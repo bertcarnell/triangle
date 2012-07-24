@@ -1,18 +1,21 @@
-:: Set variables for inserting the repository number
-
-::set mypath=.\lhs
-::set exec=C:\Program Files\TortoiseSVN\bin\SubWCRev.exe
-
-::"%exec%" "%mypath%" "%mypath%\ModifyInput\DESCRIPTION.input" "%mypath%\DESCRIPTION"
-::"%exec%" "%mypath%" "%mypath%\ModifyInput\dirichlet-package.Rd.Input" "%mypath%\man\dirichlet-package.Rd"
-
 :: Build R Package
-
+set Rversion=R-2.14.2
+set Rcommand="C:\Program Files\R\%Rversion%\bin\R.exe"
 set package=triangle
 
-R CMD check %package%
-R CMD build %package%
-R CMD INSTALL %package%
-R CMD INSTALL -build %package%
+if "%1" == "check" (
+	cd ..\pkg
+	%Rcommand% CMD check %package%
+	cd ..\trunk
+) else if "%1" == "build" (
+	cd ..\pkg
+	%Rcommand% CMD build %package%
+	%Rcommand% CMD INSTALL --build *.tar.gz
+	cd ..\trunk
+) else if "%1" == "install" (
+	cd ..\pkg
+	%Rcommand% CMD INSTALL %package%
+	cd ..\trunk
+)
 
 PAUSE

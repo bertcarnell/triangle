@@ -1,9 +1,8 @@
 10/20/06
-
-Changed the rtraingle and qtriangle functions in response to an excellent bug
-report from Dr Michael Scroggie (Michael.Scroggie@dse.vic.gov.au).  The bug
-involved the conditional logic in the inverse CDF so that when the "a" and "c"
-parameters were equal, rtriangle would return a vector of "a".
+  Changed the rtraingle and qtriangle functions in response to an excellent bug
+  report from Dr Michael Scroggie (Michael.Scroggie@dse.vic.gov.au).  The bug
+  involved the conditional logic in the inverse CDF so that when the "a" and "c"
+  parameters were equal, rtriangle would return a vector of "a".
 
 Version 0.4
   Changed the license to GPL >= 2 according to a Kurt Hornik email
@@ -12,6 +11,7 @@ Version 0.5
   Changed the filenames to be portable
   
 Version 0.6 03/25/2009
-	added the log scale triangle function
+  added the log scale triangle function
 
-
+Version 0.7
+  Added the manual entry for the logarithmic triangle
