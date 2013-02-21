@@ -15,3 +15,9 @@ Version 0.6 03/25/2009
 
 Version 0.7
   Added the manual entry for the logarithmic triangle
+  
+Version 0.8
+  Changed the arguments for dtriangle and dltriangle to be an "x" instead of a "q"
+  based on a suggestion from Randall Pruim.  Also, changed the default for the
+  triangle mode to be 1/2 of the base instead of 1/2 (or 10 for the log triangle)
+  based on Randall Pruim's suggestion as well.

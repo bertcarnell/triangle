@@ -1,8 +1,8 @@
 Package: triangle
 Type: Package
 Title: Provides the standard distribution functions for the triangle distribution
-Version: 0.6
-Date: 2009-03-25
+Version: 0.8
+Date: 2013-02-21
 Author: Rob Carnell
 Maintainer: Rob Carnell <carnellr@battelle.org> 
 Depends: R (>= 2.14.1)

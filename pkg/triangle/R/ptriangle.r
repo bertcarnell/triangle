@@ -16,7 +16,7 @@
 #
 ################################################################################
 
-ptriangle <- function(q, a=0, b=1, c=.5) {
+ptriangle <- function(q, a=0, b=1, c=(a+b)/2) {
   q1 <- length(q)
   a1 <- length(a)
   b1 <- length(b)

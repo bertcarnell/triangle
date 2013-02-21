@@ -13,13 +13,13 @@ gives the density, \code{ptriangle} gives the distribution function,
 \code{n} random deviates.
 }
 \usage{
-dtriangle(q, a=0, b=1, c=0.5)
-ptriangle(q, a=0, b=1, c=0.5)
-qtriangle(p, a=0, b=1, c=0.5)
-rtriangle(n, a=0, b=1, c=0.5)
+dtriangle(x, a=0, b=1, c=(a+b)/2)
+ptriangle(q, a=0, b=1, c=(a+b)/2)
+qtriangle(p, a=0, b=1, c=(a+b)/2)
+rtriangle(n, a=0, b=1, c=(a+b)/2)
 }
 \arguments{
-  \item{q}{vector of quantiles.}
+  \item{x,q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{a}{lower limit of the distribution.}
   \item{b}{upper limit of the distribution.}

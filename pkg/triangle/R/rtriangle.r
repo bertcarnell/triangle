@@ -20,7 +20,7 @@
 #
 ################################################################################
 
-rtriangle <- function(n=1, a=0, b=1, c=0.5){
+rtriangle <- function(n=1, a=0, b=1, c=(a+b)/2){
   if(length(n)>1) n <- length(n)
   if(n<1 | is.na(n)) stop(paste("invalid argument: n =", n))
   n <- floor(n)

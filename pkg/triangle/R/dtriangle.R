@@ -16,8 +16,8 @@
 #
 ################################################################################
 
-dtriangle <- function(q, a=0, b=1, c=.5) {
-  q1 <- length(q)
+dtriangle <- function(x, a=0, b=1, c=(a+b)/2) {
+  x1 <- length(x)
   a1 <- length(a)
   b1 <- length(b)
   c1 <- length(c)
@@ -42,18 +42,18 @@ dtriangle <- function(q, a=0, b=1, c=.5) {
     }
   }
 
-  k <- max(q1, a1, b1, c1)
-  if(k==1) return(dTest(c(q, a, b, c)))
+  k <- max(x1, a1, b1, c1)
+  if(k==1) return(dTest(c(x, a, b, c)))
 
   params <- matrix(nrow=k, ncol=4)
   tryCatch(
   {
-    params[,1] <- q
+    params[,1] <- x
     params[,2] <- a
     params[,3] <- b
     params[,4] <- c
   }, error = function(X) {
-    stop(paste(" -- Argument Lengths: length of q = ", q1,
+    stop(paste(" -- Argument Lengths: length of x = ", x1,
                 ", a = ", a1, ", b = ", b1, ", c = ", c1, " -- ", X, sep=""))
   })
 

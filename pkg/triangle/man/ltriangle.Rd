@@ -13,13 +13,13 @@ gives the density, \code{pltriangle} gives the distribution function,
 \code{n} random deviates.
 }
 \usage{
-dltriangle(q, a=1, b=100, c=10, logbase=10)
-pltriangle(q, a=1, b=100, c=10, logbase=10)
-qltriangle(p, a=1, b=100, c=10, logbase=10)
-rltriangle(n=1, a=1, b=100, c=10, logbase=10)
+dltriangle(x, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
+pltriangle(q, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
+qltriangle(p, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
+rltriangle(n=1, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
 }
 \arguments{
-  \item{q}{vector of quantiles.}
+  \item{x,q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{a}{lower limit of the distribution.}
   \item{b}{upper limit of the distribution.}

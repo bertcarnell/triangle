@@ -20,7 +20,7 @@
 #
 ################################################################################
 
-qtriangle <- function(p, a=0, b=1, c=.5) {
+qtriangle <- function(p, a=0, b=1, c=(a+b)/2) {
   p1 <- length(p)
   a1 <- length(a)
   b1 <- length(b)

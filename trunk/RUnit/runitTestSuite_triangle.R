@@ -17,7 +17,7 @@ require(RUnit)
 #defaultPath <- chartr("/", "//", paste(.path.package("triangle"), "/RUnit", sep=""))
 
 ################# used in development ##########################################
-defaultPath <- file.path("~", "R Packages", "triangle")
+defaultPath <- file.path(getwd(), "Repositories", "triangle", "admin", "pkg", "triangle")
 source(file.path(defaultPath, "R", "qtriangle.R"))
 source(file.path(defaultPath, "R", "dtriangle.R"))
 source(file.path(defaultPath, "R", "rtriangle.R"))
@@ -25,14 +25,14 @@ source(file.path(defaultPath, "R", "ptriangle.R"))
 source(file.path(defaultPath, "R", "ltriangle.R"))
 
 testSuite.triangle <- defineTestSuite("triangle",
-  dirs=file.path(defaultPath, "RUnit"),
+  dirs=file.path(defaultPath, "..", "..", "trunk", "RUnit"),
   testFileRegexp="^runit_[rpqdl]triangle[.][rR]$")
 
 testResult <- runTestSuite(testSuite.triangle)
 
 ################# used in development ##########################################
 
-htmlFile <- file.path(defaultPath, "RUnit", "Test_Results.html")
+htmlFile <- file.path(defaultPath, "..", "..", "trunk", "RUnit", "Test_Results.html")
 
 ## warning expected about gcc compiler
 suppressWarnings(printHTMLProtocol(testResult, fileName=htmlFile))

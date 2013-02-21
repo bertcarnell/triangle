@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-rltriangle <- function(n=1, a=1, b=100, c=10, logbase=10)
+rltriangle <- function(n=1, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
 {
   stopifnot(length(n) == 1)
   if(n < 1 | is.na(n)) stop(paste("invalid argument: n =", n))
@@ -61,8 +61,8 @@ rltriangle <- function(n=1, a=1, b=100, c=10, logbase=10)
   return(p)
 }
 
-dltriangle <- function(q, a=1, b=100, c=10, logbase=10) {
-  q1 <- length(q)
+dltriangle <- function(x, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10) {
+  x1 <- length(x)
   a1 <- length(a)
   b1 <- length(b)
   c1 <- length(c)
@@ -73,13 +73,13 @@ dltriangle <- function(q, a=1, b=100, c=10, logbase=10) {
     la <- log10(a)
     lb <- log10(b)
     lc <- log10(c)
-    lq <- log10(q)
+    lx <- log10(x)
   } else
   {
     la <- log(a)/log(logbase)
     lb <- log(b)/log(logbase)
     lc <- log(c)/log(logbase)
-    lq <- log(q)/log(logbase)
+    lx <- log(x)/log(logbase)
   }
 
   dTest <- function(X){
@@ -109,25 +109,25 @@ dltriangle <- function(q, a=1, b=100, c=10, logbase=10) {
     }
   }
 
-  k <- max(q1, a1, b1, c1)
-  if(k==1) return(dTest(c(lq, la, lb, lc)))
+  k <- max(x1, a1, b1, c1)
+  if(k==1) return(dTest(c(lx, la, lb, lc)))
 
   params <- matrix(nrow=k, ncol=4)
   tryCatch(
   {
-    params[,1] <- lq
+    params[,1] <- lx
     params[,2] <- la
     params[,3] <- lb
     params[,4] <- lc
   }, error = function(X) {
-    stop(paste(" -- Argument Lengths: length of q = ", q1,
+    stop(paste(" -- Argument Lengths: length of x = ", x1,
                 ", a = ", a1, ", b = ", b1, ", c = ", c1, " -- ", X, sep=""))
   })
 
   return(apply(params, 1, dTest))
 }
 
-pltriangle <- function(q, a=1, b=100, c=10, logbase=10)
+pltriangle <- function(q, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
 {
   q1 <- length(q)
   a1 <- length(a)
@@ -194,7 +194,7 @@ pltriangle <- function(q, a=1, b=100, c=10, logbase=10)
   return(apply(params, 1, pTest))
 }
 
-qltriangle <- function(p, a=1, b=100, c=10, logbase=10)
+qltriangle <- function(p, a=1, b=100, c=10^((log10(a)+log10(b))/2), logbase=10)
 {
   p1 <- length(p)
   a1 <- length(a)
