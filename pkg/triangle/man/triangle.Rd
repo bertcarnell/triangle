@@ -28,7 +28,7 @@ rtriangle(n, a=0, b=1, c=(a+b)/2)
     is taken to be the number required.}
 }
 \details{
-  All probabilities are lower tailed probabilties.
+  All probabilities are lower tailed probabilities.
 
   \code{a}, \code{b}, and \code{c} may be appropriate length vectors except in
   the case of \code{rtriangle}.
@@ -48,7 +48,7 @@ rtriangle(n, a=0, b=1, c=(a+b)/2)
 }
 \value{
   \code{dtriangle} gives the density, \code{ptriangle} gives the distribution
-  function, \code{qtriangle} gives the quantile function, and \code{rtraingle}
+  function, \code{qtriangle} gives the quantile function, and \code{rtriangle}
   generates random deviates.
 
   Invalid arguments will result in return value \code{NaN} or \code{NA}.

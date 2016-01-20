@@ -1,5 +1,5 @@
 :: Build R Package
-set Rversion=R-2.14.2
+set Rversion=R-3.2.3
 set Rcommand="C:\Program Files\R\%Rversion%\bin\R.exe"
 set package=triangle
 

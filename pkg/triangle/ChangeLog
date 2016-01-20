@@ -21,3 +21,7 @@ Version 0.8
   based on a suggestion from Randall Pruim.  Also, changed the default for the
   triangle mode to be 1/2 of the base instead of 1/2 (or 10 for the log triangle)
   based on Randall Pruim's suggestion as well.
+
+Version 0.9
+  Updates to fix errors in the CRAN build.
+  

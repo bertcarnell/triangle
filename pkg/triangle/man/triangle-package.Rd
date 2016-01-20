@@ -1,6 +1,5 @@
 \name{triangle-package}
 \alias{triangle-package}
-\alias{triangle}
 \docType{package}
 \title{
   Triangle Distributions
