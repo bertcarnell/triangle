@@ -28,5 +28,9 @@ Version 0.9
 Version 0.10
   Update to the description file
   
+Version 0.11
+  Update to dtriangle to fix a bug when a == c and x == c
+ 
+  
  
   

@@ -26,7 +26,7 @@ ptriangle <- function(q, a=0, b=1, c=(a+b)/2) {
     if(any(is.na(X))){ # is.na is TRUE for NA, NaN, and FALSE
       if(any(is.nan(X))) return(NaN) # to conform to qunif
       else return(NA) # to conform to qunif
-    } else if(X[2] > X[4] | X[3] < X[4] | (X[1]==X[2] & X[2]==X[4])){
+    } else if(X[2] > X[4] | X[3] < X[4] | (X[2]==X[4] & X[3]==X[4])){
       warning("values required to be  a <= c <= b (at least one strict inequality)")
       return(NaN) # to conform to behavior of qunif
     } else if(any(is.infinite(X[2:4]))){

@@ -26,4 +26,28 @@ test.dtriangle <- function(){
                                c(2, 2, 2, .5)), c(0, 0, 0, 2))
   suppressWarnings(checkEquals(dtriangle(c(.5, .6), c(0, 0), c(1, 1),
                                          c(.5, 1.5)), c(2, NaN)))
+  # regression test
+  checkTrue(all(!is.nan(dtriangle(0:10, a=2, b=5, c=2))))
+  suppressWarnings(checkTrue(is.nan(dtriangle(.5, 1, 1, 1))))
+  
+  # more case testing
+  checkEqualsNumeric(dtriangle(0, 1, 3, 2), 0)
+  checkEqualsNumeric(dtriangle(1, 1, 3, 2), 0)
+  checkEqualsNumeric(dtriangle(1.5, 1, 3, 2), 0.5)
+  checkEqualsNumeric(dtriangle(2, 1, 3, 2), 1)
+  checkEqualsNumeric(dtriangle(2.5, 1, 3, 2), 0.5)
+  checkEqualsNumeric(dtriangle(3, 1, 3, 2), 0)
+  checkEqualsNumeric(dtriangle(4, 1, 3, 2), 0)
+  
+  checkEqualsNumeric(dtriangle(0, 1, 3, 1), 0)
+  checkEqualsNumeric(dtriangle(1, 1, 3, 1), 1)
+  checkEqualsNumeric(dtriangle(2, 1, 3, 1), 0.5)
+  checkEqualsNumeric(dtriangle(3, 1, 3, 1), 0)
+  checkEqualsNumeric(dtriangle(4, 1, 3, 1), 0)
+  
+  checkEqualsNumeric(dtriangle(0, 1, 3, 3), 0)
+  checkEqualsNumeric(dtriangle(1, 1, 3, 3), 0)
+  checkEqualsNumeric(dtriangle(2, 1, 3, 3), 0.5)
+  checkEqualsNumeric(dtriangle(3, 1, 3, 3), 1)
+  checkEqualsNumeric(dtriangle(4, 1, 3, 3), 0)
 }
