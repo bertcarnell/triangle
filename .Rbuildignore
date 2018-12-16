@@ -1,2 +1,4 @@
+^codecov\.yml$
+^\.travis\.yml$
 ^triangle\.Rproj$
 ^\.Rproj\.user$
