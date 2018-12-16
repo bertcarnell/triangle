@@ -2,6 +2,7 @@
 
 #' @include dtriangle.R
 #' @rdname triangle
+#' @importFrom stats runif
 #' @export
 rtriangle <- function(n=1, a=0, b=1, c=(a + b)/2){
   if (length(n) > 1) n <- length(n)

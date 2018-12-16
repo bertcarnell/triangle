@@ -9,13 +9,13 @@ Version 0.4
 
 Version 0.5
   Changed the filenames to be portable
-  
+
 Version 0.6 03/25/2009
   added the log scale triangle function
 
 Version 0.7
   Added the manual entry for the logarithmic triangle
-  
+
 Version 0.8
   Changed the arguments for dtriangle and dltriangle to be an "x" instead of a "q"
   based on a suggestion from Randall Pruim.  Also, changed the default for the
@@ -24,13 +24,15 @@ Version 0.8
 
 Version 0.9
   Updates to fix errors in the CRAN build.
-  
+
 Version 0.10
   Update to the description file
-  
+
 Version 0.11
   Update to dtriangle to fix a bug when a == c and x == c
- 
-  
- 
-  
+
+Version 0.12
+  Update to move from R-forge to github
+
+
+
