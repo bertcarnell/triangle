@@ -1,4 +1,0 @@
-export(dtriangle, ptriangle, qtriangle, rtriangle,
-  dltriangle, pltriangle, qltriangle, rltriangle)
-
-importFrom("stats", dist, na.exclude, na.fail, na.omit, runif)
