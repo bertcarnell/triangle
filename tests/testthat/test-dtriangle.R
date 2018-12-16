@@ -36,4 +36,10 @@ test_that("dtriangle", {
   expect_equal(dtriangle(2, 1, 3, 3), 0.5)
   expect_equal(dtriangle(3, 1, 3, 3), 1)
   expect_equal(dtriangle(4, 1, 3, 3), 0)
+
+  expect_true(is.na(dtriangle(.5, 0, NA, 3)))
+  expect_true(is.nan(dtriangle(.5, 0, 5, NaN)))
+  expect_true(is.nan(dtriangle(.5, 0, Inf, 3)))
+
+  expect_error(dtriangle(c(1,2,3), c(1,2,3), c(4,5), c(1,2,3)))
 })

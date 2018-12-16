@@ -25,6 +25,12 @@ test_that("rltriangle",
   expect_true(all(is.na(rltriangle(10, -5, -2, -2))))
   expect_true(all(1 == rltriangle(10,1,1,1)))
   expect_true(all(is.na(rltriangle(10,-1,-1,-1))))
+
+  expect_true(all(is.nan(rltriangle(10, 5, 6, 4))))
+  expect_true(all(is.nan(rltriangle(10, 5, 6, 7))))
+  expect_true(all(is.nan(rltriangle(10, 5, Inf, 7))))
+
+  expect_true(all(rltriangle(3, 1, 100, 10, logbase = 7) >= 1))
 })
 
 test_that("dltriangle",
@@ -37,6 +43,16 @@ test_that("dltriangle",
   expect_warning(expect_equal(dltriangle(.5, 1, 2, .5), NaN))
   expect_equal(dltriangle(c(1, 3, 10^.5), c(1, 1, 1), c(3, 3, 10),
                                 c(2, 2, 10^.5)), c(0, 0, 2))
+
+  expect_equal(dltriangle(7, 1, 49, 7, logbase = 7), 1)
+
+  expect_true(is.na(dltriangle(.5, 0, NA, 3)))
+  expect_true(is.nan(dltriangle(.5, 0, 5, NaN)))
+  expect_true(is.nan(dltriangle(.5, 0, Inf, 3)))
+
+  expect_error(dltriangle(c(1,2,3), c(1,2,3), c(4,5), c(1,2,3)))
+
+  expect_equal(0.5, dltriangle(10^0.5, 1, 100, 10))
 })
 
 test_that("ptriangle",
@@ -49,6 +65,14 @@ test_that("ptriangle",
   expect_warning(expect_equal(pltriangle(.5, 1, 2, .5), NaN))
   expect_equal(pltriangle(c(1, 3, 10^.5), c(1, 1, 1), c(3, 3, 10),
                                 c(2, 2, 10^.5)), c(0, 1, .5))
+
+  expect_equal(pltriangle(7, 1, 49, 7, logbase = 7), 0.5)
+
+  expect_true(is.na(pltriangle(1, 0, NA, 3)))
+  expect_true(is.nan(pltriangle(1, 0, 5, NaN)))
+  expect_true(is.nan(pltriangle(1, 0, Inf, 3)))
+
+  expect_error(pltriangle(c(1,2,3), c(1,2,3), c(4,5), c(1,2,3)))
 })
 
 test_that("qltriangle",
@@ -74,4 +98,12 @@ test_that("qltriangle",
   expect_equal(qltriangle(pltriangle(15, 1, 100, 10), 1, 100, 10), 15)
   expect_equal(qltriangle(pltriangle(3, 2, 5, 5), 2, 5, 5), 3)
   expect_equal(qltriangle(pltriangle(5, 2, 5, 5), 2, 5, 5), 5)
+
+  expect_equal(qltriangle(0.5, 1, 49, 7, logbase = 7), 7)
+
+  expect_true(is.na(qltriangle(0.5, 0, NA, 3)))
+  expect_true(is.nan(qltriangle(0.5, 0, 5, NaN)))
+  expect_true(is.nan(qltriangle(0.5, 0, Inf, 3)))
+
+  expect_error(qltriangle(c(.1,.2,.3), c(1,2,3), c(4,5), c(1,2,3)))
 })

@@ -35,4 +35,8 @@ test_that("qtriangle", {
   expect_equal(qtriangle(ptriangle(.5, 0, 1, 0), 0, 1, 0), 0.5)
   expect_equal(qtriangle(ptriangle(3, 2, 5, 5), 2, 5, 5), 3)
   expect_equal(qtriangle(ptriangle(5, 2, 5, 5), 2, 5, 5), 5)
+
+  expect_equal(5, qtriangle(1, 1, 5, 5))
+  expect_equal(5, qtriangle(1, 1, 5 + .Machine$double.eps, 5))
+  expect_equal(5, qtriangle(1 - 2 * .Machine$double.eps, 1, 5, 5))
 })

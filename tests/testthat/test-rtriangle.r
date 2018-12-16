@@ -30,4 +30,9 @@ test_that("multiplication works", {
   expect_true(!all(-2 == rtriangle(10, -5, -2, -2)))
   expect_true(all(1 == rtriangle(10,1,1,1)))
   expect_true(all(-1 == rtriangle(10,-1,-1,-1)))
+
+  expect_equal(2, length(rtriangle(c(4,5), 0, 2, 1)))
+  expect_true(all(is.nan(rtriangle(10, 5, 6, 4))))
+  expect_true(all(is.nan(rtriangle(10, 5, 6, 7))))
+  expect_true(all(is.nan(rtriangle(10, 5, Inf, 7))))
 })

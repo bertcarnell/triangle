@@ -15,4 +15,9 @@ test_that("ptriangle", {
   expect_warning(expect_equal(ptriangle(c(.5, .6), c(0, 0), c(1, 1),
                                                 c(.5, 1.5)), c(.5, NaN)))
 
+  expect_true(is.na(ptriangle(.5, 0, NA, 3)))
+  expect_true(is.nan(ptriangle(.5, 0, 5, NaN)))
+  expect_true(is.nan(ptriangle(.5, 0, Inf, 3)))
+
+  expect_error(ptriangle(c(1,2,3), c(1,2,3), c(4,5), c(1,2,3)))
 })
