@@ -1,11 +1,11 @@
 Package: triangle
 Title: Provides the Standard Distribution Functions for the Triangle Distribution
-Version: 0.12.0.9000
+Version: 0.12
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Rob",
+           family = "Carnell",
            role = c("aut", "cre"),
-           email = "first.last@example.com")
+           email = "bertcarnell@gmail.com")
 Description: Provides the "r, q, p, and d" distribution functions for the triangle distribution.
 License: GPL (>= 2)
 Encoding: UTF-8
