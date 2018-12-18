@@ -72,8 +72,58 @@
 <div id="triangle" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#triangle" class="anchor"></a>triangle</h1></div>
-<p>An package to work with the triangle distribution and logarithmic triangle distribution</p>
-<p><a href="https://travis-ci.org/bertcarnell/triangle"><img src="https://travis-ci.org/bertcarnell/triangle.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/github/bertcarnell/triangle?branch=master"><img src="https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg" alt="Coverage status"></a></p>
+<p>An R package to work with the triangle distribution and logarithmic triangle distribution</p>
+<table class="table">
+<thead><tr class="header">
+<th>Linux &amp; MacOS</th>
+<th>Windows</th>
+<th>Code Coverage</th>
+<th>CRAN</th>
+<th>CRAN Usage</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td><a href="https://travis-ci.org/bertcarnell/triangle"><img src="https://travis-ci.org/bertcarnell/triangle.svg?branch=master" alt="Travis build status"></a></td>
+<td><a href="https://ci.appveyor.com/project/bertcarnell/triangle"><img src="https://ci.appveyor.com/api/projects/status/github/bertcarnell/triangle?branch=master&amp;svg=true" alt="AppVeyor build status"></a></td>
+<td><a href="https://codecov.io/github/bertcarnell/triangle?branch=master"><img src="https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg" alt="Coverage status"></a></td>
+<td><a href="https://cran.r-project.org/package=triangle"><img src="https://cranlogs.r-pkg.org/badges/triangle"></a></td>
+<td><a href="https://cran.r-project.org/package=triangle"><img src="https://www.r-pkg.org/badges/version/triangle" alt="CRAN status"></a></td>
+</tr></tbody>
+</table>
+<p>See the package documentation <a href="https://bertcarnell.github.io/triangle/">here:</a></p>
+<div id="getting-started" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-started" class="anchor"></a>Getting Started</h2>
+<p>Install the R package:</p>
+<pre><code># Stable CRAN version
+install.packages(triangle)
+
+# OR development version from GitHub
+require(devtools)
+devtools::install_github("bertcarnell/triangle")</code></pre>
+<p>use the functions:</p>
+<ul>
+<li>
+<code>a</code> = minimum</li>
+<li>
+<code>b</code> = maximum</li>
+<li>
+<code>c</code> = mode</li>
+</ul>
+<pre><code>require(triangle)
+
+# rtriangle(n, a, b, c)
+rtriangle(10, 1, 5, 2)
+
+# ptriangle(x, a, b, c)
+ptriangle(0:10, 0, 10, 5)
+
+# qtriangle(p, a, b, c)
+qtriangle(seq(0, 1, by = 0.1), 1, 10, 3)
+
+# dtriangle(x, a, b, c)
+dtriangle(0:10, 0, 10, 5)
+</code></pre>
+</div>
 </div>
   </div>
 
@@ -82,6 +132,8 @@
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=triangle">https://​cloud.r-project.org/​package=triangle</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/bertcarnell/triangle/issues">https://​github.com/​bertcarnell/​triangle/​issues</a>
 </li>
 </ul>
 </div>
