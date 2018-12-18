@@ -275,6 +275,9 @@ qltriangle <- function(p, a=1, b=100, c=10^((log10(a) + log10(b))/2), logbase=10
                (X[3] - sqrt((1 - X[1])*(X[3] - X[2])*(X[3] - X[4]))) >= X[4]))
     {
       return(logbase^(X[3] - sqrt((1 - X[1])*(X[3] - X[2])*(X[3] - X[4]))))
+    } else if (X[2] != X[4] && (X[2] + sqrt(X[1]*(X[3] - X[2])*(X[4] - X[2]))) - X[4] <= (X[3] - X[2])*.Machine$double.eps)
+    {
+      return(X[4])
     } else stop("Unexpected Result")
   }
 

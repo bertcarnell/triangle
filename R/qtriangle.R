@@ -32,7 +32,7 @@ qtriangle <- function(p, a=0, b=1, c=(a + b)/2) {
               (X[2] == X[4] &&
                (X[3] - sqrt((1 - X[1])*(X[3] - X[2])*(X[3] - X[4]))) >= X[4])) {
       return(X[3] - sqrt((1 - X[1])*(X[3] - X[2])*(X[3] - X[4])))
-    } else if (X[2] != X[4] && (X[2] + sqrt(X[1]*(X[3] - X[2])*(X[4] - X[2]))) - X[4] <= .Machine$double.eps)
+    } else if (X[2] != X[4] && (X[2] + sqrt(X[1]*(X[3] - X[2])*(X[4] - X[2]))) - X[4] <= (X[3] - X[2])*.Machine$double.eps)
     {
       return(X[4])
     } else stop("Unexpected Result")

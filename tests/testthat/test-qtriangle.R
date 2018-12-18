@@ -39,4 +39,16 @@ test_that("qtriangle", {
   expect_equal(5, qtriangle(1, 1, 5, 5))
   expect_equal(5, qtriangle(1, 1, 5 + .Machine$double.eps, 5))
   expect_equal(5, qtriangle(1 - 2 * .Machine$double.eps, 1, 5, 5))
+
+  # these tests both failed until the numeric tolerance was increased to 2*.Machine$double.eps
+  expect_true(all(qtriangle(seq(0, 1, by = 0.1), 0, 10, 3) >= 0.0))
+  expect_equal(3, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 10, 3))
+  # this test failed until the numeric tolerance was increased to 10*.Machine$double.eps
+  expect_equal(30, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 100, 30))
+  # increased tolerance relative to the base of the triangle
+  expect_equal(300, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 1000, 300))
+  expect_equal(3000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 10000, 3000))
+  expect_equal(30000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 100000, 30000))
+  expect_equal(300000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 1000000, 300000))
+  expect_equal(3000000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 10000000, 3000000))
 })
