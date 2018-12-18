@@ -29,6 +29,11 @@ axis(1, at = c(0,1,4), labels = c("a", "c", "b"))
 box()
 ```
 
+- $a$ = minimum
+- $b$ = maximum
+- $c$ = mode
+- $h$ = density at the mode = $\frac{2}{b-a}$
+
 ## Triangle PDF
 
 $$f(x) =
@@ -174,7 +179,7 @@ $$G(b) = \frac{lc-la}{lb-la} + \frac{-(lc-lb)}{lb-la} = 1$$
 
 Now calculating $E(y)$,
 
-$$E(y) = \int_{-\infty}^y yg(y)dy$$
+$$E(y) = \int y\ g(y)\ dy$$
 
 $$=\frac{\beta_1}{ln({\phi})} \int_a^c \bigg[\frac{ln(y)}{ln({\phi})} - la\bigg]dy + 
 \frac{\beta_2}{ln({\phi})} \int_c^b \bigg[\frac{ln(y)}{ln({\phi})} - lb]dy$$
