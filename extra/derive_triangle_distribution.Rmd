@@ -1,0 +1,358 @@
+---
+title: "Triangle Distribution Derivation"
+author: "Rob Carnell"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+header-includes:
+  - \usepackage{amsmath}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+require(reticulate)
+if (packageVersion("knitr") < 1.18)
+{
+  knitr::knit_engines$set(python = reticulate::eng_python)
+}
+have_sympy <- reticulate::py_module_available("sympy")
+if (!have_sympy)
+{
+  reticulate::py_install("sympy")
+  have_sympy <- reticulate::py_module_available("sympy")
+}
+if (!have_sympy)
+  stop("sympy not available")
+```
+
+## Triangle Notation
+
+```{r triangle_drawing, echo=FALSE, fig.width=5, fig.height=4}
+plot(c(-1,5), c(0,4), type = "n", xlab = "x", ylab = "f(x)", axes = FALSE)
+lines(c(0,1), c(0,3), col = "red")
+lines(c(1,4), c(3,0), col = "red")
+axis(2, at = c(0,3), labels = c("0","h"), las = 2)
+axis(1, at = c(0,1,4), labels = c("a", "c", "b"))
+box()
+```
+
+- $a$ = minimum
+- $b$ = maximum
+- $c$ = mode
+- $h$ = density at the mode = $\frac{2}{b-a}$
+
+## Triangle PDF
+
+$$f(x) =
+\left\{
+	\begin{array}{ll}
+		\frac{h}{c-a}(x-a)  & \mbox{if } a \leq x \leq c \\
+		\frac{h}{c-b}(x-b) & \mbox{if } c < x \leq b \\
+		0 & \mbox{otherwise}
+	\end{array}
+\right.\ \ \ \ (1)$$
+
+Integrating the pdf in equation (1) to solve for h
+
+```{python echo = FALSE}
+import sympy as sp
+from sympy import ln
+x, a, b, c, h = sp.symbols('x a b c h', real=True)
+# integrate the pdf
+intpdf = sp.integrate(h/(c-a)*(x-a), (x, a, c)) + sp.integrate(h/(c-b)*(x-b), (x, c, b))
+intpdf = sp.simplify(intpdf)
+intpdf_str = sp.latex(intpdf)
+# solve for h
+solveforh = sp.solveset(sp.Eq(intpdf, 1), h)
+solveforh = sp.simplify(solveforh.args[0])
+solveforh_str = sp.latex(solveforh)
+
+pdf1 = 2/(c-a)/(b-a)*(x-a)
+pdf2 = 2/(b-a)/(c-b)*(x-b)
+
+cdf1 = sp.simplify(sp.integrate(pdf1, (x, a, x)))
+cdf2 = sp.simplify(cdf1.subs(x, c) + sp.integrate(pdf2, (x, c, x)))
+cdf1_str = sp.latex(cdf1)
+cdf2_str = sp.latex(cdf2)
+cdf11 = float(cdf1.evalf(subs={a:1, b:5, c:3, x:1}))
+cdf12 = float(cdf1.evalf(subs={a:1, b:5, c:3, x:2}))
+cdf13 = float(cdf1.evalf(subs={a:1, b:5, c:3, x:3}))
+cdf24 = float(cdf2.evalf(subs={a:1, b:5, c:3, x:4}))
+cdf25 = float(cdf2.evalf(subs={a:1, b:5, c:3, x:5}))
+
+assert sp.simplify(cdf2.subs(x, b)) == 1
+
+mx = sp.integrate(x*pdf1, (x, a, c)) + sp.integrate(x*pdf2, (x, c, b))
+mx = sp.factor(sp.simplify(mx))
+mx_str = sp.latex(mx)
+# reticulate can't convert sympy.float objects, so cast them to primitive floats first
+mx1 = float(mx.evalf(subs={a:1, b:5, c:3}))
+mx2 = float(mx.evalf(subs={a:1, b:5, c:1}))
+mx3 = float(mx.evalf(subs={a:1, b:5, c:5}))
+
+vx = sp.integrate(x*x*pdf1, (x, a, c)) + sp.integrate(x*x*pdf2, (x, c, b)) - mx * mx
+vx = sp.factor(sp.simplify(vx))
+vx_str = sp.latex(vx)
+vx1 = float(vx.evalf(subs={a:1, b:5, c:3}))
+vx2 = float(vx.evalf(subs={a:1, b:5, c:1}))
+vx3 = float(vx.evalf(subs={a:1, b:5, c:5}))
+
+# log triangle
+a, b, c, h = sp.symbols('a b c h', real=True, positive=True)
+y, t = sp.symbols('y t', real=True, positive=True)
+phi = sp.symbols('phi', integer=True, positive=True)
+beta1 = (2*ln(phi)*ln(phi)/(ln(c)-ln(a))/(ln(b)-ln(a)))
+beta2 = (2*ln(phi)*ln(phi)/(ln(c)-ln(b))/(ln(b)-ln(a)))
+
+lpdf1 = beta1 / ln(phi) / ln(phi) * (ln(y) - ln(a)) / y
+lpdf2 = beta2 / ln(phi) / ln(phi) * (ln(y) - ln(b)) / y
+
+lcdf1 = sp.simplify(sp.integrate(lpdf1, (y, a, y)))
+lcdf2 = sp.simplify(lcdf1.subs(y, c) + sp.integrate(lpdf2, (y, c, y)))
+lcdf1_str = sp.latex(lcdf1)
+lcdf2_str = sp.latex(lcdf2)
+lcdf11 = float(lcdf1.evalf(subs={a:1, b:100, c:10, y:1, phi:10}))
+lcdf12 = float(lcdf1.evalf(subs={a:1, b:100, c:10, y:2, phi:10}))
+lcdf13 = float(lcdf1.evalf(subs={a:1, b:100, c:10, y:10, phi:10}))
+lcdf24 = float(lcdf2.evalf(subs={a:1, b:100, c:10, y:20, phi:10}))
+lcdf25 = float(lcdf2.evalf(subs={a:1, b:100, c:10, y:100, phi:10}))
+
+assert sp.simplify(lcdf2.subs(y, b)) == 1
+
+lmx = sp.integrate(y*lpdf1, (y, a, c)) + sp.integrate(y*lpdf2, (y, c, b))
+lmx = sp.simplify(sp.factor(sp.expand_log(sp.simplify(lmx))))
+lmx_str = sp.latex(lmx)
+lmx_low = sp.integrate(y*lpdf1, (y, a, c)).subs(c, b)
+lmx_low = sp.simplify(sp.factor(sp.expand_log(sp.simplify(lmx_low))))
+lmx_low_str = sp.latex(lmx_low)
+lmx_high = sp.integrate(y*lpdf2, (y, c, b)).subs(c, a)
+lmx_high = sp.simplify(sp.factor(sp.expand_log(sp.simplify(lmx_high))))
+lmx_high_str = sp.latex(lmx_high)
+lmx1 = float(lmx.evalf(subs={a:1, b:100, c:10, phi:10}))
+lmx2 = float(lmx_high.evalf(subs={a:1, b:100, c:1, phi:10}))
+lmx3 = float(lmx_low.evalf(subs={a:1, b:100, c:100, phi:10}))
+
+lvx = sp.integrate(y*y*lpdf1, (y, a, c)) + sp.integrate(y*y*lpdf2, (y, c, b)) - lmx * lmx
+lvx = sp.simplify(sp.factor(sp.expand_log(sp.simplify(lvx))))
+lvx_str = sp.latex(lvx)
+lvx_low = sp.integrate(y*y*lpdf1, (y, a, c)) - lmx_low * lmx_low
+lvx_low = sp.simplify(sp.factor(sp.expand_log(sp.simplify(lvx_low.subs(c, b)))))
+lvx_low_str = sp.latex(lvx_low)
+lvx_high = sp.integrate(y*y*lpdf2, (y, c, b)) - lmx_high * lmx_high
+lvx_high = sp.simplify(sp.factor(sp.expand_log(sp.simplify(lvx_high.subs(c, a)))))
+lvx_high_str = sp.latex(lvx_high)
+lvx1 = float(lvx.evalf(subs={a:1, b:100, c:10, phi:10}))
+lvx2 = float(lvx_high.evalf(subs={a:1, b:100, c:1, phi:10}))
+lvx3 = float(lvx_low.evalf(subs={a:1, b:100, c:100, phi:10}))
+```
+
+$$\int f(x) dx = 1$$
+
+$$\frac{h}{c-a}\int_{a}^{c} (x-a) dx + 
+\frac{h}{c-b} \int_{c}^{b} (x-b) dx = 1$$
+
+$$`r py$intpdf_str` = 1$$
+
+$$h = `r py$solveforh_str` \ \ \ \ (2)$$
+
+Substituting back into equation (1),
+
+$$f(x) =
+\left\{
+	\begin{array}{ll}
+		\frac{2}{(b-a)(c-a)}(x-a)  & \mbox{if } a \leq x \leq c \\
+		\frac{2}{(b-a)(c-b)}(x-b) & \mbox{if } c < x \leq b \\
+		0 & \mbox{otherwise}
+	\end{array}
+\right.\ \ \ \ (3)$$
+
+## Triangle Mean
+
+Integrating equation (3) to find $E(x)$,
+
+$$E(X)=\int xf(x)dx = \frac{h}{c-a}\int_a^c (x^2-ax) dx + 
+\frac{h}{c-b}\int_c^b (x^2-bx) dx$$
+
+$$E(X) = `r py$mx_str` \ \ \ \ (3)$$
+
+## Triangle Variance
+
+$$V(X) = E(X^2) - \big(E(X)\big)^2$$
+
+$$V(X) = `r py$vx_str`$$
+
+## Logarithmic Triangle distribution
+
+Define:
+
+$$a_l=log_{\phi}(a),\ \ b_l=log_{\phi}(b),\ \ c_l=log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}$$
+
+$$f(z) = 
+\left\{
+  \begin{array}{ll}
+    \frac{h}{c_l - a_l}(z - a_l) & \mbox{if } a_l \leq z \leq c_l \\
+    \frac{h}{c_l - b_l}(z - b_l) & \mbox{if } c_l < z \leq b_l \\
+    0 & \mbox{otherwise}
+  \end{array}
+\right.\ \ \ \ (4)$$
+
+However,
+
+$$E({\phi}^z) \neq {\phi}^{E(z)}\ \ \ \ (5)$$
+
+Therefore, transforming...
+
+$$Y={\phi}^Z$$
+
+$$Z=log_{\phi}(Y)$$
+
+$$w(y)=log_{\phi}(y)$$
+
+$$w'(y)=\frac{dz}{dy} = \frac{1}{yln({\phi})}$$
+
+$$g(y)=f(w(y))w'(y)$$
+
+$$g(y) = 
+\left\{
+  \begin{array}{ll}
+    \frac{2}{(c_l-a_l)(b_l-a_l)ln({\phi})}\frac{log_{\phi}(y) - a_l}{y} & \mbox{if } 0 < a \leq y \leq c \\
+    \frac{2}{(c_l-b_l)(b_l-a_l)ln({\phi})}\frac{lob_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
+    0 & \mbox{otherwise}
+  \end{array}
+\right.\ \ \ \ (5)$$
+
+Define:
+
+$$\beta_1=\frac{2}{(c_l-a_l)(b_l-a_l)}$$
+
+$$\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}$$
+
+Finding the CDF, 
+
+$$G(y)=\int_{-\infty}^y g(y)dy$$
+
+$$\mbox{for}\ a \leq y \leq c,\ \ G(y) = \frac{\beta_1}{ln({\phi})} \int_a^y \frac{ln(y)}{yln({\phi})}-\frac{a_l}{y}dy$$
+
+$$=`r py$lcdf1_str`$$
+
+$$\mbox{for}\ c < y \leq b,\ \ G(y) = G(c) + \frac{\beta_2}{ln({\phi})} \int_c^y \frac{ln(y)}{yln({\phi})} - \frac{b_l}{y}dy$$
+
+$$=`r py$lcdf2_str`$$
+
+Now calculating $E(Y)$,
+
+$$E(Y) = \int y\ g(y)\ dy$$
+
+$$=\frac{\beta_1}{ln({\phi})} \int_a^c \bigg[\frac{ln(y)}{ln({\phi})} - a_l\bigg]dy + 
+\frac{\beta_2}{ln({\phi})} \int_c^b \bigg[\frac{ln(y)}{ln({\phi})} - b_l]dy$$
+
+When $a < c < b$,
+
+$$E(Y) =`r py$lmx_str`$$
+
+when $a < c = b$,
+
+$$E(Y) = `r py$lmx_low_str`$$
+
+when $a = c < b$,
+
+$$E(Y) = `r py$lmx_high_str`$$
+
+And calculating $V(Y)$,
+
+$$V(Y) = \int y^2\ g(y)\ dy - \big(E(Y)\big)^2$$
+
+When $a < c < b$,
+
+$$V(Y) =`r py$lvx_str`$$
+
+when $a < c = b$,
+
+$$V(Y) = `r py$lvx_low_str`$$
+
+when $a = c < b$,
+
+$$V(Y) = `r py$lvx_high_str`$$
+
+## Checking the R functions
+
+For `rtriangle(1E6, 1, 5, 3)`,
+
+```{r check1, echo=FALSE, message=FALSE}
+require(triangle)
+N <- 1000000
+X <- rtriangle(N, 1, 5, 3)
+cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
+          "expected:", signif(py$mx1, digits = 6)))
+cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
+          "expected:", signif(py$vx1, digits = 6)))
+cat(paste("CDF:  got: ", signif(ptriangle(1, 1, 5, 3), digits = 6), 
+          "expected:", signif(py$cdf11, digits = 6)))
+cat(paste("CDF:  got: ", signif(ptriangle(2, 1, 5, 3), digits = 6), 
+          "expected:", signif(py$cdf12, digits = 6)))
+cat(paste("CDF:  got: ", signif(ptriangle(3, 1, 5, 3), digits = 6), 
+          "expected:", signif(py$cdf13, digits = 6)))
+cat(paste("CDF:  got: ", signif(ptriangle(4, 1, 5, 3), digits = 6), 
+          "expected:", signif(py$cdf24, digits = 6)))
+cat(paste("CDF:  got: ", signif(ptriangle(5, 1, 5, 3), digits = 6), 
+          "expected:", signif(py$cdf25, digits = 6)))
+
+```
+
+For `rtriangle(1E6, 1, 5, 1)`,
+
+```{r check2, echo=FALSE}
+X <- rtriangle(N, 1, 5, 1)
+cat(paste("Mean:  got: ", signif(mean(X), digits = 6), "expected", signif(py$mx2, digits = 6)))
+cat(paste("Variance:  got: ", signif(var(X), digits = 6), "expected", signif(py$vx2, digits = 6)))
+```
+
+For `rtriangle(1E6, 1, 5, 5)`,
+
+```{r check3, echo=FALSE}
+X <- rtriangle(N, 1, 5, 5)
+cat(paste("Mean:  got: ", signif(mean(X), digits = 6), "expected", signif(py$mx3, digits = 6)))
+cat(paste("Variance:  got: ", signif(var(X), digits = 6), "expected", signif(py$vx3, digits = 6)))
+```
+
+For `rltriangle(1E6, 1, 100, 10)`
+
+```{r check4, echo=FALSE}
+X <- rltriangle(N, 1, 100, 10)
+cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
+          "expected:", signif(py$lmx1, digits = 6)))
+cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
+          "expected:", signif(py$lvx1, digits = 6)))
+cat(paste("CDF:  got: ", signif(pltriangle(1, 1, 100, 10), digits = 6), 
+          "expected:", signif(py$lcdf11, digits = 6)))
+cat(paste("CDF:  got: ", signif(pltriangle(2, 1, 100, 10), digits = 6), 
+          "expected:", signif(py$lcdf12, digits = 6)))
+cat(paste("CDF:  got: ", signif(pltriangle(10, 1, 100, 10), digits = 6), 
+          "expected:", signif(py$lcdf13, digits = 6)))
+cat(paste("CDF:  got: ", signif(pltriangle(20, 1, 100, 10), digits = 6), 
+          "expected:", signif(py$lcdf24, digits = 6)))
+cat(paste("CDF:  got: ", signif(pltriangle(100, 1, 100, 10), digits = 6), 
+          "expected:", signif(py$lcdf25, digits = 6)))
+```
+
+```{r check5, echo=FALSE}
+X <- rltriangle(N, 1, 100, 1)
+cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
+          "expected:", signif(py$lmx2, digits = 6)))
+cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
+          "expected:", signif(py$lvx2, digits = 6)))
+```
+
+```{r check6, echo=FALSE}
+X <- rltriangle(N, 1, 100, 100)
+cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
+          "expected:", signif(py$lmx3, digits = 6)))
+cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
+          "expected:", signif(py$lvx3, digits = 6)))
+```

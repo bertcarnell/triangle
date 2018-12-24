@@ -3,3 +3,5 @@
 ^\.travis\.yml$
 ^triangle\.Rproj$
 ^\.Rproj\.user$
+^extra$
+^docs$
