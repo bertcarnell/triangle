@@ -11,7 +11,7 @@ See the package documentation [here:](https://bertcarnell.github.io/triangle/)
 
 Install the R package:
 
-```
+```r
 # Stable CRAN version
 install.packages(triangle)
 
@@ -26,7 +26,7 @@ use the functions:
 - `b` = maximum
 - `c` = mode
 
-```
+```r
 require(triangle)
 
 # rtriangle(n, a, b, c)
