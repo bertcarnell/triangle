@@ -6,11 +6,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Triangle Distribution Math • triangle</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Triangle Distribution Math">
 <meta property="og:description" content="">
+<meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -73,7 +80,7 @@
       <h1>Triangle Distribution Math</h1>
                         <h4 class="author">Rob Carnell</h4>
             
-            <h4 class="date">2018-12-17</h4>
+            <h4 class="date">2019-02-11</h4>
       
       
       <div class="hidden name"><code>triangledistributionmath.Rmd</code></div>
@@ -86,6 +93,17 @@
 <h2 class="hasAnchor">
 <a href="#triangle-notation" class="anchor"></a>Triangle Notation</h2>
 <p><img src="triangledistributionmath_files/figure-html/triangle_drawing-1.png" width="480"></p>
+<ul>
+<li>
+<span class="math inline">\(a\)</span> = minimum</li>
+<li>
+<span class="math inline">\(b\)</span> = maximum</li>
+<li>
+<span class="math inline">\(c\)</span> = mode</li>
+<li>
+<span class="math inline">\(h\)</span> = density at the mode = <span class="math inline">\(\frac{2}{b-a}\)</span>
+</li>
+</ul>
 </div>
 <div id="triangle-pdf" class="section level2">
 <h2 class="hasAnchor">
@@ -99,15 +117,8 @@
     \end{array}
 \right.\ \ \ \ (1)\]</span></p>
 <p>Integrating the pdf in equation (1) to solve for h</p>
-<p><span class="math display">\[\int f(x) dx = \frac{h}{c-a}\int_{a}^{c} (x-a) dx + 
-\frac{h}{c-b} \int_{c}^{b} (x-b) dx\]</span></p>
-<p><span class="math display">\[=\frac{h}{c-a} \bigg[\frac{x^2}{2}-ax\bigg]_{a}^{c} + 
-\frac{h}{c-b} \bigg[\frac{x^2}{2} - bx\bigg]_{c}^{b}\]</span></p>
-<p><span class="math display">\[=\frac{h}{2(c-a)}\big[c^2-2ac-a^2+2a^2\big] + \frac{h}{2(c-b)}\big[b^2-2b^2-c^2+2bc\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{2(c-a)(c-b)} \big[c^3-bc^2-2ac^2+2abc-a^2c+a^2b+2a^2c-2a^2b+b^2c-ab^2-2b^2c+2ab^2-c^3+ac^2+2bc^2-2abc\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{2(c-a)(c-b)}\big[bc^2-ac^2+a^2c-a^2b-b^2c+ab^2+abc-abc\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{2(c-a)(c-b)}\big[b(c^2-ac+ab-bc)-a(c^2-ac+ab-bc)\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{2(c-a)(c-b)}\big[b(c-a)(c-b)-a(c-a)(c-b)\big]=\frac{h(b-a)}{2}=1\]</span></p>
+<p><span class="math display">\[\int f(x) dx = 1\]</span></p>
+<p><span class="math display">\[\frac{h}{c-a}\int_{a}^{c} (x-a) dx + \frac{h}{c-b} \int_{c}^{b} (x-b) dx = \frac{h(b-a)}{2}\]</span></p>
 <p><span class="math display">\[h=\frac{2}{b-a}\ \ \ \ (2)\]</span></p>
 <p>Substituting back into equation (1),</p>
 <p><span class="math display">\[f(x) =
@@ -123,31 +134,27 @@
 <h2 class="hasAnchor">
 <a href="#triangle-mean" class="anchor"></a>Triangle Mean</h2>
 <p>Integrating equation (3) to find <span class="math inline">\(E(x)\)</span>,</p>
-<p><span class="math display">\[E(x)=\int xf(x)dx = \frac{h}{c-a}\int_a^c (x^2-ax) dx + 
+<p><span class="math display">\[E(X)=\int xf(x)dx = \frac{h}{c-a}\int_a^c (x^2-ax) dx + 
 \frac{h}{c-b}\int_c^b (x^2-bx) dx\]</span></p>
-<p><span class="math display">\[=\frac{h}{c-a} \bigg[\frac{x^3}{3}-\frac{ax^2}{2}\bigg]_a^c +
-\frac{h}{c-b} \bigg[\frac{x^3}{3}-\frac{bx^2}{2}\bigg]_c^b\]</span></p>
-<p><span class="math display">\[=\frac{h}{6(c-a)}\big[2c^3-3ac^2+a^3\big] +
-\frac{h}{6(c-b)}\big[-b^3-2c^3+3bc^2\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{6(c-a)(c-b)}\big[2c^4-2bc^3-3ac^3+3abc^2+a^3c-a^3b -
-b^3c+ab^3-2c^4+2ac^3+3bc^3-3abc^2\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{6(c-a)(c-b)}\big[bc^3-ac^3+a^3c-a^3b-b^3c+ab^3\big]\]</span></p>
-<p><span class="math display">\[=\frac{h}{6(c-a)(c-b)}\big[a(a^2c-a^2b)+b(-b^2c+ab^2)+c(bc^2-ac^2)\big]\]</span></p>
-<p><span class="math display">\[=\frac{1}{3(c-a)(c-b)(b-a)} \big[(a(bc^2-abc+ab^2-b^2c-ac^2+a^2c-a^2b+abc) + b(bc^2-abc+ab^2-b^2c-ac^2+a^2c-a^2b+abc) +
-c(bc^2-abc+ab^2-b^2c-ac^2+a^2c-a^2b+abc))\big]\]</span></p>
-<p><span class="math display">\[=\frac{1}{3(c-a)(c-b)(b-a)}\big[a(c-a)(c-b)(b-a)+b(c-a)(c-b)(b-a)+c(c-a)(c-b)(b-a)\big]\]</span></p>
 <p><span class="math display">\[=\frac{a+b+c}{3}\ \ \ \ (3)\]</span></p>
+</div>
+<div id="triangle-variance" class="section level2">
+<h2 class="hasAnchor">
+<a href="#triangle-variance" class="anchor"></a>Triangle Variance</h2>
+<p><span class="math display">\[V(X) = E(X^2) - \big(E(X)\big)^2 = \int x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2\]</span></p>
+<p><span class="math display">\[=\frac{h}{c-a}\int_{a}^{c} x^2(x-a) dx + \frac{h}{c-b} \int_{c}^{b} x^2(x-b) dx- \bigg(\frac{a+b+c}{3}\bigg)^2\]</span></p>
+<p><span class="math display">\[=\frac{a^2+b^2+c^2-ab-ac-bc}{18}\]</span></p>
 </div>
 <div id="logarithmic-triangle-distribution" class="section level2">
 <h2 class="hasAnchor">
 <a href="#logarithmic-triangle-distribution" class="anchor"></a>Logarithmic Triangle distribution</h2>
 <p>Define:</p>
-<p><span class="math display">\[la=log_{\phi}(a),\ \ lb=log_{\phi}(b),\ \ lc=log_{\phi}(c),\ \ h=\frac{2}{lb-la}, \ \ \phi = \mbox{log base}\]</span></p>
+<p><span class="math display">\[a_l=log_{\phi}(a),\ \ b_l=log_{\phi}(b),\ \ c_l=log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}\]</span></p>
 <p><span class="math display">\[f(z) = 
 \left\{
   \begin{array}{ll}
-    \frac{h}{lc - la}(z - la) &amp; \mbox{if } la \leq z \leq lc \\
-    \frac{h}{lc - lb}(z - lb) &amp; \mbox{if } lc &lt; z \leq lb \\
+    \frac{h}{c_l - a_l}(z - a_l) &amp; \mbox{if } a_l \leq z \leq c_l \\
+    \frac{h}{c_l - b_l}(z - b_l) &amp; \mbox{if } c_l &lt; z \leq b_l \\
     0 &amp; \mbox{otherwise}
   \end{array}
 \right.\ \ \ \ (4)\]</span></p>
@@ -162,38 +169,28 @@ c(bc^2-abc+ab^2-b^2c-ac^2+a^2c-a^2b+abc))\big]\]</span></p>
 <p><span class="math display">\[g(y) = 
 \left\{
   \begin{array}{ll}
-    \frac{2}{(lc-la)(lb-la)ln({\phi})}\frac{log_{\phi}(y) - la}{y} &amp; \mbox{if } 0 &lt; a \leq y \leq c \\
-    \frac{2}{(lc-lb)(lb-la)ln({\phi})}\frac{lob_{\phi}(y) - lb}{y} &amp; \mbox{if } c &lt; y \leq b \\
+    \frac{2}{(c_l-a_l)(b_l-a_l)ln({\phi})}\frac{log_{\phi}(y) - a_l}{y} &amp; \mbox{if } 0 &lt; a \leq y \leq c \\
+    \frac{2}{(c_l-b_l)(b_l-a_l)ln({\phi})}\frac{lob_{\phi}(y) - b_l}{y} &amp; \mbox{if } c &lt; y \leq b \\
     0 &amp; \mbox{otherwise}
   \end{array}
 \right.\ \ \ \ (5)\]</span></p>
 <p>Define:</p>
-<p><span class="math display">\[\beta_1=\frac{2}{(lc-la)(lb-la)}\]</span></p>
-<p><span class="math display">\[\beta_2=\frac{2}{(lc-lb)(lb-la)}\]</span></p>
+<p><span class="math display">\[\beta_1=\frac{2}{(c_l-a_l)(b_l-a_l)}\]</span></p>
+<p><span class="math display">\[\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}\]</span></p>
 <p>Finding the CDF,</p>
 <p><span class="math display">\[G(y)=\int_{-\infty}^y g(y)dy\]</span></p>
-<p><span class="math display">\[G(a \leq y \leq c) = \frac{\beta_1}{ln({\phi})} \int_a^y \frac{ln(y)}{yln({\phi})}-\frac{la}{y}dy\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \bigg[\frac{ln^2(y)}{2ln({\phi})} - laln(y)\bigg]_a^y\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \bigg[\frac{ln^2(y)}{2ln({\phi})} - laln(y) - 
-\frac{ln^2(a)}{2ln({\phi})} + laln(a)\bigg]\]</span></p>
-<p><span class="math display">\[=\beta_1 \bigg[\frac{log_{\phi}^2(y)}{2} - lalog_{\phi}(y) - \frac{la^2}{2} + la^2\bigg]\]</span></p>
-<p><span class="math display">\[G(c &lt; y \leq b) = G(c) + \frac{\beta_2}{ln({\phi})} \int_c^y \frac{ln(y)}{yln({\phi})} - \frac{lb}{y}dy\]</span></p>
-<p><span class="math display">\[=G(c) + \frac{\beta_2}{ln({\phi})} \bigg[\frac{ln^2(y)}{2ln({\phi})} - lb ln(y)\bigg]_c^y\]</span></p>
-<p><span class="math display">\[=G(c) + \frac{\beta_2}{ln({\phi})} \bigg[\frac{ln^2(y)}{2ln({\phi})} - lb ln(y) - 
-\frac{ln^2(c)}{2ln({\phi})} + lb ln(c)\bigg]\]</span></p>
-<p><span class="math display">\[=G(c) + \beta_2 \bigg[\frac{log_{\phi}^2(y)}{2} - lb log_{\phi}(y) - \frac{lc^2}{2} + lb lc\bigg]\]</span></p>
+<p><span class="math display">\[\mbox{for}\ a \leq y \leq c,\ \ G(y) = \frac{\beta_1}{ln({\phi})} \int_a^y \frac{ln(y)}{yln({\phi})}-\frac{a_l}{y}dy\]</span></p>
+<p><span class="math display">\[=\beta_1 \bigg[\frac{log_{\phi}^2(y)}{2} - a_llog_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]\]</span></p>
+<p><span class="math display">\[\mbox{for}\ c &lt; y \leq b,\ \ G(y) = G(c) + \frac{\beta_2}{ln({\phi})} \int_c^y \frac{ln(y)}{yln({\phi})} - \frac{b_l}{y}dy\]</span></p>
+<p><span class="math display">\[=G(c) + \beta_2 \bigg[\frac{log_{\phi}^2(y)}{2} - b_l log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]\]</span></p>
 <p>Checking that the CDF is 1 at b,</p>
-<p><span class="math display">\[G(b) = \frac{lc^2 - 2la lc + la^2}{(lc-la)(lb-la)} + \frac{-lb^2-lc^2+2lblc}{(lc-lb)(lb-la)}\]</span></p>
-<p><span class="math display">\[G(b) = \frac{lc-la}{lb-la} + \frac{-(lc-lb)}{lb-la} = 1\]</span></p>
+<p><span class="math display">\[G(b) = \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} + \frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)}\]</span></p>
+<p><span class="math display">\[= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1\]</span></p>
 <p>Now calculating <span class="math inline">\(E(y)\)</span>,</p>
-<p><span class="math display">\[E(y) = \int_{-\infty}^y yg(y)dy\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \int_a^c \bigg[\frac{ln(y)}{ln({\phi})} - la\bigg]dy + 
-\frac{\beta_2}{ln({\phi})} \int_c^b \bigg[\frac{ln(y)}{ln({\phi})} - lb]dy\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \bigg[\frac{yln(y)-y}{ln({\phi})} - lay\bigg]_a^c +
-\frac{\beta_2}{ln({\phi})} \bigg[\frac{yln(y)-y}{ln({\phi})} - lby\bigg]_c^b\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \bigg[\frac{cln(c)-c}{ln({\phi})} - cla - \frac{aln(a)-a}{ln({\phi})} + ala\bigg] +
-\frac{\beta_2}{ln({\phi})} \bigg[\frac{bln(b)-b}{ln({\phi})} - blb - \frac{cln(c)-c}{ln({\phi})} + clb\bigg]\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \bigg[clc - \frac{c}{ln({\phi})} - cla + \frac{a}{ln({\phi})}\bigg] + \frac{\beta_2}{ln({\phi})} \bigg[\frac{-b}{ln({\phi})} - clc + \frac{c}{ln({\phi})} + clb\bigg]\]</span></p>
+<p><span class="math display">\[E(y) = \int y\ g(y)\ dy\]</span></p>
+<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \int_a^c \bigg[\frac{ln(y)}{ln({\phi})} - a_l\bigg]dy + 
+\frac{\beta_2}{ln({\phi})} \int_c^b \bigg[\frac{ln(y)}{ln({\phi})} - b_l\bigg]dy\]</span></p>
+<p><span class="math display">\[=\frac{c\beta_1}{ln^2({\phi})} \bigg[ln(c) - 1 - ln(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{ln^2({\phi})} \bigg[\frac{-b}{c} - ln(c) + 1 + ln(b)\bigg]\]</span></p>
 </div>
   </div>
 
@@ -205,6 +202,7 @@ c(bc^2-abc+ab^2-b^2c-ac^2+a^2c-a^2b+abc))\big]\]</span></p>
 <li><a href="#triangle-notation">Triangle Notation</a></li>
       <li><a href="#triangle-pdf">Triangle PDF</a></li>
       <li><a href="#triangle-mean">Triangle Mean</a></li>
+      <li><a href="#triangle-variance">Triangle Variance</a></li>
       <li><a href="#logarithmic-triangle-distribution">Logarithmic Triangle distribution</a></li>
       </ul>
 </div>

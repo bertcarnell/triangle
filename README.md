@@ -1,4 +1,5 @@
-# triangle
+<div><table><tr><td><img align="left" width="200" height="200" src="logo.svg"></td></tr></table></div>
+
 An R package to work with the triangle distribution and logarithmic triangle distribution
 
 |<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|<sub>CRAN Downloads</sub>|<sub>CRAN</sub>|
