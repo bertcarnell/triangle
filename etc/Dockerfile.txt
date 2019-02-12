@@ -6,11 +6,34 @@ RUN apt-get update -qq \
 	&& apt-get dist-upgrade -y
 	
 ## install requirements for R packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+## best practice to run update each time in case the build restarts later
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq \
+	&& DEBIAN_FRONTEND=noninteractive apt-get install -t unstable -y \
+	libgmp-dev \
 	curl \
-	libcurl4-openssl-dev
+	libcurl4-openssl-dev \
+	python-dev \
+	libssl-dev \
+	default-jdk \
+	libxml2-dev \
+	libcgal-dev \
+	libfreetype6-dev \
+	xorg \
+	libx11-dev \
+	libftgl2 \
+	texinfo \
+	texlive-base \
+	texlive-extra-utils \
+	texlive-fonts-extra \
+	texlive-fonts-recommended \
+	texlive-generic-recommended \
+	texlive-latex-base \
+	texlive-latex-extra \
+	texlive-latex-recommended \
+	git
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -t unstable -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq \
+	&& apt-get install -t unstable -y \
 	r-recommended \
 	r-cran-evd \ 
 	r-cran-plotly \ 
@@ -75,3 +98,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -t unstable -y \
 COPY [rev_dep_docker_packages.R", "/home/rocker/rev_dep_docker_packages.R"]
 
 RUN Rscript /home/docker/rev_dep_docker_packages.R triangle
+
+RUN wget https://install-github.me/r-lib/revdepcheck \
+	&& Rscript -e 'source("revdepcheck")'
