@@ -6,3 +6,5 @@
 ^extra$
 ^docs$
 ^etc$
+^pkgdown
+^logo.svg$
