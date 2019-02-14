@@ -53,7 +53,10 @@ if (!file.exists(file.path(revdep_library_path_old, pkg)))
   deps <- tools::package_dependencies(pkg)[[pkg]]
 
   install.packages(pkg, lib = revdep_library_path_old)
-  install.packages(deps, lib = revdep_library_path_old)
+  if (length(deps) > 0)
+  {
+    install.packages(deps, lib = revdep_library_path_old)
+  }
 } else
 {
   cat("old package already installed\n")
@@ -66,9 +69,14 @@ if (!file.exists(file.path(revdep_library_path_new, pkg)))
 {
   out <- callr::rcmd("build", cmdargs = pkg_path)
   assertthat::assert_that(out$status == 0, msg = "R CMD build failed on the new package")
-  pkg_tar_ball <- list.files(path = '.', pattern = pkg)
+  pkg_tar_ball <- list.files(path = '.', pattern = paste0(pkg, ".*[.]tar[.]gz$"))
   install.packages(pkg_tar_ball, lib = revdep_library_path_new, repos = NULL)
-  install.packages(deps, lib = revdep_library_path_new)
+
+  deps <- tools::package_dependencies(pkg)[[pkg]]
+  if (length(deps) > 0)
+  {
+    install.packages(deps, lib = revdep_library_path_new)
+  }
 } else
 {
   cat("new package already installed\n")

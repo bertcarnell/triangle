@@ -30,7 +30,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq \
 	texlive-latex-base \
 	texlive-latex-extra \
 	texlive-latex-recommended \
-	git
+	git \
+	libgdal-dev
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq \
 	&& apt-get install -t unstable -y \
@@ -73,14 +74,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq \
 	r-cran-vgam \ 
 	r-cran-psych \ 
 	r-cran-desolve \ 
-	r-cran-Rcpp \ 
-	r-cran-DT \ 
+	r-cran-rcpp \ 
+	r-cran-dt \ 
 	r-cran-shiny \ 
 	r-cran-maxlik \ 
 	r-cran-r.utils \ 
 	r-cran-biasedurn \ 
-	r-cran-fBasics \ 
-	r-cran-fExtremes \ 
+	r-cran-fbasics \ 
+	r-cran-fextremes \ 
 	r-cran-msm \ 
 	r-cran-sn \ 
 	r-cran-stabledist \ 
@@ -89,13 +90,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq \
 	r-cran-memoise \ 
 	r-cran-tibble \ 
 	r-cran-hmisc \ 
-	r-cran-lpSolve \ 
+	r-cran-lpsolve \ 
 	r-cran-readxl \ 
 	r-cran-stringr \ 
 	r-cran-gtools \ 
-	r-cran-rgl
+	r-cran-rgl \
+	r-cran-devtools \
+	r-cran-gsl \
+	r-cran-v8
 
-COPY [rev_dep_docker_packages.R", "/home/rocker/rev_dep_docker_packages.R"]
+COPY ["rev_dep_docker_packages.R", "/home/docker/rev_dep_docker_packages.R"]
 
 RUN Rscript /home/docker/rev_dep_docker_packages.R triangle
 

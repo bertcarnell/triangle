@@ -14,11 +14,14 @@ if (length(args) == 0) {
 ################################################################################
 require(devtools)
 get_rev_deps <- function(x) tools::package_dependencies(packages = x, which = "most")
+exclusions_list <- c("ExtDist")
 
 rev_dep_req_install <- function(rev_req)
 {
   # install if not done already
   rev_depends_ureq <- unique(unlist(rev_req))
+  ind <- which(rev_depends_ureq %in% exclusions_list)
+  if (length(ind) > 0) rev_depends_ureq <- rev_depends_ureq[-ind]
   for (i in seq_along(rev_depends_ureq))
   {
     # don't need to check or install the target_pacakge
@@ -29,7 +32,7 @@ rev_dep_req_install <- function(rev_req)
     print(paste(":::::::", rev_depends_ureq[i], ":::::::::::::::::::::::::::::::"))
     if (!require(rev_depends_ureq[i], character.only = TRUE))
     {
-      install.packages(rev_depends_ureq[i])
+      install.packages(rev_depends_ureq[i], dependencies = TRUE)
     }
     # after installation check the result and error if not working
     if (!require(rev_depends_ureq[i], character.only = TRUE))
@@ -61,3 +64,4 @@ pack_rev_suggests_req <- lapply(pack_rev_suggests, get_rev_deps)
 rev_dep_req_install(pack_rev_depends_req)
 rev_dep_req_install(pack_rev_imports_req)
 rev_dep_req_install(pack_rev_suggests_req)
+
