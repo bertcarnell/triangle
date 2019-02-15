@@ -77,7 +77,13 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div><table class="table"><tr><td><img align="left" width="200" height="200" src="logo.svg"></td></tr></table></div>
+<div>
+  <table class="table"><tr>
+<td>
+        <img align="left" width="200" height="200" src="logo.svg">
+</td>
+    </tr></table>
+</div>
 <p>An R package to work with the triangle distribution and logarithmic triangle distribution</p>
 <table class="table">
 <thead><tr class="header">
@@ -117,17 +123,33 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(triangle)
 
+<span class="co"># triangle distribution</span>
+
 <span class="co"># rtriangle(n, a, b, c)</span>
-<span class="kw"><a href="reference/triangle.html">rtriangle</a></span>(<span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">2</span>)
+<span class="kw"><a href="reference/triangle.html">rtriangle</a></span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">2</span>)
 
 <span class="co"># ptriangle(x, a, b, c)</span>
-<span class="kw"><a href="reference/triangle.html">ptriangle</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>)
+<span class="kw"><a href="reference/triangle.html">ptriangle</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>)
 
 <span class="co"># qtriangle(p, a, b, c)</span>
-<span class="kw"><a href="reference/triangle.html">qtriangle</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>), <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">3</span>)
+<span class="kw"><a href="reference/triangle.html">qtriangle</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">3</span>)
 
 <span class="co"># dtriangle(x, a, b, c)</span>
-<span class="kw"><a href="reference/triangle.html">dtriangle</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>)</code></pre></div>
+<span class="kw"><a href="reference/triangle.html">dtriangle</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>)
+
+<span class="co"># logarithmic triangle distribution</span>
+
+<span class="co"># rlriangle(n, a, b, c, logbase)</span>
+<span class="kw"><a href="reference/ltriangle.html">rltriangle</a></span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">10</span>)
+
+<span class="co"># pltriangle(x, a, b, c, logbase)</span>
+<span class="kw"><a href="reference/ltriangle.html">pltriangle</a></span>(<span class="dv">10</span><span class="op">^</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>), <span class="dv">1</span>, <span class="dv">1000</span>, <span class="dv">10</span>)
+
+<span class="co"># qltriangle(p, a, b, c, logbase)</span>
+<span class="kw"><a href="reference/ltriangle.html">qltriangle</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">20</span>)
+
+<span class="co"># dltriangle(x, a, b, c)</span>
+<span class="kw"><a href="reference/ltriangle.html">dltriangle</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">5</span>)</code></pre></div>
 </div>
 
   </div>

@@ -1,4 +1,12 @@
-<div><table><tr><td><img align="left" width="200" height="200" src="logo.svg"></td></tr></table></div>
+<div>
+  <table style="border: 0">
+    <tr>
+      <td>
+        <img align="left" width="200" height="200" src="logo.svg"/>
+      </td>
+    </tr>
+  </table>
+</div>
 
 An R package to work with the triangle distribution and logarithmic triangle distribution
 
@@ -30,16 +38,31 @@ use the functions:
 ```r
 require(triangle)
 
+# triangle distribution
+
 # rtriangle(n, a, b, c)
-rtriangle(10, 1, 5, 2)
+rtriangle(5, 1, 5, 2)
 
 # ptriangle(x, a, b, c)
-ptriangle(0:10, 0, 10, 5)
+ptriangle(0:5, 0, 10, 5)
 
 # qtriangle(p, a, b, c)
-qtriangle(seq(0, 1, by = 0.1), 1, 10, 3)
+qtriangle(seq(0, 1, by = 0.2), 1, 10, 3)
 
 # dtriangle(x, a, b, c)
-dtriangle(0:10, 0, 10, 5)
+dtriangle(0:4, 0, 10, 5)
 
+# logarithmic triangle distribution
+
+# rlriangle(n, a, b, c, logbase)
+rltriangle(5, 1, 100, 10)
+
+# pltriangle(x, a, b, c, logbase)
+pltriangle(10^(0:3), 1, 1000, 10)
+
+# qltriangle(p, a, b, c, logbase)
+qltriangle(seq(0, 1, by = 0.2), 1, 100, 20)
+
+# dltriangle(x, a, b, c)
+dltriangle(0:5, 1, 10, 5)
 ```

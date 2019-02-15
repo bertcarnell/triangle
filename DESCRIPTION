@@ -1,6 +1,6 @@
 Package: triangle
 Title: Provides the Standard Distribution Functions for the Triangle Distribution
-Version: 0.12
+Version: 0.13
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
