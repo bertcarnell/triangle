@@ -7,6 +7,8 @@ matrix:
       after_success: Rscript -e 'covr::codecov()'
     - dist: trusty
       r: devel
+      # 3/8/2019 time checks are failing on R-devel
+      env: _R_CHECK_SYSTEM_CLOCK_ = 0
     - os: osx
       r: release
 
