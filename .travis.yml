@@ -11,6 +11,8 @@ matrix:
       env: _R_CHECK_SYSTEM_CLOCK_ = 0
     - os: osx
       r: release
+      # macOS 10.12 version - Fixing Travis build failure on 4/8/2020
+      osx_image: xcode9.2
 
 r_github_packages:
   - r-lib/covr
