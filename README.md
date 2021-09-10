@@ -10,9 +10,9 @@
 
 An R package to work with the triangle distribution and logarithmic triangle distribution
 
-|<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|<sub>CRAN Downloads</sub>|<sub>CRAN</sub>|
+|<sub>Github Actions</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|<sub>CRAN Downloads</sub>|<sub>CRAN</sub>|
 |:---:|:---:|:---:|:---:|:---:|
-|[![Travis build status](https://travis-ci.org/bertcarnell/triangle.svg?branch=master)](https://travis-ci.org/bertcarnell/triangle)|[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/bertcarnell/triangle?branch=master&svg=true)](https://ci.appveyor.com/project/bertcarnell/triangle)|[![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master)|[![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle)|[![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle)|
+|[![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml)|[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/bertcarnell/triangle?branch=master&svg=true)](https://ci.appveyor.com/project/bertcarnell/triangle)|[![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master)|[![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle)|[![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle)|
 
 See the package documentation [here:](https://bertcarnell.github.io/triangle/)
 
