@@ -34,5 +34,6 @@ Version 0.11
 Version 0.12
   Update to move from R-forge to github
 
-
+version 1.0
+  Included maximum likelihood and methods of moments estimates
 

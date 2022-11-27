@@ -1,28 +1,33 @@
 Package: triangle
-Title: Provides the Standard Distribution Functions for the Triangle Distribution
-Version: 0.13
+Title: Provides the Standard Distribution Functions and parameter estimates for the Triangle Distribution 
+Version: 1.0
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
            role = c("aut", "cre"),
            email = "bertcarnell@gmail.com")
-Description: Provides the "r, q, p, and d" distribution functions for the triangle distribution.
+Description: Provides the "r, q, p, and d" distribution functions for the triangle distribution.  Also includes maximum likelihood estimation of parameters.
 License: GPL (>= 2)
 URL: https://bertcarnell.github.io/triangle/
 BugReports: https://github.com/bertcarnell/triangle/issues
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.1
 Depends: R (>= 2.14.1)
 Collate: 
     'dtriangle.R'
     'ltriangle.r'
+    'mle-utils.R'
+    'mle.R'
+    'mom.R'
     'ptriangle.r'
     'qtriangle.R'
     'rtriangle.r'
+Imports:
+    assertthat,
+    stats4,
+    methods
 Suggests: 
     testthat,
     knitr,
-    rmarkdown,
-    covr
+    rmarkdown
 VignetteBuilder: knitr

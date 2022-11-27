@@ -8,17 +8,19 @@
 \alias{qltriangle}
 \title{The Log-Triangle Distribution}
 \usage{
-rltriangle(n = 1, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2),
-  logbase = 10)
+rltriangle(
+  n = 1,
+  a = 1,
+  b = 100,
+  c = 10^((log10(a) + log10(b))/2),
+  logbase = 10
+)
 
-dltriangle(x, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2),
-  logbase = 10)
+dltriangle(x, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2), logbase = 10)
 
-pltriangle(q, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2),
-  logbase = 10)
+pltriangle(q, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2), logbase = 10)
 
-qltriangle(p, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2),
-  logbase = 10)
+qltriangle(p, a = 1, b = 100, c = 10^((log10(a) + log10(b))/2), logbase = 10)
 }
 \arguments{
 \item{n}{number of observations. If \code{length(n) > 1}, the length is taken to be the number required.}
