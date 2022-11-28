@@ -1,5 +1,5 @@
 Package: triangle
-Title: Provides the Standard Distribution Functions and parameter estimates for the Triangle Distribution 
+Title: Distribution Functions and Parameter Estimates for the Triangle Distribution
 Version: 1.0
 Authors@R: 
     person(given = "Rob",
