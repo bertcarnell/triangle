@@ -25,7 +25,7 @@
 #' \code{rltraingle} generates random deviates.  Invalid arguments will
 #' result in return value \code{NaN} or \code{NA}.
 #' @references
-#' Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) \emph{The New S Language}.  Wadsworth \& Brooks/Cole.
+#' Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) \emph{The New S Language}.  Wadsworth & Brooks/Cole.
 #' @seealso
 #' \code{\link{.Random.seed}} about random number generation,
 #' \code{\link{runif}}, etc for other distributions.

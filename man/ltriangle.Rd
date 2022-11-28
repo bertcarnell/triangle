@@ -62,7 +62,7 @@ dltriangle(10, 1, 100, 10) # 2/(log10(b)-log10(a)) = 1
 qltriangle(pltriangle(10)) # 10
 }
 \references{
-Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) \emph{The New S Language}.  Wadsworth \& Brooks/Cole.
+Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) \emph{The New S Language}.  Wadsworth & Brooks/Cole.
 }
 \seealso{
 \code{\link{.Random.seed}} about random number generation,

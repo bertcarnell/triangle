@@ -67,7 +67,7 @@ dtriangle(0.5, 0, 1, 0.5) # 2/(b-a) = 2
 qtriangle(ptriangle(0.7)) # 0.7
 }
 \references{
-Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) \emph{The New S Language}.  Wadsworth \& Brooks/Cole.
+Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) \emph{The New S Language}.  Wadsworth & Brooks/Cole.
 }
 \seealso{
 \code{\link{.Random.seed}} about random number generation,

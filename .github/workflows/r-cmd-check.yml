@@ -65,6 +65,8 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          sudo apt-get install libcurl
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
@@ -93,7 +95,7 @@ jobs:
           R_DONT_USE_TK: true
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--use-valgrind"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
-        
+
       - name: Code Coverage
         if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         run: covr::codecov()
