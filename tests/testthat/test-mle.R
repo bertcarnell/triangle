@@ -8,13 +8,14 @@ test_that("logM works", {
   expect_true(abs(exp(logM(xtest, 0, 1, 5)) - 0.009) < 0.001)
   expect_true(abs(exp(logM(xtest, 0, 1, 6)) - 0.005) < 0.001)
   expect_true(abs(exp(logM(xtest, 0, 1, 7)) - 0.004) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 8)) - 0.003) < 0.001)
+  expect_true(abs(exp(logM(xtest, 0, 1, 8, debug = TRUE)) - 0.003) < 0.001)
 })
 
 test_that("rhat works", {
   xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
 
   expect_equal(3, rhat(xtest, 0, 1))
+  expect_equal(3, rhat(xtest, 0, 1, debug = TRUE))
 })
 
 test_that("triangle_mle_c_given_ab works", {
@@ -22,6 +23,7 @@ test_that("triangle_mle_c_given_ab works", {
 
   expect_equal(0.3, triangle_mle_c_given_ab(xtest, 0, 1)$c_hat)
 
+  expect_equal(0.3, triangle_mle_c_given_ab(xtest, 0, 1, debug = TRUE)$c_hat)
 })
 
 test_that("nLL_triangle works", {
@@ -30,6 +32,10 @@ test_that("nLL_triangle works", {
   expect_equal(-sum(log(dtriangle(xtest, 0, 1, 0.3))),
                nLL_triangle(xtest, 0, 1, 0.3),
                tolerance = 1E-5)
+
+  expect_equal(-log(1/2), nLL_triangle(1, 0, 2, 2, debug = TRUE))
+  expect_equal(-log(1/2), nLL_triangle(1, 0, 2, 0))
+  expect_equal(-log(1), nLL_triangle(1, 0, 2, 1))
 })
 
 test_that("gradient_nLL_triangle_given_c works", {
@@ -39,6 +45,10 @@ test_that("gradient_nLL_triangle_given_c works", {
 
   expect_equal(2, length(g))
   expect_true(g[1] < 0 & g[2] > 0)
+
+  expect_equal(c(0, 0.5), gradient_nLL_triangle_given_c(1, 0, 2, 2))
+  expect_equal(c(-0.5, 0), gradient_nLL_triangle_given_c(1, 0, 2, 0))
+  expect_equal(c(-0.5, 0.5), gradient_nLL_triangle_given_c(1, 0, 2, 1))
 })
 
 test_that("hessian_nLL_triangle_given_c works", {
@@ -49,12 +59,16 @@ test_that("hessian_nLL_triangle_given_c works", {
   expect_equal(c(2, 2), dim(h))
   expect_true(all(diag(h) > 0))
   expect_equal(h[1,2], h[2,1])
+
+  expect_equal(c(-0.25, 0.75, 0.75, -0.75), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 2)))
+  expect_equal(c(-0.75, 0.75, 0.75, -0.25), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 0)))
+  expect_equal(c(-1.75, 0.75, 0.75, -1.75), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 1)))
 })
 
 test_that("triangle_mle_ab_given_c works", {
   xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
 
-  temp <- triangle_mle_ab_given_c(xtest, 0.3)
+  temp <- triangle_mle_ab_given_c(xtest, 0.3, debug = TRUE)
 
   expect_true(temp$a < min(xtest))
   expect_true(temp$b > max(xtest))

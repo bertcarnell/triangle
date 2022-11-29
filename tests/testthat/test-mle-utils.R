@@ -70,6 +70,13 @@ test_that("profile works", {
   expect_equivalent("profile.mle", class(prof))
   expect_equal(3, length(prof@profile))
   expect_equal(3, ncol(prof@profile$a$par.vals))
+
+  mle1 <- standard_triangle_mle(xtest)
+  prof <- profile(mle1)
+
+  expect_equivalent("profile.mle", class(prof))
+  expect_equal(3, length(prof@profile))
+  expect_equal(3, ncol(prof@profile$a$par.vals))
 })
 
 test_that("confint works", {

@@ -194,18 +194,21 @@ gradient_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
   ind2 <- which(x >= c)
   n1 <- length(ind1)
   n2 <- length(ind2)
-  if (n1 > 0 & n2 > 0 & c > a & c < b)
+  if (n1 > 0 & n2 > 0)
   {
-    return(c(-n/(b-a) - n1/(c-a) + sum(1/(x[ind1] - a)),
-             n/(b-a) + n2/(b-c) - sum(1/(b-x[ind2]))))
+    return(c(-n/(b - a) - ifelse(c > a, n1/(c - a), 0) + sum(ifelse(x[ind1] > a, 1/(x[ind1] - a), 0)),
+             n/(b - a) + ifelse(b > c, n2/(b - c), 0) - sum(ifelse(x[ind2] < b, 1/(b - x[ind2]), 0))))
   } else if (n1 == 0)
   {
-    return(c(-n/(b-a),
-             n/(b-a) + n2/(b-c) - sum(1/(b-x[ind2]))))
+    return(c(-n/(b - a),
+             n/(b - a) + ifelse(b > c, n2/(b - c), 0) - sum(ifelse(x[ind2] < b, 1/(b - x[ind2]), 0))))
   } else if (n2 == 0)
   {
-    return(c(-n/(b-a) - n1/(c-a) + sum(1/(x[ind1] - a)),
-             n/(b-a)))
+    return(c(-n/(b - a) - ifelse(c > a, n1/(c - a), 0) + sum(ifelse(x[ind1] > a, 1/(x[ind1] - a), 0)),
+             n/(b - a)))
+  } else
+  {
+    stop("Unexpected result in gradient")
   }
 }
 
@@ -228,24 +231,31 @@ gradient_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
 #' hessian_nLL_triangle_given_c(xtest, 0, 1, 0.3)
 hessian_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
 {
+  if (debug)
+  {
+    assertthat::assert_that(a < b, msg = "a must be less than b")
+  }
   n <- length(x)
   ind1 <- which(x < c)
   ind2 <- which(x >= c)
   n1 <- length(ind1)
   n2 <- length(ind2)
-  dadb <- n / (b-a)^2
-  if (n1 > 0 & n2 > 0 & c > a & c < b)
+  dadb <- n / (b - a)^2
+  if (n1 > 0 & n2 > 0)
   {
-    da2 <- -n/(b-a)^2 - n1/(c-a)^2 + sum(1/(x[ind1] - a)^2)
-    db2 <- -n/(b-a)^2 - n2/(b-c)^2 + sum(1/(b - x[ind2])^2)
+    da2 <- -n/(b - a)^2 - ifelse(c > a, n1/(c - a)^2, 0) + sum(ifelse(x[ind1] > a, 1/(x[ind1] - a)^2, 0))
+    db2 <- -n/(b - a)^2 - ifelse(b > c, n2/(b - c)^2, 0) + sum(ifelse(x[ind2] < b, 1/(b - x[ind2])^2, 0))
   } else if (n1 == 0)
   {
-    da2 <- -n/(b-a)^2
-    db2 <- -n/(b-a)^2 - n2/(b-c)^2 + sum(1/(b - x[ind2])^2)
+    da2 <- -n/(b - a)^2
+    db2 <- -n/(b - a)^2 - ifelse(b > c, n2/(b - c)^2, 0) + sum(ifelse(x[ind2] < b, 1/(b - x[ind2])^2, 0))
   } else if (n2 == 0)
   {
-    da2 <- -n/(b-a)^2 - n1/(c-a)^2 + sum(1/(x[ind1] - a)^2)
-    db2 <- -n/(b-a)^2
+    da2 <- -n/(b - a)^2 - ifelse(c > a, n1/(c - a)^2, 0) + sum(ifelse(x[ind1] > a, 1/(x[ind1] - a)^2, 0))
+    db2 <- -n/(b - a)^2
+  } else
+  {
+    stop("Unexpected result in hessian")
   }
   return(matrix(c(da2, dadb, dadb, db2), nrow = 2, dimnames = list(c("a","b"), c("a","b"))))
 }
