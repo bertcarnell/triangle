@@ -143,42 +143,25 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="triangle.html">rtriangle</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mle1</span> <span class="op">&lt;-</span> <span class="fu"><a href="triangle_mle.html">triangle_mle</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in triangle_mle(x):</span> could not find function "triangle_mle"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Maximum likelihood estimation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> triangle_mle(x = x)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Estimate Std. Error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a 0.0126984 0.02130325</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b 1.0199653 0.03726141</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c 0.4009061 0.02558629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2 log L: -33.76886 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summary(mle1):</span> object 'mle1' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0126984 1.0199653 0.4009061 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in coef(mle1):</span> object 'mle1' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' 16.88443 (df=3)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in logLik(mle1):</span> object 'mle1' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -27.76886</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in AIC(mle1):</span> object 'mle1' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -19.95335</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in BIC(mle1):</span> object 'mle1' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               a             b            c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a  4.538284e-04 -6.172867e-05 0.0000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b -6.172867e-05  1.388413e-03 0.0000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c  0.000000e+00  0.000000e+00 0.0006546582</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vcov(mle1):</span> object 'mle1' not found</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">prof</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">mle1</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">prof</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">mle1</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         2.5 %     97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a -0.04930598 0.03388311</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b  0.96801163 1.11208523</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c  0.31007717 0.57124349</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in confint(mle1, 1:3, level = 0.95):</span> object 'mle1' not found</span>
 </code></pre></div>
     </div>
   </div>

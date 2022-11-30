@@ -63,6 +63,10 @@ test_that("hessian_nLL_triangle_given_c works", {
   expect_equal(c(-0.25, 0.75, 0.75, -0.75), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 2)))
   expect_equal(c(-0.75, 0.75, 0.75, -0.25), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 0)))
   expect_equal(c(-1.75, 0.75, 0.75, -1.75), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 1)))
+
+  h <- hessian_nLL_triangle_given_c(xtest, 0, 0.81, 0.81)
+  expect_equal(c(2, 2), dim(h))
+  expect_equal(h[1,2], h[2,1])
 })
 
 test_that("triangle_mle_ab_given_c works", {

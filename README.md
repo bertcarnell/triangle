@@ -37,9 +37,11 @@ use the functions:
 
 ```r
 require(triangle)
+```
 
-# triangle distribution
+### Triangle distribution
 
+```r
 # rtriangle(n, a, b, c)
 rtriangle(5, 1, 5, 2)
 
@@ -51,9 +53,11 @@ qtriangle(seq(0, 1, by = 0.2), 1, 10, 3)
 
 # dtriangle(x, a, b, c)
 dtriangle(0:4, 0, 10, 5)
+```
 
-# logarithmic triangle distribution
+### Logarithmic triangle distribution
 
+```r
 # rlriangle(n, a, b, c, logbase)
 rltriangle(5, 1, 100, 10)
 
@@ -65,4 +69,19 @@ qltriangle(seq(0, 1, by = 0.2), 1, 100, 20)
 
 # dltriangle(x, a, b, c)
 dltriangle(0:5, 1, 10, 5)
+```
+
+### Parameter estimates
+
+```r
+# triangle method of moments estimates
+x <- rtriangle(20, 0, 2, 1.5)
+triangle_mom(x)
+
+# triangle maximum likelihood estimates
+x <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+triangle_mle(x)
+
+# standard triangle (0,1) likelihood estimates
+standard_triangle_mle(x)
 ```
