@@ -6,6 +6,7 @@
 #' @export
 #'
 #' @examples
+#' set.seed(1204)
 #' x <- rtriangle(20, 0, 2, 1.5)
 #' triangle_mom(x)
 triangle_mom <- function(x)

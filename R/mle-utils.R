@@ -14,6 +14,7 @@
 #' @importFrom methods new
 #'
 #' @examples
+#' set.seed(1234)
 #' x <- rtriangle(100, 0, 1, 0.5)
 #' mle1 <- triangle_mle(x)
 #' summary(mle1)
@@ -24,7 +25,7 @@
 #' vcov(mle1)
 #' \dontrun{
 #'   prof <- profile(mle1)
-#'   plot(prof)
+#'   stats4::plot(prof)
 #' }
 #' confint(mle1, 1:3, level = 0.95)
 summary.triangle_mle <- function(object, ...)

@@ -17,6 +17,7 @@
 #' @return The \code{log(M)} from equation 1.43
 #'
 #' @examples
+#' set.seed(103)
 #' logM(rtriangle(10, 0, 1, 0.5), 0, 1, 3)
 logM <- function(z, a, b, r, debug = FALSE)
 {
@@ -64,6 +65,7 @@ logM <- function(z, a, b, r, debug = FALSE)
 #' @return the order statistic number
 #'
 #' @examples
+#' set.seed(40039)
 #' rhat(rtriangle(10, 0, 1, 0.5), 0, 1)
 rhat <- function(z, a, b, debug = FALSE)
 {
