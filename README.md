@@ -58,7 +58,7 @@ dtriangle(0:4, 0, 10, 5)
 ### Logarithmic triangle distribution
 
 ```r
-# rlriangle(n, a, b, c, logbase)
+# rltriangle(n, a, b, c, logbase)
 rltriangle(5, 1, 100, 10)
 
 # pltriangle(x, a, b, c, logbase)
@@ -67,7 +67,7 @@ pltriangle(10^(0:3), 1, 1000, 10)
 # qltriangle(p, a, b, c, logbase)
 qltriangle(seq(0, 1, by = 0.2), 1, 100, 20)
 
-# dltriangle(x, a, b, c)
+# dltriangle(x, a, b, c, logbase)
 dltriangle(0:5, 1, 10, 5)
 ```
 
@@ -80,6 +80,7 @@ triangle_mom(x)
 
 # triangle maximum likelihood estimates
 x <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+# triangle_mle(x, debug = FALSE, maxiter = 100)
 triangle_mle(x)
 
 # standard triangle (0,1) likelihood estimates
