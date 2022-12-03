@@ -156,7 +156,7 @@
 <h3 id="logarithmic-triangle-distribution">Logarithmic triangle distribution<a class="anchor" aria-label="anchor" href="#logarithmic-triangle-distribution"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># rlriangle(n, a, b, c, logbase)</span></span>
+<code class="sourceCode R"><span><span class="co"># rltriangle(n, a, b, c, logbase)</span></span>
 <span><span class="fu"><a href="reference/ltriangle.html">rltriangle</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">100</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># pltriangle(x, a, b, c, logbase)</span></span>
@@ -165,7 +165,7 @@
 <span><span class="co"># qltriangle(p, a, b, c, logbase)</span></span>
 <span><span class="fu"><a href="reference/ltriangle.html">qltriangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">100</span>, <span class="fl">20</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># dltriangle(x, a, b, c)</span></span>
+<span><span class="co"># dltriangle(x, a, b, c, logbase)</span></span>
 <span><span class="fu"><a href="reference/ltriangle.html">dltriangle</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -178,6 +178,7 @@
 <span></span>
 <span><span class="co"># triangle maximum likelihood estimates</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.45</span>, <span class="fl">0.6</span>, <span class="fl">0.75</span>, <span class="fl">0.8</span><span class="op">)</span></span>
+<span><span class="co"># triangle_mle(x, debug = FALSE, maxiter = 100)</span></span>
 <span><span class="fu"><a href="reference/triangle_mle.html">triangle_mle</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># standard triangle (0,1) likelihood estimates</span></span>
