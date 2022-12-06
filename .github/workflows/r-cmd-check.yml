@@ -65,7 +65,7 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-          sudo apt-get install libcurl4-openssl-dev libicu-dev texlive-core
+          sudo apt-get install libcurl4-openssl-dev libicu-dev texlive-latex-base
 
       - name: Install dependencies
         run: |
