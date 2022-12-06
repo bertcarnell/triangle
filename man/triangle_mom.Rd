@@ -16,6 +16,7 @@ a vector of the parameter estimates
 Triangle distribution method of moments estimate
 }
 \examples{
+set.seed(1204)
 x <- rtriangle(20, 0, 2, 1.5)
 triangle_mom(x)
 }

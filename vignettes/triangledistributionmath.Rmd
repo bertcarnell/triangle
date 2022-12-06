@@ -85,7 +85,7 @@ $$=\frac{a^2+b^2+c^2-ab-ac-bc}{18}$$
 
 Define:
 
-$$a_l=log_{\phi}(a),\ \ b_l=log_{\phi}(b),\ \ c_l=log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}$$
+$$a_l=\log_{\phi}(a),\ \ b_l=\log_{\phi}(b),\ \ c_l=\log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}$$
 
 $$f(z) = 
 \left\{
@@ -104,19 +104,19 @@ Therefore, transforming...
 
 $$Y={\phi}^Z$$
 
-$$Z=log_{\phi}(Y)$$
+$$Z=\log_{\phi}(Y)$$
 
-$$w(y)=log_{\phi}(y)$$
+$$w(y)=\log_{\phi}(y)$$
 
-$$w'(y)=\frac{dz}{dy} = \frac{1}{yln({\phi})}$$
+$$w'(y)=\frac{dz}{dy} = \frac{1}{y\log({\phi})}$$
 
 $$g(y)=f(w(y))w'(y)$$
 
 $$g(y) = 
 \left\{
   \begin{array}{ll}
-    \frac{2}{(c_l-a_l)(b_l-a_l)ln({\phi})}\frac{log_{\phi}(y) - a_l}{y} & \mbox{if } 0 < a \leq y \leq c \\
-    \frac{2}{(c_l-b_l)(b_l-a_l)ln({\phi})}\frac{lob_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
+    \frac{2}{(c_l-a_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - a_l}{y} & \mbox{if } 0 < a \leq y \leq c \\
+    \frac{2}{(c_l-b_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
     0 & \mbox{otherwise}
   \end{array}
 \right.\ \ \ \ (5)$$
@@ -131,13 +131,13 @@ Finding the CDF,
 
 $$G(y)=\int_{-\infty}^y g(y)dy$$
 
-$$\mbox{for}\ a \leq y \leq c,\ \ G(y) = \frac{\beta_1}{ln({\phi})} \int_a^y \frac{ln(y)}{yln({\phi})}-\frac{a_l}{y}dy$$
+$$\mbox{for}\ a \leq y \leq c,\ \ G(y) = \frac{\beta_1}{\log({\phi})} \int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy$$
 
-$$=\beta_1 \bigg[\frac{log_{\phi}^2(y)}{2} - a_llog_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]$$
+$$=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]$$
 
-$$\mbox{for}\ c < y \leq b,\ \ G(y) = G(c) + \frac{\beta_2}{ln({\phi})} \int_c^y \frac{ln(y)}{yln({\phi})} - \frac{b_l}{y}dy$$
+$$\mbox{for}\ c < y \leq b,\ \ G(y) = G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy$$
 
-$$=G(c) + \beta_2 \bigg[\frac{log_{\phi}^2(y)}{2} - b_l log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]$$
+$$=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]$$
 
 Checking that the CDF is 1 at b,
 
@@ -149,7 +149,160 @@ Now calculating $E(y)$,
 
 $$E(y) = \int y\ g(y)\ dy$$
 
-$$=\frac{\beta_1}{ln({\phi})} \int_a^c \bigg[\frac{ln(y)}{ln({\phi})} - a_l\bigg]dy + 
-\frac{\beta_2}{ln({\phi})} \int_c^b \bigg[\frac{ln(y)}{ln({\phi})} - b_l\bigg]dy$$
+$$=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy + 
+\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})} - b_l\bigg]dy$$
 
-$$=\frac{c\beta_1}{ln^2({\phi})} \bigg[ln(c) - 1 - ln(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{ln^2({\phi})} \bigg[\frac{-b}{c} - ln(c) + 1 + ln(b)\bigg]$$
+$$=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]$$
+
+## Method of Moments
+
+$$E(x) = \frac{a + b + c}{3}$$
+
+$$c = 3E(x) - a - b = 3E(x) - \min(x) - \max(x)$$
+
+## Maximum Likelihood Estimation
+
+The procedure for maximum likelihood estimation involves maximizing the 
+likelihood with respect to $c$ for a fixed $a$ and $b$,
+followed by minimizing the negative log likelihood with respect to $a$ and $b$
+for a fixed $c$.  
+
+###  Maximizing the Likelihood with respect to $c$
+
+This discussion follows the results from [Samuel Kotz and Johan Rene van Dorp. Beyond Beta](https://doi.org/10.1142/5720)
+
+for the purposes of this section, with a fixed $a$ and $b$, the sample can be easily
+rescaled to $a=0$ and $b=1$.  This section will proceed on $[0,1]$ with the mode at $0 \le c \le 1$
+
+$$w(x) = 
+\left\{
+  \begin{array}{ll}
+    \frac{2x}{c} & \mbox{if } 0 \le x \lt c \\
+    \frac{2(1-x)}{1-c} & \mbox{if } c \le x \leq 1 \\
+    0 & \mbox{otherwise}
+  \end{array}
+\right.$$
+
+$$L(x|c) = \prod_{i}^{n} w(x|c)$$
+
+Assume that the sample is ordered into order statistics $X_{(1)} \lt \dots \lt X_{(n)}$.  Also, note
+that $X_{(r)} \le c \lt X_{(r+1)}$.  In other words, the mode falls between the $r^{th}$ and $r+1$ order statistics.
+
+$$L(x|c) = \prod_{i=1}^{r} \frac{2x_{(i)}}{c} \prod_{i=r+1}^{n} \frac{2(1-x_{(i)})}{1-c} = \frac{2^n \prod_{i=1}^{r} x_{(i)} \prod_{i=r+1}^{n} (1-x_{(i)})}{c^r(1-c)^{n-r}}$$
+
+To maximize the likelihood, we can first maximize with respect to $r$ and then locate $c$ between
+the $r^{th}$ and $r+1$ order statistics.  For notation purposes, also define $X_{(0)} = 0$ and $X_{(n+1)} = 1$.
+
+$$\large \max_{0 \le c \le 1} L(x|c) = \max_{r \ \epsilon \ (0,\dots,n)} \ \ \max_{x_{(r)} \le c \le x_{(r+1)}} \ \ L(x|c)$$
+
+#### Case 1.  $c$ is between the first and second to last order statistic $r \ \epsilon \ (1, \dots, n-1)$
+
+Noticing that maximizing the likelihood is equivalent to minimizing the denominator:
+
+$$\large \max L(x|c) = \max_{r \ \epsilon \ (1,\dots,n-1)} \ \ \min_{x_{(r)} \le c \le x_{(r+1)}} \ \ c^r(1-c)^{n-r}$$
+
+Since $c^r(1-c)^{n-r}$ is unimodal with respect to $c$, it should be sufficient to test the end points
+of an interval to find the minimum on the interval
+
+$$\large = \max_{r \ \epsilon \ (1,\dots,n-1)} \ \ \min_{c \ \epsilon \ (x_{(r)},\ \ x_{(r+1)})} \ \ c^r(1-c)^{n-r}$$
+
+Therefore, for this case, it is sufficient to test the likelihood using $c$ at each of the sampled points and find the largest.
+
+#### Case 2.  $c$ is between 0 and the first order statistic $r = 0$
+
+$$\large \max L(x|c) = \max_{0 \le c \le x_{(1)}} \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-c} = \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-x_{(1)}}$$
+
+Choosing the largest endpoint in the interval, creates the smallest denominator, and the largest likelihood.
+
+Therefore, for this case, it is sufficient to test the likelihood using $c$ at the first sampled point.
+
+#### Case 3.  $c$ is between the last order statistic $r = n$ and 1
+
+$$\large \max L(x|c) = \max_{x_{(n)} \le c \le 1} \prod_{i=1}^{n} \frac{x_{(i)}}{c} = \prod_{i=1}^{n} \frac{x_{(i)}}{x_{(n)}}$$
+
+Choosing the smallest option in the denominator creates the largest likelihood.  Again, it is sufficient
+to test the likelihood using $c$ at the largest sample point.
+
+#### All Cases
+
+For all cases, it is sufficient to compute the sample likelihood using $c$ equal
+to each of the samples, and choosing the largest likelihood from the $n$ options
+to find the corresponding $c$.  This calculation is performed with a fixed $a$ and $b$,
+so the test must be performed iteratively as $a$ and $b$ are separately optimized.
+
+### Negative Log Likelihood
+
+$$nLL = -\log(L) = -\log\left(\prod_i^n f(x_i)\right)$$
+
+$$ = - \sum_i^n \log\left(f(x_i)\right) = - \sum_{i: \ a \le x_i \lt c}^{n_1} \log\left(f(x_i)\right) - \sum_{i: \ c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)$$
+
+where $n = n_1 + n_2$
+
+#### Case 1 $a = c \lt b$
+
+$$ nLL = - \sum_{i}^{n} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)$$
+
+$$ = -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)$$
+
+#### Case 2 $a \lt c = b$
+
+$$ = - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) $$
+
+$$ = -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)$$
+
+#### Case 3 a \lt c \lt b
+
+$$ = - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)$$
+
+$$ = -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)$$
+
+### Gradient of the negative Log Likelihood Given $c$:
+
+The negative log likelihood is not differentiable with respect to $c$ because the limits of the sum are
+affected by $c$.  There the gradient and hessian are derived as if $c$ is fixed.
+
+#### Case 1 $a = c \lt b$
+
+$$\frac{dnLL}{da} = - \frac{n}{b-a}$$
+
+$$\frac{dnLL}{db} = \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}$$
+
+#### Case 2 $a \lt c = b$
+
+$$\frac{dnLL}{da} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i - a}$$
+
+$$\frac{dnLL}{db} = \frac{n}{b-a}$$
+
+#### Case 3 a \lt c \lt b
+
+$$\frac{dnLL}{da} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}$$
+
+$$\frac{dnLL}{db} = \frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_2} \frac{1}{b-x_i}$$
+
+### Hessian of the negative Log Likelihood Given $c$:
+
+#### Case 1 $a = c \lt b$
+
+$$\frac{d^2nLL}{da^2} = - \frac{n}{(b-a)^2}$$
+
+$$\frac{d^2 nLL}{db^2} = -\frac{n}{(b-a)^2} - \frac{n}{(b-c)^2} + \sum_i^{n} \frac{1}{(b-x_i)^2}$$
+
+$$\frac{d^2 nLL}{dadb} = \frac{d^2 nLL}{dbda} = - \frac{n}{(b-a)^2}$$
+
+#### Case 2 $a \lt c = b$
+
+$$\frac{d^2 nLL}{da^2} = - \frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i - a)^2}$$
+
+$$\frac{d^2 nLL}{db^2} = - \frac{n}{(b-a)^2}$$
+
+$$\frac{d^2 nLL}{dadb} = \frac{d^2 nLL}{dbda} = - \frac{n}{(b-a)^2}$$
+
+#### Case 3 $a \lt c \lt b$
+
+$$\frac{d^2 nLL}{da^2} = - \frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i - a)^2}$$
+
+
+$$\frac{d^2 nLL}{db^2} = -\frac{n}{(b-a)^2} - \frac{n_2}{(b-c)^2} + \sum_i^{n_2} \frac{1}{(b-x_i)^2}$$
+
+$$\frac{d^2 nLL}{dadb} = \frac{d^2 nLL}{dbda} = - \frac{n}{(b-a)^2}$$
+
