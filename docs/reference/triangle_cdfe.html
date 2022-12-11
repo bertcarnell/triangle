@@ -80,15 +80,37 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.45</span>, <span class="fl">0.6</span>, <span class="fl">0.75</span>, <span class="fl">0.8</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10304</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="triangle.html">rtriangle</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cdfe</span> <span class="op">&lt;-</span> <span class="fu">triangle_cdfe</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in triangle_cdfe(xtest):</span> could not find function "triangle_cdfe"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cdfe</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(cdfe):</span> object 'cdfe' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Nonlinear regression model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   model: ecdf1 ~ ptriangle(x, a, b, c)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    data: parent.frame()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      a      b      c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7848 5.3555 2.1059 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  residual sum-of-squares: 0.03265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Algorithm "port", convergence message: relative convergence (4)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cdfe</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summary(cdfe):</span> object 'cdfe' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: ecdf1 ~ ptriangle(x, a, b, c)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a  0.78482    0.04266   18.40   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b  5.35551    0.03210  166.84   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c  2.10587    0.04613   45.65   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.01835 on 97 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Algorithm "port", convergence message: relative convergence (4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">cdfe</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in coef(cdfe):</span> object 'cdfe' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7848163 5.3555055 2.1058729 </span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">isNamespaceLoaded</a></span><span class="op">(</span><span class="st">"MASS"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">cdfe</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

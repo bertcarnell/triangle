@@ -16,7 +16,8 @@ an object of class \code{nls}
 Triangle parameter estimates using a non-linear fit of the empirical CDF
 }
 \examples{
-xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+set.seed(10304)
+xtest <- rtriangle(100, 1, 5, 2)
 cdfe <- triangle_cdfe(xtest)
 print(cdfe)
 summary(cdfe)

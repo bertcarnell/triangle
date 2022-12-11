@@ -83,14 +83,25 @@ number of observations, and the sample</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p><a href="https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf" class="external-link">https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf</a></p>
+    <p>Samuel Kotz and Johan Rene van Dorp. Beyond Beta <a href="https://doi.org/10.1142/5720" class="external-link">doi:10.1142/5720</a></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.45</span>, <span class="fl">0.6</span>, <span class="fl">0.75</span>, <span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">standard_triangle_mle</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in standard_triangle_mle(xtest):</span> could not find function "standard_triangle_mle"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Triangle Maximum Likelihood Estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  standard_triangle_mle(x = xtest) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Estimate Std.Err</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a      0.0  0.0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b      1.0  0.0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c      0.3  0.0871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Convergence Code:  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	 </span>
 </code></pre></div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 test_that("triangle_cdfe works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.41, 0.42, 0.43, 0.45, 0.6, 0.75, 0.8)
+  set.seed(10304)
+  xtest <- rtriangle(100, 1, 5, 2)
   cdfe <- triangle_cdfe(xtest)
 
   expect_equal("nls", class(cdfe))
