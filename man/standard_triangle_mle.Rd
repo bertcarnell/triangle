@@ -24,5 +24,5 @@ xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
 standard_triangle_mle(xtest)
 }
 \references{
-\url{https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf}
+Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 }

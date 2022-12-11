@@ -45,5 +45,5 @@ jobs:
         run: |
           file_name <- pkgbuild::build("../triangle")
           rhub::validate_email(email = "${{ secrets.RHUB_EMAIL }}", token = "${{ secrets.RHUB_EMAIL_TOKEN }}")
-          rhub::${{ matrix.config.cmd }}(path=file_name, env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"))
+          rhub::${{ matrix.config.cmd }}(path=file_name, env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = FALSE))
         shell: Rscript {0}

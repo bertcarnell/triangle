@@ -2,7 +2,7 @@
 
 #' Log of the maximization function.  The natural log of equation 1.43
 #'
-#' @references \url{https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf}
+#' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 #'
 #' @noRd
 #'
@@ -51,7 +51,7 @@ logM <- function(z, a, b, r, debug = FALSE)
 #' The order statistic which is the estimate of the mode of the triangle distribution
 #' for a given \code{a} and \code{b} from equation 1.42
 #'
-#' @references \url{https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf}
+#' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 #'
 #' @noRd
 #'
@@ -399,7 +399,7 @@ variance_rth_order_stat <- function(n, r, a, b, c)
 
 #' Maximum likelihood estimate of the triangle distribution parameters
 #'
-#' @references \url{https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf}
+#' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 #'
 #' @param x sample from a triangle distribution
 #' @param debug if \code{TRUE} then the function will check the input parameters
@@ -462,7 +462,7 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
 
 #' Maximum likelihood estimate of the standard triangle distribution mode
 #'
-#' @references \url{https://www.worldscientific.com/doi/suppl/10.1142/5720/suppl_file/5720_chap1.pdf}
+#' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 #'
 #' @param x sample from a triangle distribution
 #' @param debug if \code{TRUE} then the function will check the input parameters

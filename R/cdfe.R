@@ -31,7 +31,7 @@ triangle_cdfe <- function(x)
               b = maxx + 0.5*rangex,
               c = 3*mean(x) - minx - maxx),
     algorithm = "port",
-    lower = c(-Inf, maxx, minx),
-    upper = c(minx, Inf, maxx))
+    lower = c(minx - 2*rangex, maxx, minx),
+    upper = c(minx, maxx + 2*rangex, maxx))
   return(nls1)
 }
