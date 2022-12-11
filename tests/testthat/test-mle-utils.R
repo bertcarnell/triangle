@@ -11,6 +11,13 @@ test_that("summary works", {
                summ@m2logL)
 })
 
+test_that("print works", {
+  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+
+  mle1 <- triangle_mle(xtest)
+  expect_output(print(mle1))
+})
+
 test_that("coef works", {
   xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
 

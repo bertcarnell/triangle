@@ -86,7 +86,7 @@
                         <h4 data-toc-skip class="author">Rob
 Carnell</h4>
             
-            <h4 data-toc-skip class="date">2022-12-02</h4>
+            <h4 data-toc-skip class="date">2022-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bertcarnell/triangle/blob/HEAD/vignettes/triangledistributionmath.Rmd" class="external-link"><code>vignettes/triangledistributionmath.Rmd</code></a></small>
       <div class="hidden name"><code>triangledistributionmath.Rmd</code></div>
@@ -160,8 +160,8 @@ x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2\]</span></p>
 <h2 id="logarithmic-triangle-distribution">Logarithmic Triangle distribution<a class="anchor" aria-label="anchor" href="#logarithmic-triangle-distribution"></a>
 </h2>
 <p>Define:</p>
-<p><span class="math display">\[a_l=log_{\phi}(a),\ \
-b_l=log_{\phi}(b),\ \ c_l=log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \
+<p><span class="math display">\[a_l=\log_{\phi}(a),\ \
+b_l=\log_{\phi}(b),\ \ c_l=\log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \
 \phi = \mbox{log base}\]</span></p>
 <p><span class="math display">\[f(z) =
 \left\{
@@ -176,18 +176,18 @@ b_l=log_{\phi}(b),\ \ c_l=log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \
 (5)\]</span></p>
 <p>Therefore, transforming…</p>
 <p><span class="math display">\[Y={\phi}^Z\]</span></p>
-<p><span class="math display">\[Z=log_{\phi}(Y)\]</span></p>
-<p><span class="math display">\[w(y)=log_{\phi}(y)\]</span></p>
+<p><span class="math display">\[Z=\log_{\phi}(Y)\]</span></p>
+<p><span class="math display">\[w(y)=\log_{\phi}(y)\]</span></p>
 <p><span class="math display">\[w'(y)=\frac{dz}{dy} =
-\frac{1}{yln({\phi})}\]</span></p>
+\frac{1}{y\log({\phi})}\]</span></p>
 <p><span class="math display">\[g(y)=f(w(y))w'(y)\]</span></p>
 <p><span class="math display">\[g(y) =
 \left\{
   \begin{array}{ll}
-    \frac{2}{(c_l-a_l)(b_l-a_l)ln({\phi})}\frac{log_{\phi}(y) - a_l}{y}
-&amp; \mbox{if } 0 &lt; a \leq y \leq c \\
-    \frac{2}{(c_l-b_l)(b_l-a_l)ln({\phi})}\frac{lob_{\phi}(y) - b_l}{y}
-&amp; \mbox{if } c &lt; y \leq b \\
+    \frac{2}{(c_l-a_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) -
+a_l}{y} &amp; \mbox{if } 0 &lt; a \leq y \leq c \\
+    \frac{2}{(c_l-b_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) -
+b_l}{y} &amp; \mbox{if } c &lt; y \leq b \\
     0 &amp; \mbox{otherwise}
   \end{array}
 \right.\ \ \ \ (5)\]</span></p>
@@ -198,16 +198,17 @@ b_l=log_{\phi}(b),\ \ c_l=log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \
 <p><span class="math display">\[G(y)=\int_{-\infty}^y
 g(y)dy\]</span></p>
 <p><span class="math display">\[\mbox{for}\ a \leq y \leq c,\ \ G(y) =
-\frac{\beta_1}{ln({\phi})} \int_a^y
-\frac{ln(y)}{yln({\phi})}-\frac{a_l}{y}dy\]</span></p>
-<p><span class="math display">\[=\beta_1 \bigg[\frac{log_{\phi}^2(y)}{2}
-- a_llog_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]\]</span></p>
+\frac{\beta_1}{\log({\phi})} \int_a^y
+\frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy\]</span></p>
+<p><span class="math display">\[=\beta_1
+\bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2}
++ a_l^2\bigg]\]</span></p>
 <p><span class="math display">\[\mbox{for}\ c &lt; y \leq b,\ \ G(y) =
-G(c) + \frac{\beta_2}{ln({\phi})} \int_c^y \frac{ln(y)}{yln({\phi})} -
-\frac{b_l}{y}dy\]</span></p>
+G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y
+\frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy\]</span></p>
 <p><span class="math display">\[=G(c) + \beta_2
-\bigg[\frac{log_{\phi}^2(y)}{2} - b_l log_{\phi}(y) - \frac{c_l^2}{2} +
-b_l c_l\bigg]\]</span></p>
+\bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2}
++ b_l c_l\bigg]\]</span></p>
 <p>Checking that the CDF is 1 at b,</p>
 <p><span class="math display">\[G(b) = \frac{c_l^2 - 2a_l c_l +
 a_l^2}{(c_l-a_l)(b_l-a_l)} +
@@ -216,14 +217,266 @@ a_l^2}{(c_l-a_l)(b_l-a_l)} +
 \frac{-(c_l-b_l)}{b_l-a_l} = 1\]</span></p>
 <p>Now calculating <span class="math inline">\(E(y)\)</span>,</p>
 <p><span class="math display">\[E(y) = \int y\ g(y)\ dy\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{ln({\phi})} \int_a^c
-\bigg[\frac{ln(y)}{ln({\phi})} - a_l\bigg]dy +
-\frac{\beta_2}{ln({\phi})} \int_c^b \bigg[\frac{ln(y)}{ln({\phi})} -
-b_l\bigg]dy\]</span></p>
-<p><span class="math display">\[=\frac{c\beta_1}{ln^2({\phi})}
-\bigg[ln(c) - 1 - ln(a) + \frac{a}{c} \bigg] +
-\frac{c\beta_2}{ln^2({\phi})} \bigg[\frac{-b}{c} - ln(c) + 1 +
-ln(b)\bigg]\]</span></p>
+<p><span class="math display">\[=\frac{\beta_1}{\log({\phi})} \int_a^c
+\bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy +
+\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})}
+- b_l\bigg]dy\]</span></p>
+<p><span class="math display">\[=\frac{c\beta_1}{\log^2({\phi})}
+\bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] +
+\frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 +
+\log(b) \bigg]\]</span></p>
+</div>
+<div class="section level2">
+<h2 id="method-of-moments">Method of Moments<a class="anchor" aria-label="anchor" href="#method-of-moments"></a>
+</h2>
+<p><span class="math display">\[E(x) = \frac{a + b + c}{3}\]</span></p>
+<p><span class="math display">\[c = 3E(x) - a - b = 3E(x) - \min(x) -
+\max(x)\]</span></p>
+</div>
+<div class="section level2">
+<h2 id="maximum-likelihood-estimation">Maximum Likelihood Estimation<a class="anchor" aria-label="anchor" href="#maximum-likelihood-estimation"></a>
+</h2>
+<p>The procedure for maximum likelihood estimation involves maximizing
+the likelihood with respect to <span class="math inline">\(c\)</span>
+for a fixed <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, followed by minimizing the negative
+log likelihood with respect to <span class="math inline">\(a\)</span>
+and <span class="math inline">\(b\)</span> for a fixed <span class="math inline">\(c\)</span>.</p>
+<div class="section level3">
+<h3 id="maximizing-the-likelihood-with-respect-to-c">Maximizing the Likelihood with respect to <span class="math inline">\(c\)</span><a class="anchor" aria-label="anchor" href="#maximizing-the-likelihood-with-respect-to-c"></a>
+</h3>
+<p>This discussion follows the results from <a href="https://doi.org/10.1142/5720" class="external-link">Samuel Kotz and Johan Rene van Dorp.
+Beyond Beta</a></p>
+<p>For the purposes of this section, with a fixed <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, the sample can be easily rescaled to
+<span class="math inline">\(a=0\)</span> and <span class="math inline">\(b=1\)</span>. This section will proceed on <span class="math inline">\([0,1]\)</span> with the mode at <span class="math inline">\(0 \le c \le 1\)</span></p>
+<p><span class="math display">\[w(x) =
+\left\{
+  \begin{array}{ll}
+    \frac{2x}{c} &amp; \mbox{if } 0 \le x \lt c \\
+    \frac{2(1-x)}{1-c} &amp; \mbox{if } c \le x \leq 1 \\
+    0 &amp; \mbox{otherwise}
+  \end{array}
+\right.\]</span></p>
+<p><span class="math display">\[L(x|c) = \prod_{i}^{n}
+w(x|c)\]</span></p>
+<p>Assume that the sample is ordered into order statistics <span class="math inline">\(X_{(1)} \lt \dots \lt X_{(n)}\)</span>. Also, note
+that <span class="math inline">\(X_{(r)} \le c \lt X_{(r+1)}\)</span>.
+In other words, the mode falls between the <span class="math inline">\(r^{th}\)</span> and <span class="math inline">\(r+1\)</span> order statistics.</p>
+<p><span class="math display">\[L(x|c) = \prod_{i=1}^{r}
+\frac{2x_{(i)}}{c} \prod_{i=r+1}^{n} \frac{2(1-x_{(i)})}{1-c} =
+\frac{2^n \prod_{i=1}^{r} x_{(i)} \prod_{i=r+1}^{n}
+(1-x_{(i)})}{c^r(1-c)^{n-r}}\]</span></p>
+<p>To maximize the likelihood, we can first maximize with respect to
+<span class="math inline">\(r\)</span> and then locate <span class="math inline">\(c\)</span> between the <span class="math inline">\(r^{th}\)</span> and <span class="math inline">\(r+1\)</span> order statistics. For notation
+purposes, also define <span class="math inline">\(X_{(0)} = 0\)</span>
+and <span class="math inline">\(X_{(n+1)} = 1\)</span>.</p>
+<p><span class="math display">\[\large \max_{0 \le c \le 1} L(x|c) =
+\max_{r \ \epsilon \ (0,\dots,n)} \ \ \max_{x_{(r)} \le c \le x_{(r+1)}}
+\ \ L(x|c)\]</span></p>
+<div class="section level4">
+<h4 id="case-1--c-is-between-the-first-and-second-to-last-order-statistic-r-epsilon-1-dots-n-1">Case 1. <span class="math inline">\(c\)</span> is between the first
+and second to last order statistic <span class="math inline">\(r \
+\epsilon \ (1, \dots, n-1)\)</span><a class="anchor" aria-label="anchor" href="#case-1--c-is-between-the-first-and-second-to-last-order-statistic-r-epsilon-1-dots-n-1"></a>
+</h4>
+<p>Noticing that maximizing the likelihood is equivalent to minimizing
+the denominator:</p>
+<p><span class="math display">\[\large \max L(x|c) = \max_{r \ \epsilon
+\ (1,\dots,n-1)} \ \ \min_{x_{(r)} \le c \le x_{(r+1)}} \ \
+c^r(1-c)^{n-r}\]</span></p>
+<p>Since <span class="math inline">\(c^r(1-c)^{n-r}\)</span> is unimodal
+with respect to <span class="math inline">\(c\)</span>, it should be
+sufficient to test the end points of an interval to find the minimum on
+the interval</p>
+<p><span class="math display">\[\large = \max_{r \ \epsilon \
+(1,\dots,n-1)} \ \ \min_{c \ \epsilon \ (x_{(r)},\ \ x_{(r+1)})} \ \
+c^r(1-c)^{n-r}\]</span></p>
+<p>Therefore, for this case, it is sufficient to test the likelihood
+using <span class="math inline">\(c\)</span> at each of the sampled
+points and find the largest.</p>
+<div class="section level5">
+<h5 id="side-note-on-zcr1-cn-r-being-unimodal">Side note on <span class="math inline">\(z=c^r(1-c)^{n-r}\)</span>
+being unimodal<a class="anchor" aria-label="anchor" href="#side-note-on-zcr1-cn-r-being-unimodal"></a>
+</h5>
+<p><span class="math display">\[\frac{dz}{dc} = rc^{(r-1)}(1-c)^{n-r} +
+c^r(n-r)(1-c)^{n-r-1}(-1) = c^{(r-1)}(1-c)^{n-r-1}(r - cn)\]</span></p>
+<p><span class="math inline">\(\frac{dz}{dc} = 0\)</span> at <span class="math inline">\(c=0,\ 1,\ \frac{r}{n}\)</span>. At <span class="math inline">\(0 &lt; c &lt; \frac{r}{n}\)</span>, <span class="math inline">\(z\)</span> is positive, and at <span class="math inline">\(\frac{r}{n} &lt; c &lt; 1\)</span>, <span class="math inline">\(z\)</span> is negative. Therefore, <span class="math inline">\(z\)</span> is unimodal on <span class="math inline">\((0,1)\)</span>.</p>
+</div>
+</div>
+<div class="section level4">
+<h4 id="case-2--c-is-between-0-and-the-first-order-statistic-r-0">Case 2. <span class="math inline">\(c\)</span> is between 0 and the
+first order statistic <span class="math inline">\(r = 0\)</span><a class="anchor" aria-label="anchor" href="#case-2--c-is-between-0-and-the-first-order-statistic-r-0"></a>
+</h4>
+<p><span class="math display">\[\large \max L(x|c) = \max_{0 \le c \le
+x_{(1)}} \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-c} = \prod_{i=1}^{n}
+\frac{1-x_{(i)}}{1-x_{(1)}}\]</span></p>
+<p>Choosing the largest endpoint in the interval, creates the smallest
+denominator, and the largest likelihood.</p>
+<p>Therefore, for this case, it is sufficient to test the likelihood
+using <span class="math inline">\(c\)</span> at the first sampled
+point.</p>
+</div>
+<div class="section level4">
+<h4 id="case-3--c-is-between-the-last-order-statistic-r-n-and-1">Case 3. <span class="math inline">\(c\)</span> is between the last
+order statistic <span class="math inline">\(r = n\)</span> and 1<a class="anchor" aria-label="anchor" href="#case-3--c-is-between-the-last-order-statistic-r-n-and-1"></a>
+</h4>
+<p><span class="math display">\[\large \max L(x|c) = \max_{x_{(n)} \le c
+\le 1} \prod_{i=1}^{n} \frac{x_{(i)}}{c} = \prod_{i=1}^{n}
+\frac{x_{(i)}}{x_{(n)}}\]</span></p>
+<p>Choosing the smallest option in the denominator creates the largest
+likelihood. Again, it is sufficient to test the likelihood using <span class="math inline">\(c\)</span> at the largest sample point.</p>
+</div>
+<div class="section level4">
+<h4 id="all-cases">All Cases<a class="anchor" aria-label="anchor" href="#all-cases"></a>
+</h4>
+<p>For all cases, it is sufficient to compute the sample likelihood
+using <span class="math inline">\(c\)</span> equal to each of the
+samples, and choosing the largest likelihood from the <span class="math inline">\(n\)</span> options to find the corresponding <span class="math inline">\(c\)</span>. This calculation is performed with a
+fixed <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, so the test must be performed
+iteratively as <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are separately optimized.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="negative-log-likelihood">Negative Log Likelihood<a class="anchor" aria-label="anchor" href="#negative-log-likelihood"></a>
+</h3>
+<p><span class="math display">\[nLL = -\log(L) = -\log\left(\prod_i^n
+f(x_i)\right)\]</span></p>
+<p><span class="math display">\[ = - \sum_i^n \log\left(f(x_i)\right) =
+- \sum_{i: \ a \le x_i \lt c}^{n_1} \log\left(f(x_i)\right) - \sum_{i: \
+c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)\]</span></p>
+<p>where <span class="math inline">\(n = n_1 + n_2\)</span></p>
+<div class="section level4">
+<h4 id="case-1-a-c-lt-b">Case 1 <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b"></a>
+</h4>
+<p><span class="math display">\[ nLL = - \sum_{i}^{n} \log(2) +
+\log(b-x_i) - \log(b-a) - \log(b-c)\]</span></p>
+<p><span class="math display">\[ = -n\log(2) + n\log(b-a) + n \log(b-c)
+- \sum_{i}^{n} \log(b-x_i)\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="case-2-a-lt-c-b">Case 2 <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b"></a>
+</h4>
+<p><span class="math display">\[ = - \sum_{i}^{n} \log(2) + \log(x_i -
+a) - \log(b-a) - \log(c-a) \]</span></p>
+<p><span class="math display">\[ = -n\log(2) + n\log(b-a) + n\log(c-a) -
+\sum_{i}^{n} \log(x_i - a)\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="case-3-a-c-b">Case 3 a c b<a class="anchor" aria-label="anchor" href="#case-3-a-c-b"></a>
+</h4>
+<p><span class="math display">\[ = - \sum_{i: \ a \lt x_i \lt c}^{n_1}
+\log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i
+\lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)\]</span></p>
+<p><span class="math display">\[ = -n\log(2) + n\log(b-a) + n_1\log(c-a)
++ n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) -
+\sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)\]</span></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="gradient-of-the-negative-log-likelihood-given-c">Gradient of the negative Log Likelihood Given <span class="math inline">\(c\)</span>:<a class="anchor" aria-label="anchor" href="#gradient-of-the-negative-log-likelihood-given-c"></a>
+</h3>
+<p>The negative log likelihood is not differentiable with respect to
+<span class="math inline">\(c\)</span> because the limits of the sum
+(<span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>) are functions of <span class="math inline">\(c\)</span>. There the gradient and hessian are
+derived as if <span class="math inline">\(c\)</span> is fixed.</p>
+<div class="section level4">
+<h4 id="case-1-a-c-lt-b-1">Case 1 <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b-1"></a>
+</h4>
+<p><span class="math display">\[\frac{\partial nLL}{\partial a} = -
+\frac{n}{b-a}\]</span></p>
+<p><span class="math display">\[\frac{\partial nLL}{\partial b} =
+\frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="case-2-a-lt-c-b-1">Case 2 <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b-1"></a>
+</h4>
+<p><span class="math display">\[\frac{\partial nLL}{\partial a} = -
+\frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i -
+a}\]</span></p>
+<p><span class="math display">\[\frac{\partial nLL}{\partial b} =
+\frac{n}{b-a}\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="case-3-a-c-b-1">Case 3 a c b<a class="anchor" aria-label="anchor" href="#case-3-a-c-b-1"></a>
+</h4>
+<p><span class="math display">\[\frac{\partial nLL}{\partial a} = -
+\frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i -
+a}\]</span></p>
+<p><span class="math display">\[\frac{\partial nLL}{\partial b} =
+\frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_2}
+\frac{1}{b-x_i}\]</span></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="hessian-of-the-negative-log-likelihood-given-c">Hessian of the negative Log Likelihood Given <span class="math inline">\(c\)</span>:<a class="anchor" aria-label="anchor" href="#hessian-of-the-negative-log-likelihood-given-c"></a>
+</h3>
+<div class="section level4">
+<h4 id="case-1-a-c-lt-b-2">Case 1 <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b-2"></a>
+</h4>
+<p><span class="math display">\[\frac{\partial^2nLL}{\partial a^2} = -
+\frac{n}{(b-a)^2}\]</span></p>
+<p><span class="math display">\[\frac{\partial^2 nLL}{\partial b^2} =
+-\frac{n}{(b-a)^2} - \frac{n}{(b-c)^2} + \sum_i^{n}
+\frac{1}{(b-x_i)^2}\]</span></p>
+<p><span class="math display">\[\frac{\partial^2 nLL}{\partial a\partial
+b} = \frac{\partial^2 nLL}{\partial b\partial a} = -
+\frac{n}{(b-a)^2}\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="case-2-a-lt-c-b-2">Case 2 <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b-2"></a>
+</h4>
+<p><span class="math display">\[\frac{\partial^2 nLL}{\partial a^2} = -
+\frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i -
+a)^2}\]</span></p>
+<p><span class="math display">\[\frac{\partial^2 nLL}{\partial b^2} = -
+\frac{n}{(b-a)^2}\]</span></p>
+<p><span class="math display">\[\frac{\partial^2 nLL}{\partial a\partial
+b} = \frac{\partial^2 nLL}{\partial b\partial a} = -
+\frac{n}{(b-a)^2}\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="case-3-a-lt-c-lt-b">Case 3 <span class="math inline">\(a \lt c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-3-a-lt-c-lt-b"></a>
+</h4>
+<p><span class="math display">\[\frac{\partial^2 nLL}{\partial a^2} = -
+\frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i -
+a)^2}\]</span></p>
+<p><span class="math display">\[\frac{\partial ^2 nLL}{\partial b^2} =
+-\frac{n}{(b-a)^2} - \frac{n_2}{(b-c)^2} + \sum_i^{n_2}
+\frac{1}{(b-x_i)^2}\]</span></p>
+<p><span class="math display">\[\frac{\partial ^2 nLL}{\partial
+a\partial b} = \frac{\partial ^2 nLL}{\partial b\partial a} = -
+\frac{n}{(b-a)^2}\]</span></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="mle-variance-co-variance">MLE Variance Co-variance<a class="anchor" aria-label="anchor" href="#mle-variance-co-variance"></a>
+</h3>
+<p>For the optimization of <span class="math inline">\((a,b)\)</span>
+given <span class="math inline">\(c\)</span>, we can use the inverse of
+the hessian of the negative log likelihood for an estimate of the
+covariance matrix of <span class="math inline">\(\hat{a}\)</span> and
+<span class="math inline">\(\hat{b}\)</span>. For the variance in <span class="math inline">\(\hat{c}\)</span>, we use the variance of the <span class="math inline">\(r^{th}\)</span> order statistic which corresponds
+to <span class="math inline">\(c\)</span>. The covariance of <span class="math inline">\((a,b)\)</span> and <span class="math inline">\(c\)</span> is not computed because the negative
+log likelihood is not differentiable with respect to <span class="math inline">\(c\)</span>.</p>
+<p>Let <span class="math inline">\(H\)</span> denote the Hessian matrix,
+and let <span class="math inline">\(H^{-1}[1,1]\)</span> be the <span class="math inline">\(V(\hat{a})\)</span>, <span class="math inline">\(H^{-1}[2,2]\)</span> be the <span class="math inline">\(V(\hat{b})\)</span>, and <span class="math inline">\(H^{-1}[1,2] = H^{-1}[2,1]\)</span> be the <span class="math inline">\(Cov(\hat{a}, \hat{b})\)</span>. Then,</p>
+<p><span class="math display">\[ V([\hat{a}, \hat{b}, \hat{c}]) =   
+\begin{bmatrix}
+   H^{-1}[1,1] &amp; H^{-1}[1,2] &amp; 0  \\
+   H^{-1}[2,1] &amp; H^{-1}[2,2] &amp; 0  \\
+   0 &amp; 0 &amp; V(\hat{c})  \\
+\end{bmatrix}
+\]</span></p>
+<div class="section level4">
+<h4 id="rth-order-statistic">
+<span class="math inline">\(r^{th}\)</span> order statistic<a class="anchor" aria-label="anchor" href="#rth-order-statistic"></a>
+</h4>
+<p><span class="math display">\[f(x_{(r)}) = \frac{n!}{(r-1)!(n-r)!}
+f(x) [F(x)]^{(r-1)}[1-F(x)]^{(n-r)}\]</span></p>
+<p>A closed form solution to <span class="math inline">\(V(X_{(r)})\)</span> is not easily obtainable for
+the triangle, so numerical integration is used with <span class="math inline">\(f(x)\)</span> as <code>dtriangle</code> and <span class="math inline">\(F(x)\)</span> as <code>ptriangle</code>.</p>
+<p><span class="math display">\[V\left(X_{(r)}\right) = \int_a^b x^2
+f(x_{(r)}) dx - \left[\int_a^b x f(x_{(r)}) dx \right]^2\]</span></p>
+</div>
+</div>
 </div>
   </div>
 

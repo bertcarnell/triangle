@@ -14,7 +14,9 @@ Encoding: UTF-8
 RoxygenNote: 7.2.2
 Depends: R (>= 2.14.1)
 Collate: 
+    'cdfe.R'
     'dtriangle.R'
+    'fit-plots.R'
     'ltriangle.r'
     'mle-utils.R'
     'mle.R'
@@ -29,5 +31,6 @@ Imports:
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    MASS
 VignetteBuilder: knitr

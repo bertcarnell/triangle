@@ -16,6 +16,9 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/compare_triangle_fit.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -25,10 +28,16 @@
     <loc>/reference/mle-utils.html</loc>
   </url>
   <url>
+    <loc>/reference/qqtriangle.html</loc>
+  </url>
+  <url>
     <loc>/reference/standard_triangle_mle.html</loc>
   </url>
   <url>
     <loc>/reference/triangle.html</loc>
+  </url>
+  <url>
+    <loc>/reference/triangle_cdfe.html</loc>
   </url>
   <url>
     <loc>/reference/triangle_mle.html</loc>

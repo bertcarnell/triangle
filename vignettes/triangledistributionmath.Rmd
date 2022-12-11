@@ -171,7 +171,7 @@ for a fixed $c$.
 
 This discussion follows the results from [Samuel Kotz and Johan Rene van Dorp. Beyond Beta](https://doi.org/10.1142/5720)
 
-for the purposes of this section, with a fixed $a$ and $b$, the sample can be easily
+For the purposes of this section, with a fixed $a$ and $b$, the sample can be easily
 rescaled to $a=0$ and $b=1$.  This section will proceed on $[0,1]$ with the mode at $0 \le c \le 1$
 
 $$w(x) = 
@@ -207,6 +207,13 @@ of an interval to find the minimum on the interval
 $$\large = \max_{r \ \epsilon \ (1,\dots,n-1)} \ \ \min_{c \ \epsilon \ (x_{(r)},\ \ x_{(r+1)})} \ \ c^r(1-c)^{n-r}$$
 
 Therefore, for this case, it is sufficient to test the likelihood using $c$ at each of the sampled points and find the largest.
+
+##### Side note on $z=c^r(1-c)^{n-r}$ being unimodal
+
+$$\frac{dz}{dc} = rc^{(r-1)}(1-c)^{n-r} + c^r(n-r)(1-c)^{n-r-1}(-1) = c^{(r-1)}(1-c)^{n-r-1}(r - cn)$$
+
+$\frac{dz}{dc} = 0$ at $c=0,\ 1,\ \frac{r}{n}$.  At $0 < c < \frac{r}{n}$, $z$ is positive, and at $\frac{r}{n} < c < 1$, $z$ is negative.
+Therefore, $z$ is unimodal on $(0,1)$.
 
 #### Case 2.  $c$ is between 0 and the first order statistic $r = 0$
 
@@ -258,51 +265,81 @@ $$ = -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i: \ a \lt x_
 
 ### Gradient of the negative Log Likelihood Given $c$:
 
-The negative log likelihood is not differentiable with respect to $c$ because the limits of the sum are
-affected by $c$.  There the gradient and hessian are derived as if $c$ is fixed.
+The negative log likelihood is not differentiable with respect to $c$ because the limits of the sum ($n_1$ and $n_2$) are
+functions of $c$.  There the gradient and hessian are derived as if $c$ is fixed.
 
 #### Case 1 $a = c \lt b$
 
-$$\frac{dnLL}{da} = - \frac{n}{b-a}$$
+$$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a}$$
 
-$$\frac{dnLL}{db} = \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}$$
+$$\frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}$$
 
 #### Case 2 $a \lt c = b$
 
-$$\frac{dnLL}{da} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i - a}$$
+$$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i - a}$$
 
-$$\frac{dnLL}{db} = \frac{n}{b-a}$$
+$$\frac{\partial nLL}{\partial b} = \frac{n}{b-a}$$
 
 #### Case 3 a \lt c \lt b
 
-$$\frac{dnLL}{da} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}$$
+$$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}$$
 
-$$\frac{dnLL}{db} = \frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_2} \frac{1}{b-x_i}$$
+$$\frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_2} \frac{1}{b-x_i}$$
 
 ### Hessian of the negative Log Likelihood Given $c$:
 
 #### Case 1 $a = c \lt b$
 
-$$\frac{d^2nLL}{da^2} = - \frac{n}{(b-a)^2}$$
+$$\frac{\partial^2nLL}{\partial a^2} = - \frac{n}{(b-a)^2}$$
 
-$$\frac{d^2 nLL}{db^2} = -\frac{n}{(b-a)^2} - \frac{n}{(b-c)^2} + \sum_i^{n} \frac{1}{(b-x_i)^2}$$
+$$\frac{\partial^2 nLL}{\partial b^2} = -\frac{n}{(b-a)^2} - \frac{n}{(b-c)^2} + \sum_i^{n} \frac{1}{(b-x_i)^2}$$
 
-$$\frac{d^2 nLL}{dadb} = \frac{d^2 nLL}{dbda} = - \frac{n}{(b-a)^2}$$
+$$\frac{\partial^2 nLL}{\partial a\partial b} = \frac{\partial^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}$$
 
 #### Case 2 $a \lt c = b$
 
-$$\frac{d^2 nLL}{da^2} = - \frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i - a)^2}$$
+$$\frac{\partial^2 nLL}{\partial a^2} = - \frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i - a)^2}$$
 
-$$\frac{d^2 nLL}{db^2} = - \frac{n}{(b-a)^2}$$
+$$\frac{\partial^2 nLL}{\partial b^2} = - \frac{n}{(b-a)^2}$$
 
-$$\frac{d^2 nLL}{dadb} = \frac{d^2 nLL}{dbda} = - \frac{n}{(b-a)^2}$$
+$$\frac{\partial^2 nLL}{\partial a\partial b} = \frac{\partial^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}$$
 
 #### Case 3 $a \lt c \lt b$
 
-$$\frac{d^2 nLL}{da^2} = - \frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i - a)^2}$$
+$$\frac{\partial^2 nLL}{\partial a^2} = - \frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i - a)^2}$$
 
 
-$$\frac{d^2 nLL}{db^2} = -\frac{n}{(b-a)^2} - \frac{n_2}{(b-c)^2} + \sum_i^{n_2} \frac{1}{(b-x_i)^2}$$
+$$\frac{\partial ^2 nLL}{\partial b^2} = -\frac{n}{(b-a)^2} - \frac{n_2}{(b-c)^2} + \sum_i^{n_2} \frac{1}{(b-x_i)^2}$$
 
-$$\frac{d^2 nLL}{dadb} = \frac{d^2 nLL}{dbda} = - \frac{n}{(b-a)^2}$$
+$$\frac{\partial ^2 nLL}{\partial a\partial b} = \frac{\partial ^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}$$
+
+### MLE Variance Co-variance
+
+For the optimization of $(a,b)$ given $c$, we can use the inverse of the hessian
+of the negative log likelihood for an estimate of the covariance matrix of $\hat{a}$ 
+and $\hat{b}$.  For the variance in $\hat{c}$, we use the variance of the $r^{th}$ order
+statistic which corresponds to $c$.  The covariance of $(a,b)$ and $c$ is not
+computed because the negative log likelihood is not differentiable with respect to $c$.
+
+Let $H$ denote the Hessian matrix, and let $H^{-1}[1,1]$ be the $V(\hat{a})$,
+$H^{-1}[2,2]$ be the $V(\hat{b})$, and $H^{-1}[1,2] = H^{-1}[2,1]$ be the 
+$Cov(\hat{a}, \hat{b})$.  Then,
+
+$$ V([\hat{a}, \hat{b}, \hat{c}]) =   
+\begin{bmatrix} 
+   H^{-1}[1,1] & H^{-1}[1,2] & 0  \\
+   H^{-1}[2,1] & H^{-1}[2,2] & 0  \\
+   0 & 0 & V(\hat{c})  \\
+\end{bmatrix} 
+$$
+
+#### $r^{th}$ order statistic
+
+$$f(x_{(r)}) = \frac{n!}{(r-1)!(n-r)!} f(x) [F(x)]^{(r-1)}[1-F(x)]^{(n-r)}$$
+
+A closed form solution to $V(X_{(r)})$ is not easily obtainable for the triangle,
+so numerical integration is used with $f(x)$ as `dtriangle` and $F(x)$ as `ptriangle`.
+
+$$V\left(X_{(r)}\right) = \int_a^b x^2 f(x_{(r)}) dx - \left[\int_a^b x f(x_{(r)}) dx \right]^2$$
+
 

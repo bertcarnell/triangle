@@ -2,6 +2,7 @@
 % Please edit documentation in R/mle-utils.R
 \name{summary.triangle_mle}
 \alias{summary.triangle_mle}
+\alias{print.triangle_mle}
 \alias{coef.triangle_mle}
 \alias{logLik.triangle_mle}
 \alias{AIC.triangle_mle}
@@ -12,6 +13,8 @@
 \title{Utility Methods for S3 class triangle_mle}
 \usage{
 \method{summary}{triangle_mle}(object, ...)
+
+\method{print}{triangle_mle}(x, ...)
 
 \method{coef}{triangle_mle}(object, ...)
 
@@ -30,7 +33,9 @@
 \arguments{
 \item{object}{class triangle_mle from a call to \code{triangle_mle()}}
 
-\item{...}{not used}
+\item{...}{not used except for \code{print} (other arguments passed to \code{printCoefmat})}
+
+\item{x}{the \code{triangle_mle} object}
 
 \item{k}{the penalty per parameter to be used; the default k = 2}
 
@@ -42,6 +47,8 @@
 }
 \value{
 an object of class summary.mle
+
+x invisibly
 
 a vector of coefficients
 
@@ -65,6 +72,7 @@ set.seed(1234)
 x <- rtriangle(100, 0, 1, 0.5)
 mle1 <- triangle_mle(x)
 summary(mle1)
+print(mle1)
 coef(mle1)
 logLik(mle1)
 AIC(mle1)

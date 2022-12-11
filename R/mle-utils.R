@@ -2,11 +2,13 @@
 #' Utility Methods for S3 class triangle_mle
 #'
 #' @param object class triangle_mle from a call to \code{triangle_mle()}
-#' @param ... not used
+#' @param x the \code{triangle_mle} object
+#' @param ... not used except for \code{print} (other arguments passed to \code{printCoefmat})
 #'
 #' @rdname mle-utils
 #'
 #' @return an object of class summary.mle
+#' @method summary triangle_mle
 #' @export
 #'
 #' @importClassesFrom stats4 summary.mle
@@ -18,6 +20,7 @@
 #' x <- rtriangle(100, 0, 1, 0.5)
 #' mle1 <- triangle_mle(x)
 #' summary(mle1)
+#' print(mle1)
 #' coef(mle1)
 #' logLik(mle1)
 #' AIC(mle1)
@@ -36,7 +39,27 @@ summary.triangle_mle <- function(object, ...)
 }
 
 #' @rdname mle-utils
+#' @return x invisibly
+#' @export
+#'
+#' @importFrom stats printCoefmat
+#' @importFrom stats4 coef vcov
+print.triangle_mle <- function(x, ...)
+{
+  cat("Triangle Maximum Likelihood Estimates")
+  cat("\n\nCall: ", deparse(x$call), "\n")
+  cat("\nEstimates:\n")
+  cmat <- cbind(stats4::coef(x), sqrt(diag(stats4::vcov(x))))
+  colnames(cmat) <- c("Estimate", "Std.Err")
+  stats::printCoefmat(cmat, ...)
+  cat("\nConvergence Code: ", ifelse(all(is.na(x$details)), NA, x$details$convergence))
+  cat("\n\t", ifelse(all(is.na(x$details)), "", x$details$message))
+  invisible(x)
+}
+
+#' @rdname mle-utils
 #' @return a vector of coefficients
+#' @method coef triangle_mle
 #' @export
 coef.triangle_mle <- function(object, ...) object$coef
 
@@ -73,6 +96,7 @@ BIC.triangle_mle <- function(object, ...)
 
 #' @rdname mle-utils
 #' @return the variance co-variance matrix
+#' @method vcov triangle_mle
 #' @export
 vcov.triangle_mle <- function(object, ...)
 {
