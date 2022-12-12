@@ -16,7 +16,9 @@
 #' print(cdfe)
 #' summary(cdfe)
 #' coef(cdfe)
-#' if (isNamespaceLoaded("MASS")) confint(cdfe)
+#' \dontrun{
+#'   MASS::confint(cdfe)
+#' }
 triangle_cdfe <- function(x)
 {
   # x <- rtriangle(100, 0, 1, .3)

@@ -81,6 +81,6 @@ vcov(mle1)
 \dontrun{
   prof <- profile(mle1)
   stats4::plot(prof)
+  confint(mle1, 1:3, level = 0.95)
 }
-confint(mle1, 1:3, level = 0.95)
 }

@@ -29,11 +29,14 @@
 #' \dontrun{
 #'   prof <- profile(mle1)
 #'   stats4::plot(prof)
+#'   confint(mle1, 1:3, level = 0.95)
 #' }
-#' confint(mle1, 1:3, level = 0.95)
 summary.triangle_mle <- function(object, ...)
 {
-  cmat <- cbind(Estimate = object$coef, `Std. Error` = sqrt(diag(object$vcov)))
+  vars <- diag(object$vcov)
+  # it is possible to have negative numbers in the vcov because of numerical precision
+  vars[which(vars < 0)] <- NA
+  cmat <- cbind(Estimate = object$coef, `Std. Error` = sqrt(vars))
   m2logL <- 2 * object$min
   methods::new("summary.mle", call = object$call, coef = cmat, m2logL = m2logL)
 }
@@ -46,10 +49,13 @@ summary.triangle_mle <- function(object, ...)
 #' @importFrom stats4 coef vcov
 print.triangle_mle <- function(x, ...)
 {
+  vars <- diag(stats4::vcov(x))
+  # it is possible to have negative numbers in the vcov because of numerical precision
+  vars[which(vars < 0)] <- NA
   cat("Triangle Maximum Likelihood Estimates")
   cat("\n\nCall: ", deparse(x$call), "\n")
   cat("\nEstimates:\n")
-  cmat <- cbind(stats4::coef(x), sqrt(diag(stats4::vcov(x))))
+  cmat <- cbind(stats4::coef(x), sqrt(vars))
   colnames(cmat) <- c("Estimate", "Std.Err")
   stats::printCoefmat(cmat, ...)
   cat("\nConvergence Code: ", ifelse(all(is.na(x$details)), NA, x$details$convergence))

@@ -22,5 +22,7 @@ cdfe <- triangle_cdfe(xtest)
 print(cdfe)
 summary(cdfe)
 coef(cdfe)
-if (isNamespaceLoaded("MASS")) confint(cdfe)
+\dontrun{
+  MASS::confint(cdfe)
+}
 }
