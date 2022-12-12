@@ -89,7 +89,8 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.45</span>, <span class="fl">0.6</span>, <span class="fl">0.75</span>, <span class="fl">0.8</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10304</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="triangle.html">rtriangle</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">compare_triangle_fit</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="compare_triangle_fit-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
