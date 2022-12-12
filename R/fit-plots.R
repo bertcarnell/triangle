@@ -18,7 +18,8 @@
 #' @importFrom graphics abline
 #'
 #' @examples
-#' xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+#' set.seed(10304)
+#' xtest <- rtriangle(100, 1, 5, 2)
 #' theta <- coef(triangle_mle(xtest))
 #' qqtriangle(xtest, theta[1], theta[2], theta[3])
 qqtriangle <- function(y, a, b, c, main = "Triangle Q-Q Plot",
@@ -49,7 +50,8 @@ qqtriangle <- function(y, a, b, c, main = "Triangle Q-Q Plot",
 #' @export
 #'
 #' @examples
-#' xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+#' set.seed(10304)
+#' xtest <- rtriangle(100, 1, 5, 2)
 #' compare_triangle_fit(xtest)
 compare_triangle_fit <- function(y, cols = c("red", "blue", "green"), main = "Triangle Fit Comparison", ...)
 {
