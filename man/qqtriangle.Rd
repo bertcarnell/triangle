@@ -39,7 +39,8 @@ a list of x-y coordinates on the plot
 Quantile-Quantile Plot for Triangle Distributed Data
 }
 \examples{
-xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+set.seed(10304)
+xtest <- rtriangle(100, 1, 5, 2)
 theta <- coef(triangle_mle(xtest))
 qqtriangle(xtest, theta[1], theta[2], theta[3])
 }

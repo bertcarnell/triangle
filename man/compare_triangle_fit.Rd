@@ -24,6 +24,7 @@ compare_triangle_fit(
 Compare multiple triangle distributions fits
 }
 \examples{
-xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+set.seed(10304)
+xtest <- rtriangle(100, 1, 5, 2)
 compare_triangle_fit(xtest)
 }
