@@ -60,13 +60,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">triangle_cdfe</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">triangle_cdfe</span><span class="op">(</span><span class="va">x</span>, control <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/nls.control.html" class="external-link">nls.control</a></span><span class="op">(</span>maxiter <span class="op">=</span> <span class="fl">100</span>, warnOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>the triangle distributed sample</p></dd>
+
+
+<dt>control</dt>
+<dd><p>an object created by <code><a href="https://rdrr.io/r/stats/nls.control.html" class="external-link">stats::nls.control</a></code></p></dd>
 
 </dl></div>
     <div id="value">
@@ -112,7 +116,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.7848163 5.3555055 2.1058729 </span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">MASS</span><span class="fu">::</span><span class="fu">confint</span><span class="op">(</span><span class="va">cdfe</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">cdfe</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

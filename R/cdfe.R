@@ -3,11 +3,12 @@
 #' Triangle parameter estimates using a non-linear fit of the empirical CDF
 #'
 #' @param x the triangle distributed sample
+#' @param control an object created by \code{stats::nls.control}
 #'
 #' @return an object of class \code{nls}
 #' @export
 #'
-#' @importFrom stats nls
+#' @importFrom stats nls nls.control
 #'
 #' @examples
 #' set.seed(10304)
@@ -17,9 +18,9 @@
 #' summary(cdfe)
 #' coef(cdfe)
 #' \dontrun{
-#'   MASS::confint(cdfe)
+#'   confint(cdfe)
 #' }
-triangle_cdfe <- function(x)
+triangle_cdfe <- function(x, control = stats::nls.control(maxiter = 100, warnOnly = TRUE))
 {
   # x <- rtriangle(100, 0, 1, .3)
   n <- length(x)
@@ -35,6 +36,7 @@ triangle_cdfe <- function(x)
               c = 3*mean(x) - minx - maxx),
     algorithm = "port",
     lower = c(minx - 2*rangex, maxx, minx),
-    upper = c(minx, maxx + 2*rangex, maxx))
+    upper = c(minx, maxx + 2*rangex, maxx),
+    control = control)
   return(nls1)
 }

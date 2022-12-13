@@ -4,10 +4,12 @@
 \alias{triangle_cdfe}
 \title{Triangle parameter estimates using a non-linear fit of the empirical CDF}
 \usage{
-triangle_cdfe(x)
+triangle_cdfe(x, control = stats::nls.control(maxiter = 100, warnOnly = TRUE))
 }
 \arguments{
 \item{x}{the triangle distributed sample}
+
+\item{control}{an object created by \code{stats::nls.control}}
 }
 \value{
 an object of class \code{nls}
@@ -23,6 +25,6 @@ print(cdfe)
 summary(cdfe)
 coef(cdfe)
 \dontrun{
-  MASS::confint(cdfe)
+  confint(cdfe)
 }
 }
