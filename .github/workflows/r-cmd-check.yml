@@ -23,12 +23,8 @@ jobs:
           - {os: windows-latest, r: 'devel'}
           - {os: macOS-latest, r: 'release'}
           - {os: macOS-latest, r: 'devel'}
-          #- {os: ubuntu-latest, r: 'release'}
-          #- {os: ubuntu-latest, r: 'devel'}
-          - {os: ubuntu-22.04, r: 'release'}
-          - {os: ubuntu-22.04, r: 'devel'}
-          #- {os: ubuntu-20.04, r: 'release'}
-          #- {os: ubuntu-20.04, r: 'devel'}
+          - {os: ubuntu-latest, r: 'release'}
+          - {os: ubuntu-latest, r: 'devel'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -79,18 +75,18 @@ jobs:
         shell: Rscript {0}
 
       - name: Check Standard
-        if: ( matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel' ) == false
+        if: ( runner.os == 'Linux' && matrix.config.r == 'devel' ) == false
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
       - name: Install Valgrind (Linux-rdevel only)
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
+        if: runner.os == 'Linux' && matrix.config.r == 'devel'
         run: sudo apt-get install valgrind
 
       - name: Check Valgrind (Linux-rdevel only)
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
+        if: runner.os == 'Linux' && matrix.config.r == 'devel'
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
           # https://www.valgrind.org/docs/manual/manual-core.html
@@ -102,7 +98,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Code Coverage
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        if: runner.os == 'Linux' && matrix.config.r == 'release'
         run: covr::codecov()
         shell: Rscript {0}
 
