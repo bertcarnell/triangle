@@ -11,8 +11,8 @@ triangle_mle(x, debug = FALSE, maxiter = 100)
 
 \item{debug}{if \code{TRUE} then the function will check the input parameters}
 
-\item{maxiter}{the maximum number of cycles of optimization between maximizing a and b given c
-and maximizing c given a an b}
+\item{maxiter}{the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
+and maximizing \code{c} given \code{a} and \code{b}}
 }
 \value{
 an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,
@@ -24,6 +24,9 @@ Maximum likelihood estimate of the triangle distribution parameters
 }
 \examples{
 xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+triangle_mle(xtest)
+
+xtest <- rtriangle(20, 1, 5, 3.5)
 triangle_mle(xtest)
 }
 \references{

@@ -8,5 +8,7 @@
 ^etc$
 ^pkgdown
 ^logo.svg$
+^README.Rmd$
 ^README.md$
 ^\.github
+^_pkgdown\.yml$

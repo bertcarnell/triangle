@@ -4,7 +4,7 @@ author: "Rob Carnell"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Triangle Distribution Derivation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 header-includes:
@@ -284,75 +284,93 @@ $$V(Y) = `r py$lvx_high_str`$$
 
 For `rtriangle(1E6, 1, 5, 3)`,
 
-```{r check1, echo=FALSE, message=FALSE}
+```{r check1, echo=FALSE, message=FALSE, results='asis'}
 require(triangle)
 N <- 1000000
 X <- rtriangle(N, 1, 5, 3)
-cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
-          "expected:", signif(py$mx1, digits = 6)))
-cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
-          "expected:", signif(py$vx1, digits = 6)))
-cat(paste("CDF:  got: ", signif(ptriangle(1, 1, 5, 3), digits = 6), 
-          "expected:", signif(py$cdf11, digits = 6)))
-cat(paste("CDF:  got: ", signif(ptriangle(2, 1, 5, 3), digits = 6), 
-          "expected:", signif(py$cdf12, digits = 6)))
-cat(paste("CDF:  got: ", signif(ptriangle(3, 1, 5, 3), digits = 6), 
-          "expected:", signif(py$cdf13, digits = 6)))
-cat(paste("CDF:  got: ", signif(ptriangle(4, 1, 5, 3), digits = 6), 
-          "expected:", signif(py$cdf24, digits = 6)))
-cat(paste("CDF:  got: ", signif(ptriangle(5, 1, 5, 3), digits = 6), 
-          "expected:", signif(py$cdf25, digits = 6)))
+
+cat("|Metric|Random Sample|Equation Expectation|\n")
+cat("|---|---|---|\n")
+cat(paste("|Mean|", signif(mean(X), digits = 6), 
+          "|", signif(py$mx1, digits = 6), "|\n"))
+cat(paste("|Variance|", signif(var(X), digits = 6), 
+          "|", signif(py$vx1, digits = 6), "|\n"))
+cat(paste("|CDF(1)|", signif(ptriangle(1, 1, 5, 3), digits = 6), 
+          "|", signif(py$cdf11, digits = 6), "|\n"))
+cat(paste("|CDF(2)|", signif(ptriangle(2, 1, 5, 3), digits = 6), 
+          "|", signif(py$cdf12, digits = 6), "|\n"))
+cat(paste("|CDF(3)|", signif(ptriangle(3, 1, 5, 3), digits = 6), 
+          "|", signif(py$cdf13, digits = 6), "|\n"))
+cat(paste("|CDF(4)|", signif(ptriangle(4, 1, 5, 3), digits = 6), 
+          "|", signif(py$cdf24, digits = 6), "|\n"))
+cat(paste("|CDF(5)|", signif(ptriangle(5, 1, 5, 3), digits = 6), 
+          "|", signif(py$cdf25, digits = 6), "|\n"))
 
 ```
 
 For `rtriangle(1E6, 1, 5, 1)`,
 
-```{r check2, echo=FALSE}
+```{r check2, echo=FALSE, results='asis'}
 X <- rtriangle(N, 1, 5, 1)
-cat(paste("Mean:  got: ", signif(mean(X), digits = 6), "expected", signif(py$mx2, digits = 6)))
-cat(paste("Variance:  got: ", signif(var(X), digits = 6), "expected", signif(py$vx2, digits = 6)))
+cat("|Metric|Random Sample|Equation Expectation|\n")
+cat("|---|---|---|\n")
+cat(paste("|Mean|", signif(mean(X), digits = 6), "|", signif(py$mx2, digits = 6), "|\n"))
+cat(paste("|Variance|", signif(var(X), digits = 6), "|", signif(py$vx2, digits = 6), "|\n"))
 ```
 
 For `rtriangle(1E6, 1, 5, 5)`,
 
-```{r check3, echo=FALSE}
+```{r check3, echo=FALSE, results='asis'}
 X <- rtriangle(N, 1, 5, 5)
-cat(paste("Mean:  got: ", signif(mean(X), digits = 6), "expected", signif(py$mx3, digits = 6)))
-cat(paste("Variance:  got: ", signif(var(X), digits = 6), "expected", signif(py$vx3, digits = 6)))
+cat("|Metric|Random Sample|Equation Expectation|\n")
+cat("|---|---|---|\n")
+cat(paste("|Mean|", signif(mean(X), digits = 6), "|", signif(py$mx3, digits = 6), "|\n"))
+cat(paste("|Variance|", signif(var(X), digits = 6), "|", signif(py$vx3, digits = 6), "|\n"))
 ```
 
 For `rltriangle(1E6, 1, 100, 10)`
 
-```{r check4, echo=FALSE}
+```{r check4, echo=FALSE, results='asis'}
 X <- rltriangle(N, 1, 100, 10)
-cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
-          "expected:", signif(py$lmx1, digits = 6)))
-cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
-          "expected:", signif(py$lvx1, digits = 6)))
-cat(paste("CDF:  got: ", signif(pltriangle(1, 1, 100, 10), digits = 6), 
-          "expected:", signif(py$lcdf11, digits = 6)))
-cat(paste("CDF:  got: ", signif(pltriangle(2, 1, 100, 10), digits = 6), 
-          "expected:", signif(py$lcdf12, digits = 6)))
-cat(paste("CDF:  got: ", signif(pltriangle(10, 1, 100, 10), digits = 6), 
-          "expected:", signif(py$lcdf13, digits = 6)))
-cat(paste("CDF:  got: ", signif(pltriangle(20, 1, 100, 10), digits = 6), 
-          "expected:", signif(py$lcdf24, digits = 6)))
-cat(paste("CDF:  got: ", signif(pltriangle(100, 1, 100, 10), digits = 6), 
-          "expected:", signif(py$lcdf25, digits = 6)))
+
+cat("|Metric|Random Sample|Equation Expectation|\n")
+cat("|---|---|---|\n")
+cat(paste("|Mean|", signif(mean(X), digits = 6), 
+          "|", signif(py$lmx1, digits = 6), "|\n"))
+cat(paste("|Variance|", signif(var(X), digits = 6), 
+          "|", signif(py$lvx1, digits = 6), "|\n"))
+cat(paste("|CDF(1)|", signif(pltriangle(1, 1, 100, 10), digits = 6), 
+          "|", signif(py$lcdf11, digits = 6), "|\n"))
+cat(paste("|CDF(2)|", signif(pltriangle(2, 1, 100, 10), digits = 6), 
+          "|", signif(py$lcdf12, digits = 6), "|\n"))
+cat(paste("|CDF(10)|", signif(pltriangle(10, 1, 100, 10), digits = 6), 
+          "|", signif(py$lcdf13, digits = 6), "|\n"))
+cat(paste("|CDF(20)|", signif(pltriangle(20, 1, 100, 10), digits = 6), 
+          "|", signif(py$lcdf24, digits = 6), "|\n"))
+cat(paste("|CDF(100)|", signif(pltriangle(100, 1, 100, 10), digits = 6), 
+          "|", signif(py$lcdf25, digits = 6), "|\n"))
 ```
 
-```{r check5, echo=FALSE}
+For `rltriangle(1E6, 1, 100, 1)`
+
+```{r check5, echo=FALSE, results='asis'}
 X <- rltriangle(N, 1, 100, 1)
-cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
-          "expected:", signif(py$lmx2, digits = 6)))
-cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
-          "expected:", signif(py$lvx2, digits = 6)))
+cat("|Metric|Random Sample|Equation Expectation|\n")
+cat("|---|---|---|\n")
+cat(paste("|Mean|", signif(mean(X), digits = 6), 
+          "|", signif(py$lmx2, digits = 6), "|\n"))
+cat(paste("|Variance|", signif(var(X), digits = 6), 
+          "|", signif(py$lvx2, digits = 6), "|\n"))
 ```
 
-```{r check6, echo=FALSE}
+For `rltriangle(1E6, 1, 100, 100)`
+
+```{r check6, echo=FALSE, results='asis'}
 X <- rltriangle(N, 1, 100, 100)
-cat(paste("Mean:  got: ", signif(mean(X), digits = 6), 
-          "expected:", signif(py$lmx3, digits = 6)))
-cat(paste("Variance:  got: ", signif(var(X), digits = 6), 
-          "expected:", signif(py$lvx3, digits = 6)))
+cat("|Metric|Random Sample|Equation Expectation|\n")
+cat("|---|---|---|\n")
+cat(paste("|Mean|", signif(mean(X), digits = 6), 
+          "|", signif(py$lmx3, digits = 6), "|\n"))
+cat(paste("|Variance|", signif(var(X), digits = 6), 
+          "|", signif(py$lvx3, digits = 6), "|\n"))
 ```

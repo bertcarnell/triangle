@@ -1,6 +1,6 @@
 Package: triangle
 Title: Distribution Functions and Parameter Estimates for the Triangle Distribution
-Version: 1.0
+Version: 1.0.1
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
@@ -8,10 +8,10 @@ Authors@R:
            email = "bertcarnell@gmail.com")
 Description: Provides the "r, q, p, and d" distribution functions for the triangle distribution.  Also includes maximum likelihood estimation of parameters.
 License: GPL (>= 2)
-URL: https://bertcarnell.github.io/triangle/
+URL: https://bertcarnell.github.io/triangle/, https://bertcarnell.github.io/triangle/
 BugReports: https://github.com/bertcarnell/triangle/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.2
+RoxygenNote: 7.3.0
 Depends: R (>= 2.14.1)
 Collate: 
     'cdfe.R'

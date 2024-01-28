@@ -1,8 +1,10 @@
+# Copyright 2024 Robert Carnell
+
 #' Triangle distribution method of moments estimate
 #'
 #' @param x triangle distribution sample
 #'
-#' @return a vector of the parameter estimates
+#' @return a named vector of the parameter estimates
 #' @export
 #'
 #' @examples
@@ -14,6 +16,6 @@ triangle_mom <- function(x)
   ap <- min(x)
   bp <- max(x)
   cp <- 3*mean(x) - ap - bp
-  return(c(ap, bp, cp))
+  return(c(a=ap, b=bp, c=cp))
 }
 

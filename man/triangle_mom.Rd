@@ -10,7 +10,7 @@ triangle_mom(x)
 \item{x}{triangle distribution sample}
 }
 \value{
-a vector of the parameter estimates
+a named vector of the parameter estimates
 }
 \description{
 Triangle distribution method of moments estimate

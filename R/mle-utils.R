@@ -1,3 +1,4 @@
+# Copyright 2024 Robert Carnell
 
 #' Utility Methods for S3 class triangle_mle
 #'
@@ -42,7 +43,7 @@ summary.triangle_mle <- function(object, ...)
 }
 
 #' @rdname mle-utils
-#' @return x invisibly
+#' @return \code{print.triangle_mle}: \code{x} invisibly
 #' @export
 #'
 #' @importFrom stats printCoefmat
@@ -64,13 +65,13 @@ print.triangle_mle <- function(x, ...)
 }
 
 #' @rdname mle-utils
-#' @return a vector of coefficients
+#' @return \code{coef.triangle_mle}: a vector of coefficients
 #' @method coef triangle_mle
 #' @export
 coef.triangle_mle <- function(object, ...) object$coef
 
 #' @rdname mle-utils
-#' @return an object of class logLik
+#' @return \code{logLik.triangle_mle}: an object of class \code{logLik}
 #' @export
 logLik.triangle_mle <- function(object, ...)
 {
@@ -80,8 +81,8 @@ logLik.triangle_mle <- function(object, ...)
 }
 
 #' @rdname mle-utils
-#' @param k the penalty per parameter to be used; the default k = 2
-#' @return the AIC
+#' @param k the penalty per parameter to be used; the default \code{k = 2}
+#' @return \code{AIC.triangle_mle}: the AIC
 #' @export
 AIC.triangle_mle <- function(object, ..., k=2)
 {
@@ -90,7 +91,7 @@ AIC.triangle_mle <- function(object, ..., k=2)
 }
 
 #' @rdname mle-utils
-#' @return the BIC
+#' @return \code{BIC.triangle_mle}: the BIC
 #' @importFrom stats BIC
 #' @export
 BIC.triangle_mle <- function(object, ...)
@@ -101,7 +102,7 @@ BIC.triangle_mle <- function(object, ...)
 }
 
 #' @rdname mle-utils
-#' @return the variance co-variance matrix
+#' @return \code{vcov.triangle_mle}: the variance co-variance matrix
 #' @method vcov triangle_mle
 #' @export
 vcov.triangle_mle <- function(object, ...)
@@ -110,7 +111,7 @@ vcov.triangle_mle <- function(object, ...)
 }
 
 #' @rdname mle-utils
-#' @return an object of class profile.mle
+#' @return \code{profile.triangle_mle}: an object of class \code{profile.mle}
 #' @param fitted an object of class triangle_mle
 #' @export
 #'
@@ -151,8 +152,8 @@ profile.triangle_mle <- function(fitted, ...)
   }
 
   # up
-  abc <- list(a=B0[1], b=B0[2], c=B0[3])
-  z <- list(a=0, b=0, c=0)
+  abc <- list(a = B0[1], b = B0[2], c = B0[3])
+  z <- list(a = 0, b = 0, c = 0)
   for (j in 1:3)
   {
     # if any parameters have been fixed and given 0 variance
@@ -160,6 +161,7 @@ profile.triangle_mle <- function(fitted, ...)
     if (std.err[j] == 0)
     {
       z[[j]] <- c(z[[j]], 1000, -1000, 2000)
+      # original estimates, a little larger, a little lower, larger again
       abc[[j]] <- c(abc[[j]],
                     ifelse(B0[j] == 0, B0[j] + 0.000001, B0[j] + B0[j]*0.000001),
                     ifelse(B0[j] == 0, B0[j] - 0.000001, B0[j] - B0[j]*0.000001),
@@ -223,9 +225,9 @@ profile.triangle_mle <- function(fitted, ...)
 # @exportS3Method stats::confint
 
 #' @rdname mle-utils
-#' @param parm parameters
-#' @param level confidence interval level
-#' @return an object of class profile.mle
+#' @param parm parameters to be given confidence intervals passed to \code{stats4::confint}
+#' @param level confidence interval level passed to \code{stats4::confint}
+#' @return \code{confint.triangle_mle}: a matrix of parameter confidence intervals
 #' @method confint triangle_mle
 #' @export
 #' @importClassesFrom stats4 profile.mle

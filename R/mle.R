@@ -403,8 +403,8 @@ variance_rth_order_stat <- function(n, r, a, b, c)
 #'
 #' @param x sample from a triangle distribution
 #' @param debug if \code{TRUE} then the function will check the input parameters
-#' @param maxiter the maximum number of cycles of optimization between maximizing a and b given c
-#' and maximizing c given a an b
+#' @param maxiter the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
+#' and maximizing \code{c} given \code{a} and \code{b}
 #'
 #' @return an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,
 #' variance co-variance matrix, minimum negative log likelihood, details of the optimization
@@ -413,6 +413,9 @@ variance_rth_order_stat <- function(n, r, a, b, c)
 #'
 #' @examples
 #' xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+#' triangle_mle(xtest)
+#'
+#' xtest <- rtriangle(20, 1, 5, 3.5)
 #' triangle_mle(xtest)
 triangle_mle <- function(x, debug = FALSE, maxiter = 100)
 {
@@ -474,6 +477,9 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
 #'
 #' @examples
 #' xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+#' standard_triangle_mle(xtest)
+#'
+#' xtest <- rtriangle(20, 0, 1, 0.63)
 #' standard_triangle_mle(xtest)
 standard_triangle_mle <- function(x, debug = FALSE)
 {

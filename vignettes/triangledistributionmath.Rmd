@@ -71,7 +71,7 @@ Integrating equation (3) to find $E(x)$,
 $$E(X)=\int xf(x)dx = \frac{h}{c-a}\int_a^c (x^2-ax) dx + 
 \frac{h}{c-b}\int_c^b (x^2-bx) dx$$
 
-$$=\frac{a+b+c}{3}\ \ \ \ (3)$$
+$$=\frac{a+b+c}{3}\ \ \ \ (4)$$
 
 ## Triangle Variance
 
@@ -94,11 +94,11 @@ $$f(z) =
     \frac{h}{c_l - b_l}(z - b_l) & \mbox{if } c_l < z \leq b_l \\
     0 & \mbox{otherwise}
   \end{array}
-\right.\ \ \ \ (4)$$
+\right.\ \ \ \ (5)$$
 
 However,
 
-$$E({\phi}^z) \neq {\phi}^{E(z)}\ \ \ \ (5)$$
+$$E({\phi}^z) \neq {\phi}^{E(z)}\ \ \ \ (6)$$
 
 Therefore, transforming...
 
@@ -119,7 +119,7 @@ $$g(y) =
     \frac{2}{(c_l-b_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
     0 & \mbox{otherwise}
   \end{array}
-\right.\ \ \ \ (5)$$
+\right.\ \ \ \ (7)$$
 
 Define:
 
@@ -154,11 +154,17 @@ $$=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_
 
 $$=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]$$
 
-## Method of Moments
+## Method of Moments Estimation
 
 $$E(x) = \frac{a + b + c}{3}$$
 
-$$c = 3E(x) - a - b = 3E(x) - \min(x) - \max(x)$$
+$$c = 3E(x) - a - b$$
+
+$$\hat{a} = min(x)$$
+
+$$\hat{b} = max(x)$$
+
+$$\hat{c} = 3\bar{x} - \min(x) - \max(x)$$
 
 ## Maximum Likelihood Estimation
 
@@ -253,20 +259,20 @@ $$ = -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)$$
 
 #### Case 2 $a \lt c = b$
 
-$$ = - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) $$
+$$ nLL = - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) $$
 
 $$ = -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)$$
 
 #### Case 3 a \lt c \lt b
 
-$$ = - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)$$
+$$ nLL = - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)$$
 
 $$ = -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)$$
 
 ### Gradient of the negative Log Likelihood Given $c$:
 
 The negative log likelihood is not differentiable with respect to $c$ because the limits of the sum ($n_1$ and $n_2$) are
-functions of $c$.  There the gradient and hessian are derived as if $c$ is fixed.
+functions of $c$.  Therefore the gradient and hessian are derived as if $c$ is fixed.
 
 #### Case 1 $a = c \lt b$
 
@@ -280,7 +286,7 @@ $$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n}
 
 $$\frac{\partial nLL}{\partial b} = \frac{n}{b-a}$$
 
-#### Case 3 a \lt c \lt b
+#### Case 3 $a \lt c \lt b$
 
 $$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}$$
 

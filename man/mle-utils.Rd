@@ -37,32 +37,32 @@
 
 \item{x}{the \code{triangle_mle} object}
 
-\item{k}{the penalty per parameter to be used; the default k = 2}
+\item{k}{the penalty per parameter to be used; the default \code{k = 2}}
 
 \item{fitted}{an object of class triangle_mle}
 
-\item{parm}{parameters}
+\item{parm}{parameters to be given confidence intervals passed to \code{stats4::confint}}
 
-\item{level}{confidence interval level}
+\item{level}{confidence interval level passed to \code{stats4::confint}}
 }
 \value{
 an object of class summary.mle
 
-x invisibly
+\code{print.triangle_mle}: \code{x} invisibly
 
-a vector of coefficients
+\code{coef.triangle_mle}: a vector of coefficients
 
-an object of class logLik
+\code{logLik.triangle_mle}: an object of class \code{logLik}
 
-the AIC
+\code{AIC.triangle_mle}: the AIC
 
-the BIC
+\code{BIC.triangle_mle}: the BIC
 
-the variance co-variance matrix
+\code{vcov.triangle_mle}: the variance co-variance matrix
 
-an object of class profile.mle
+\code{profile.triangle_mle}: an object of class \code{profile.mle}
 
-an object of class profile.mle
+\code{confint.triangle_mle}: a matrix of parameter confidence intervals
 }
 \description{
 Utility Methods for S3 class triangle_mle
