@@ -33,18 +33,10 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       GITHUB_PAT: ${{ secrets.MY_PAT }}
-      R_KEEP_PKG_SOURCE: yes
-      # https://github.com/r-lib/actions/issues/738
-      PKG_SYSREQS: false
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: dependencies on Linux not met by setup-r@v2
-        # https://github.com/r-lib/actions/issues/738
-        if: runner.os == 'Linux'
-        run: sudo apt-get install -y make libicu-dev libxml2-dev libssl-dev pandoc librdf0-dev libnode-dev libcurl4-gnutls-dev
 
       - name: R setup
         uses: r-lib/actions/setup-r@v2
@@ -77,7 +69,7 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-          sudo apt-get install libcurl4-openssl-dev libicu-dev texlive-latex-base libicu66
+          sudo apt-get install libcurl4-openssl-dev libicu-dev texlive-latex-base
 
       - name: Install dependencies
         run: |
