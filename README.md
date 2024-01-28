@@ -122,7 +122,8 @@ x <- rtriangle(20, 0, 2, 1.5)
 triangle_mom(x)
 ```
 
-    ## [1] 0.6341961 1.9096262 1.4197678
+    ##         a         b         c 
+    ## 0.6341961 1.9096262 1.4197678
 
 #### triangle maximum likelihood estimates
 
