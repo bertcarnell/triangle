@@ -365,16 +365,34 @@ f_rth_order_stat <- function(x, n, r, a, b, c)
 #'
 #' @return the expected value
 #'
-#' @importFrom stats integrate
 #' @examples
 #' mean_rth_order_stat(10, 5, 0, 1, 0.5)
 mean_rth_order_stat <- function(n, r, a, b, c)
 {
-  integrand <- function(x, n, r, a, b, c) {x * f_rth_order_stat(x, n, r, a, b, c)}
-  stats::integrate(integrand, lower = a, upper = b, n = n, r = r, a = a, b = b, c = c)
+  # n <- 200
+  # r <- 100
+  # a <- 0
+  # b <- 1
+  # c <- 0.5
+  if (n > 10) {
+    return(mean_rth_order_stat_numeric(n, r, a, b, c))
+  } else {
+    coefs1 <- sapply(0:(n-r), function(k) {
+      choose(n-r, k) * (b-a)^(k-n) * (c-a)^{n-k} * (-1)^(n-r-k) *
+        (c/(n-k) - (c-a)/(n-k)/(2*n-2*k+1))
+    })
+
+    coefs2 <- sapply(0:(r-1), function(k) {
+      choose(r-1, k) * (b-a)^(k-n) * (c-b)^{n-k} *
+        (-c/(n-k) + (c-b)/(n-k)/(2*n-2*k+1))
+    })
+
+    return(ifelse(c > a, r*choose(n, r)*sum(coefs1), 0) +
+             ifelse(c < b, r*choose(n, r)*(-1)^(n-r)*sum(coefs2), 0))
+  }
 }
 
-#' Variance of the rth order statistic
+#' Expected value of the rth order statistic using numeric integration
 #'
 #' @noRd
 #'
@@ -388,13 +406,67 @@ mean_rth_order_stat <- function(n, r, a, b, c)
 #'
 #' @importFrom stats integrate
 #' @examples
+#' mean_rth_order_stat_numeric(10, 5, 0, 1, 0.5)
+mean_rth_order_stat_numeric <- function(n, r, a, b, c)
+{
+  integrand <- function(x, n, r, a, b, c) {x * f_rth_order_stat(x, n, r, a, b, c)}
+  stats::integrate(integrand, lower = a, upper = b, n = n, r = r, a = a, b = b, c = c)$value
+}
+
+#' Variance of the rth order statistic
+#'
+#' @noRd
+#'
+#' @param n number of order statistics
+#' @param r the order statistic number
+#' @param a the minimum support of the triangle distribution \code{a < b}, \code{a <= min(z)}
+#' @param b the maximum support of the triangle distribution \code{b >= max(z)}
+#' @param c the mode of the triangle distribution
+#'
+#' @return the variance
+#'
+#' @examples
 #' variance_rth_order_stat(10, 5, 0, 1, 0.5)
 variance_rth_order_stat <- function(n, r, a, b, c)
 {
+  if (n > 10) {
+    variance_rth_order_stat_numeric(n, r, a, b, c)
+  } else {
+    coefs1 <- sapply(0:(n-r), function(k) {
+      choose(n-r, k) * (b-a)^(k-n) * (c-a)^(n-k) * (-1)^(n-r-k) / (n-k) *
+        (c^2 - 2*c*(c-a)/(2*n-2*k+1) + 2*(c-a)^2/(2*n-2*k+1)/(2*n-2*k+2))
+    })
+    coefs2 <- sapply(0:(r-1), function(k) {
+      choose(r-1, k) * (b-a)^(k-n) * (c-b)^(n-k)/(n-k) *
+        (-c^2 + 2*c*(c-b)/(2*n-2*k+1) - 2*(c-b)^2/(2*n-2*k+1)/(2*n-2*k+2))
+    })
+    m <- mean_rth_order_stat(n, r, a, b, c)
+    return(ifelse(c > a, r*choose(n, r)*sum(coefs1), 0) +
+      ifelse(c < b, r*choose(n, r)*(-1)^(n-r)*sum(coefs2), 0) - m^2)
+  }
+}
+
+#' Variance of the rth order statistic using numeric integration
+#'
+#' @noRd
+#'
+#' @param n number of order statistics
+#' @param r the order statistic number
+#' @param a the minimum support of the triangle distribution \code{a < b}, \code{a <= min(z)}
+#' @param b the maximum support of the triangle distribution \code{b >= max(z)}
+#' @param c the mode of the triangle distribution
+#'
+#' @return the variance
+#'
+#' @importFrom stats integrate
+#' @examples
+#' variance_rth_order_stat_numeric(10, 5, 0, 1, 0.5)
+variance_rth_order_stat_numeric <- function(n, r, a, b, c)
+{
   integrand <- function(x, n, r, a, b, c) {x * x * f_rth_order_stat(x, n, r, a, b, c)}
   E_x2 <- stats::integrate(integrand, lower = a, upper = b, n = n, r = r, a = a, b = b, c = c)
-  E_x <- mean_rth_order_stat(n, r, a, b, c)
-  E_x2$value - E_x$value * E_x$value
+  E_x <- mean_rth_order_stat_numeric(n, r, a, b, c)
+  E_x2$value - E_x * E_x
 }
 
 #' Maximum likelihood estimate of the triangle distribution parameters
@@ -450,6 +522,14 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
   }
 
   var_chat <- variance_rth_order_stat(length(x), mle_c2$r_hat, mle_ab$a, mle_ab$b, mle_c2$c_hat)
+  if (any(var_chat < 0) | debug) {
+    cat("\nNegative Varince in c hat\n")
+    cat("n=", length(x), "\n")
+    cat("r=", mle_c2$r_hat, "\n")
+    cat("a=", mle_ab$a, "\n")
+    cat("b=", mle_ab$b, "\n")
+    cat("c=", mle_c2$c_hat, "\n")
+  }
   vcov <- rbind(cbind(solve(mle_ab$hessian_ab), c(0, 0)), c(0, 0, var_chat))
   dimnames(vcov) <- list(c("a", "b", "c"), c("a", "b", "c"))
 

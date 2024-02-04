@@ -64,22 +64,36 @@ $$f(x) =
 	\end{array}
 \right.\ \ \ \ (3)$$
 
+## Triangle Distribution Function
+
+$$F_{x \le c}(x) = \int_{-\infty}^{x}f(t)dt = \int_a^x \frac{2(t-a)}{(b-a)(c-a)} dt$$
+
+$$ = \frac{(x-a)^2}{(b-a)(c-a)}$$
+
+$$F_{x \gt c}(x) = 1 - \int_x^b \frac{2(t-b)}{(b-a)(c-b)} dt$$
+$$ = 1 + \frac{(x - b)^2}{(b-a)(c-b)}$$
+
 ## Triangle Mean
 
 Integrating equation (3) to find $E(x)$,
 
-$$E(X)=\int xf(x)dx = \frac{h}{c-a}\int_a^c (x^2-ax) dx + 
-\frac{h}{c-b}\int_c^b (x^2-bx) dx$$
-
-$$=\frac{a+b+c}{3}\ \ \ \ (4)$$
+$$
+\begin{align}
+E(X) &= \int xf(x)dx = \frac{2}{(b-a)(c-a)}\int_a^c (x^2-ax) dx + 
+\frac{2}{(b-a)(c-b)}\int_c^b (x^2-bx) dx \\
+&= \frac{a+b+c}{3}\ \ \ \ (4)
+\end{align}
+$$
 
 ## Triangle Variance
 
-$$V(X) = E(X^2) - \big(E(X)\big)^2 = \int x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2$$
-
-$$=\frac{h}{c-a}\int_{a}^{c} x^2(x-a) dx + \frac{h}{c-b} \int_{c}^{b} x^2(x-b) dx- \bigg(\frac{a+b+c}{3}\bigg)^2$$
-
-$$=\frac{a^2+b^2+c^2-ab-ac-bc}{18}$$
+$$
+\begin{align}
+V(X) &= E(X^2) - \big(E(X)\big)^2 = \int x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2 \\
+&= \frac{2}{(b-a)(c-a)}\int_{a}^{c} x^2(x-a) dx + \frac{2}{(b-a)(c-b)} \int_{c}^{b} x^2(x-b) dx- \bigg(\frac{a+b+c}{3}\bigg)^2 \\
+&= \frac{a^2+b^2+c^2-ab-ac-bc}{18}
+\end{align}
+$$
 
 ## Logarithmic Triangle distribution
 
@@ -129,30 +143,41 @@ $$\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}$$
 
 Finding the CDF, 
 
-$$G(y)=\int_{-\infty}^y g(y)dy$$
+$$G(y) = \int_{-\infty}^y g(y)dy$$
 
-$$\mbox{for}\ a \leq y \leq c,\ \ G(y) = \frac{\beta_1}{\log({\phi})} \int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy$$
+$$
+\begin{align}
+\mbox{for}\ a \leq y \leq c,\ \ G(y) &= \frac{\beta_1}{\log({\phi})} \int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy \\
+&=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]
+\end{align}
+$$
 
-$$=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]$$
-
-$$\mbox{for}\ c < y \leq b,\ \ G(y) = G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy$$
-
-$$=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]$$
+$$
+\begin{align}
+\mbox{for}\ c < y \leq b,\ \ G(y) &= G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy \\
+&=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]
+\end{align}
+$$
 
 Checking that the CDF is 1 at b,
 
-$$G(b) = \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} + \frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)}$$
-
-$$= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1$$
+$$
+\begin{align}
+G(b) &= \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} + \frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)} \\
+&= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1
+\end{align}
+$$
 
 Now calculating $E(y)$,
 
-$$E(y) = \int y\ g(y)\ dy$$
-
-$$=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy + 
-\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})} - b_l\bigg]dy$$
-
-$$=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]$$
+$$
+\begin{align}
+E(y) &= \int y\ g(y)\ dy \\
+&=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy + 
+\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})} - b_l\bigg]dy \\
+&=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]
+\end{align}
+$$
 
 ## Method of Moments Estimation
 
@@ -201,7 +226,7 @@ the $r^{th}$ and $r+1$ order statistics.  For notation purposes, also define $X_
 
 $$\large \max_{0 \le c \le 1} L(x|c) = \max_{r \ \epsilon \ (0,\dots,n)} \ \ \max_{x_{(r)} \le c \le x_{(r+1)}} \ \ L(x|c)$$
 
-#### Case 1.  $c$ is between the first and second to last order statistic $r \ \epsilon \ (1, \dots, n-1)$
+#### Case 1:  $c$ is between the first and second to last order statistic $r \ \epsilon \ (1, \dots, n-1)$
 
 Noticing that maximizing the likelihood is equivalent to minimizing the denominator:
 
@@ -221,7 +246,7 @@ $$\frac{dz}{dc} = rc^{(r-1)}(1-c)^{n-r} + c^r(n-r)(1-c)^{n-r-1}(-1) = c^{(r-1)}(
 $\frac{dz}{dc} = 0$ at $c=0,\ 1,\ \frac{r}{n}$.  At $0 < c < \frac{r}{n}$, $z$ is positive, and at $\frac{r}{n} < c < 1$, $z$ is negative.
 Therefore, $z$ is unimodal on $(0,1)$.
 
-#### Case 2.  $c$ is between 0 and the first order statistic $r = 0$
+#### Case 2:  $c$ is between 0 and the first order statistic $r = 0$
 
 $$\large \max L(x|c) = \max_{0 \le c \le x_{(1)}} \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-c} = \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-x_{(1)}}$$
 
@@ -229,7 +254,7 @@ Choosing the largest endpoint in the interval, creates the smallest denominator,
 
 Therefore, for this case, it is sufficient to test the likelihood using $c$ at the first sampled point.
 
-#### Case 3.  $c$ is between the last order statistic $r = n$ and 1
+#### Case 3:  $c$ is between the last order statistic $r = n$ and 1
 
 $$\large \max L(x|c) = \max_{x_{(n)} \le c \le 1} \prod_{i=1}^{n} \frac{x_{(i)}}{c} = \prod_{i=1}^{n} \frac{x_{(i)}}{x_{(n)}}$$
 
@@ -245,48 +270,60 @@ so the test must be performed iteratively as $a$ and $b$ are separately optimize
 
 ### Negative Log Likelihood
 
-$$nLL = -\log(L) = -\log\left(\prod_i^n f(x_i)\right)$$
-
-$$ = - \sum_i^n \log\left(f(x_i)\right) = - \sum_{i: \ a \le x_i \lt c}^{n_1} \log\left(f(x_i)\right) - \sum_{i: \ c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)$$
+$$
+\begin{align}
+nLL &= -\log(L) = -\log\left(\prod_i^n f(x_i)\right) \\
+&= - \sum_i^n \log\left(f(x_i)\right) = - \sum_{i: \ a \le x_i \lt c}^{n_1}  \log\left(f(x_i)\right) - \sum_{i: \ c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)
+\end{align}
+$$
 
 where $n = n_1 + n_2$
 
-#### Case 1 $a = c \lt b$
+#### Case 1:  $a = c \lt b$
 
-$$ nLL = - \sum_{i}^{n} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)$$
+$$
+\begin{align}
+nLL &= - \sum_{i}^{n} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c) \\
+&= -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)
+\end{align}
+$$
 
-$$ = -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)$$
+#### Case 2:  $a \lt c = b$
 
-#### Case 2 $a \lt c = b$
+$$
+\begin{align}
+nLL &= - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) \\
+&= -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)
+\end{align}
+$$
 
-$$ nLL = - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) $$
+#### Case 3:  $a \lt c \lt b$
 
-$$ = -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)$$
-
-#### Case 3 a \lt c \lt b
-
-$$ nLL = - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)$$
-
-$$ = -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)$$
+$$
+\begin{align}
+nLL &= - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c) \\
+&= -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)
+\end{align}
+$$
 
 ### Gradient of the negative Log Likelihood Given $c$:
 
 The negative log likelihood is not differentiable with respect to $c$ because the limits of the sum ($n_1$ and $n_2$) are
 functions of $c$.  Therefore the gradient and hessian are derived as if $c$ is fixed.
 
-#### Case 1 $a = c \lt b$
+#### Case 1:  $a = c \lt b$
 
 $$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a}$$
 
 $$\frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}$$
 
-#### Case 2 $a \lt c = b$
+#### Case 2:  $a \lt c = b$
 
 $$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i - a}$$
 
 $$\frac{\partial nLL}{\partial b} = \frac{n}{b-a}$$
 
-#### Case 3 $a \lt c \lt b$
+#### Case 3:  $a \lt c \lt b$
 
 $$\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}$$
 
@@ -294,7 +331,7 @@ $$\frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_
 
 ### Hessian of the negative Log Likelihood Given $c$:
 
-#### Case 1 $a = c \lt b$
+#### Case 1:  $a = c \lt b$
 
 $$\frac{\partial^2nLL}{\partial a^2} = - \frac{n}{(b-a)^2}$$
 
@@ -302,7 +339,7 @@ $$\frac{\partial^2 nLL}{\partial b^2} = -\frac{n}{(b-a)^2} - \frac{n}{(b-c)^2} +
 
 $$\frac{\partial^2 nLL}{\partial a\partial b} = \frac{\partial^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}$$
 
-#### Case 2 $a \lt c = b$
+#### Case 2:  $a \lt c = b$
 
 $$\frac{\partial^2 nLL}{\partial a^2} = - \frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i - a)^2}$$
 
@@ -310,7 +347,7 @@ $$\frac{\partial^2 nLL}{\partial b^2} = - \frac{n}{(b-a)^2}$$
 
 $$\frac{\partial^2 nLL}{\partial a\partial b} = \frac{\partial^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}$$
 
-#### Case 3 $a \lt c \lt b$
+#### Case 3:  $a \lt c \lt b$
 
 $$\frac{\partial^2 nLL}{\partial a^2} = - \frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i - a)^2}$$
 
@@ -341,11 +378,87 @@ $$
 
 #### $r^{th}$ order statistic
 
-$$f(x_{(r)}) = \frac{n!}{(r-1)!(n-r)!} f(x) [F(x)]^{(r-1)}[1-F(x)]^{(n-r)}$$
+$$f(x_{(r)}) = r {n \choose r} f(x) [F(x)]^{r-1}[1-F(x)]^{n-r}$$
 
-A closed form solution to $V(X_{(r)})$ is not easily obtainable for the triangle,
-so numerical integration is used with $f(x)$ as `dtriangle` and $F(x)$ as `ptriangle`.
+#### Expected value of the $r^{th}$ order statistic
 
-$$V\left(X_{(r)}\right) = \int_a^b x^2 f(x_{(r)}) dx - \left[\int_a^b x f(x_{(r)}) dx \right]^2$$
+$$
+\begin{align}
+E(X_{(r)}) &= \int x f(x_{(r)}) dx \\
+&= \int_a^c xr {n \choose r} \frac{2(x-a)}{(b-a)(c-a)} \left(\frac{(x-a)^2}{(b-a)(c-a)}\right)^{r-1}\left(1 - \frac{(x-a)^2}{(b-a)(c-a)}\right)^{n-r}dx \\
+&+ \int_c^b xr {n \choose r} \frac{2(x-b)}{(b-a)(c-b)} \left(1+\frac{(x-b)^2}{(b-a)(c-b)}\right)^{r-1}\left(- \frac{(x-b)^2}{(b-a)(c-b)}\right)^{n-r}dx
+\end{align}
+$$
+
+To clean up the notation a little, define:
+
+$$\gamma_0 = 2r {n \choose r}$$
+
+$$\gamma_1 = (b-a)(c-a)$$
+
+$$\gamma_2 = (b-a)(c-b)$$
+
+Continuing:
+
+$$E(X_{(r)}) = \int_a^c \frac{\gamma_0}{\gamma_1^n} x(x-a)^{2r-1} \left(\gamma_1 - (x-a)^2\right)^{n-r}dx + \int_c^b \frac{\gamma_0}{\gamma_2^n} (-1)^{n-r}x(x-b)^{2n-2r+1} \left(\gamma_2 + (x-b)^2\right)^{r-1}dx$$
+
+By using a binomial expansion, we can prevent having to integrate by parts multiple times.
+
+$$(a+b)^n = \sum_{k=0}^n {n \choose k} a^kb^{n-k}$$
+
+$$
+\begin{align}
+E(X_{(r)}) &= \int_a^c \frac{\gamma_0}{\gamma_1^n} x(x-a)^{2r-1} \sum_{k=0}^{n-r} {n-r \choose k} \gamma_1^k (-1)^{n-r-k}(x-a)^{2n-2r-2k}dx \\
+&+ \int_c^b \frac{\gamma_0}{\gamma_2^n} (-1)^{n-r}x(x-b)^{2n-2r+1} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k (x-b)^{2r-2-2k}dx
+\end{align}
+$$
+
+$$
+\begin{align}
+E(X_{(r)}) &= \frac{\gamma_0}{\gamma_1^n} \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^k (-1)^{n-r-k}\int_a^c x(x-a)^{2n-2k-1}dx \\
+&+ \frac{\gamma_0}{\gamma_2^n} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k \int_c^b x(x-b)^{2n-2k-1}dx
+\end{align}
+$$
+
+$$
+\begin{align}
+E(X_{(r)}) &= \gamma_0 \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^{k-n} (-1)^{n-r-k} \left[\frac{c(c-a)^{2n-2k}}{2n-2k} - \frac{(c-a)^{2n-2k+1}}{(2n-2k)(2n-2k+1)}\right] \\
+&+ \gamma_0 (-1)^{n-r} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^{k-n}  \left[\frac{-c(c-b)^{2n-2k}}{2n-2k}+\frac{(c-b)^{2n-2k+1}}{(2n-2k)(2n-2k+1)}\right]
+\end{align}
+$$
+
+$$
+\begin{align}
+E(X_{(r)}) &= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \left[\frac{c}{n-k} - \frac{c-a}{(n-k)(2n-2k+1)}\right] \\
+&+ r {n \choose r} (-1)^{n-r} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n} (c-b)^{n-k} \left[\frac{-c}{n-k}+\frac{c-b}{(n-k)(2n-2k+1)}\right]
+\end{align}
+$$
+
+#### Expected Value of $r^{th}$ order statistic squared
+
+$$
+\begin{align}
+E(X_{(r)}^2) &= \frac{\gamma_0}{\gamma_1^n} \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^k (-1)^{n-r-k}\int_a^c x^2(x-a)^{2n-2k-1}dx \\
+&+ \frac{\gamma_0}{\gamma_2^n} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k \int_c^b x^2(x-b)^{2n-2k-1}dx
+\end{align}
+$$
+
+$$
+\begin{align}
+E(X_{(r)}^2) &= \gamma_0 \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^{k-n} (-1)^{n-r-k} \frac{(c-a)^{2n-2k}}{2n-2k}\left[c^2 - \frac{2c(c-a)}{2n-2k+1} + \frac{2(c-a)^2}{(2n-2k+1)(2n-2k+2)}\right] \\
+&+ \gamma_0 (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^{k-n}  \frac{(c-b)^{2n-2k}}{2n-2k}\left[-c^2 + \frac{2c(c-b)}{2n-2k+1}-\frac{2(c-b)^2}{(2n-2k+1)(2n-2k+2)}\right]
+\end{align}
+$$
+
+$$
+\begin{align}
+E(X_{(r)}^2) &= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \frac{1}{n-k}\left[c^2 - \frac{2c(c-a)}{2n-2k+1} + \frac{2(c-a)^2}{(2n-2k+1)(2n-2k+2)}\right] \\
+&+ r {n \choose r} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n} (c-b)^{n-k} \frac{1}{n-k}\left[-c^2 + \frac{2c(c-b)}{2n-2k+1}-\frac{2(c-b)^2}{(2n-2k+1)(2n-2k+2)}\right]
+\end{align}
+$$
+
+#### Variance of the $r^{th}$ order statistic
+
+$$V\left(X_{(r)}\right) = E(X_{(r)}^2) - \left[E(X_{(r)})\right]^2$$
 
 

@@ -95,15 +95,31 @@ test_that("f_rth_order_stat works", {
 
 test_that("mean_rth_order_stat works", {
   temp <- mean_rth_order_stat(10, 5, 0, 1, 0.5)
-  expect_true(temp$value >= 0 & temp$value <= 1)
-  expect_true(temp$value < 0.5)
+  expect_true(temp >= 0 & temp <= 1)
+  expect_true(temp < 0.5)
+
   temp <- mean_rth_order_stat(10, 6, 0, 1, 0.5)
-  expect_true(temp$value > 0.5)
+  expect_true(temp > 0.5)
 
   temp <- mean_rth_order_stat(10, 1, 0, 1, 0.5)
-  expect_true(temp$value >= 0 & temp$value <= 1)
+  expect_true(temp >= 0 & temp <= 1)
+
   temp <- mean_rth_order_stat(10, 10, 0, 1, 0.5)
-  expect_true(temp$value >= 0 & temp$value <= 1)
+  expect_true(temp >= 0 & temp <= 1)
+
+  expect_equal(mean_rth_order_stat_numeric(10, 5, 1, 3, 2),
+               mean_rth_order_stat(10, 5, 1, 3, 2), tolerance = 1E-6)
+  expect_equal(mean_rth_order_stat_numeric(10, 5, 1, 3, 1),
+               mean_rth_order_stat(10, 5, 1, 3, 1), tolerance = 1E-6)
+  expect_equal(mean_rth_order_stat_numeric(10, 5, 1, 3, 3),
+               mean_rth_order_stat(10, 5, 1, 3, 3), tolerance = 1E-6)
+  expect_equal(mean_rth_order_stat_numeric(10, 1, 1, 3, 2),
+               mean_rth_order_stat(10, 1, 1, 3, 2), tolerance = 1E-6)
+  expect_equal(mean_rth_order_stat_numeric(10, 10, 1, 3, 2),
+               mean_rth_order_stat(10, 10, 1, 3, 2), tolerance = 1E-4) ######
+
+  expect_true(mean_rth_order_stat(200, 100, 0, 1, 0.5) < 1)
+  expect_true(mean_rth_order_stat(200, 100, 0, 1, 0.5) > 0)
 })
 
 test_that("variance_rth_order_stat works", {
@@ -113,6 +129,17 @@ test_that("variance_rth_order_stat works", {
   expect_true(variance_rth_order_stat(10, 8, 0, 1, 0.5) >= 0)
   expect_true(variance_rth_order_stat(10, 9, 0, 1, 0.5) >= 0)
   expect_true(variance_rth_order_stat(10, 10, 0, 1, 0.5) >= 0)
+
+  expect_equal(variance_rth_order_stat_numeric(10, 5, 1, 3, 2),
+               variance_rth_order_stat(10, 5, 1, 3, 2), tolerance = 1E-6)
+  expect_equal(variance_rth_order_stat_numeric(10, 5, 1, 3, 1),
+               variance_rth_order_stat(10, 5, 1, 3, 1), tolerance = 1E-6)
+  expect_equal(variance_rth_order_stat_numeric(10, 5, 1, 3, 3),
+               variance_rth_order_stat(10, 5, 1, 3, 3), tolerance = 1E-6)
+  expect_equal(variance_rth_order_stat_numeric(10, 1, 1, 3, 2),
+               variance_rth_order_stat(10, 1, 1, 3, 2), tolerance = 1E-6)
+  expect_equal(variance_rth_order_stat_numeric(10, 10, 1, 3, 2),
+               variance_rth_order_stat(10, 10, 1, 3, 2), tolerance = 1E-3) ####
 })
 
 test_that("triangle_mle works", {
