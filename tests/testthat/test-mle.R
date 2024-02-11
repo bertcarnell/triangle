@@ -108,18 +108,48 @@ test_that("mean_rth_order_stat works", {
   expect_true(temp >= 0 & temp <= 1)
 
   expect_equal(mean_rth_order_stat_numeric(10, 5, 1, 3, 2),
-               mean_rth_order_stat(10, 5, 1, 3, 2), tolerance = 1E-6)
+               mean_rth_order_stat(10, 5, 1, 3, 2), tolerance = 1E-9)
   expect_equal(mean_rth_order_stat_numeric(10, 5, 1, 3, 1),
-               mean_rth_order_stat(10, 5, 1, 3, 1), tolerance = 1E-6)
+               mean_rth_order_stat(10, 5, 1, 3, 1), tolerance = 1E-9)
   expect_equal(mean_rth_order_stat_numeric(10, 5, 1, 3, 3),
-               mean_rth_order_stat(10, 5, 1, 3, 3), tolerance = 1E-6)
+               mean_rth_order_stat(10, 5, 1, 3, 3), tolerance = 1E-9)
   expect_equal(mean_rth_order_stat_numeric(10, 1, 1, 3, 2),
-               mean_rth_order_stat(10, 1, 1, 3, 2), tolerance = 1E-6)
+               mean_rth_order_stat(10, 1, 1, 3, 2), tolerance = 1E-9)
   expect_equal(mean_rth_order_stat_numeric(10, 10, 1, 3, 2),
-               mean_rth_order_stat(10, 10, 1, 3, 2), tolerance = 1E-4) ######
+               mean_rth_order_stat(10, 10, 1, 3, 2), tolerance = 1E-9)
 
   expect_true(mean_rth_order_stat(200, 100, 0, 1, 0.5) < 1)
   expect_true(mean_rth_order_stat(200, 100, 0, 1, 0.5) > 0)
+})
+
+test_that("mean_rth_order_stat matches multiple precision", {
+  testthat::skip_if_not_installed("Rmpfr")
+
+  expect_equal(mean_rth_order_stat(10, 5, 0, 1, 0.5),
+               mean_rth_order_stat_rmpfr(10, 5, 0, 1, 0.5), tolerance = 1E-9)
+
+  # a < c < b
+  for (r in 1:10) {
+    expect_equal(mean_rth_order_stat(10, r, 1, 3, 2),
+                 mean_rth_order_stat_rmpfr(10, r, 1, 3, 2), tolerance = 1E-4)
+  }
+  # a == c < b
+  for (r in 1:10) {
+    expect_equal(mean_rth_order_stat(10, r, 1, 3, 1),
+                 mean_rth_order_stat_rmpfr(10, r, 1, 3, 1), tolerance = 1E-9)
+  }
+  # a < c == b
+  for (r in 1:10) {
+    expect_equal(mean_rth_order_stat(10, r, 1, 3, 3),
+                 mean_rth_order_stat_rmpfr(10, r, 1, 3, 3), tolerance = 1E-9)
+  }
+
+  expect_equal(mean_rth_order_stat_base(10, 5, 0, 1, 0.5),
+               mean_rth_order_stat_rmpfr(10, 5, 0, 1, 0.5), tolerance = 1E-9)
+
+  expect_equal(0.5, mean_rth_order_stat_base(11, 6, 0, 1, 0.5))
+  expect_equal(0.5, mean_rth_order_stat_numeric(11, 6, 0, 1, 0.5))
+  expect_equal(0.5, mean_rth_order_stat_rmpfr(11, 6, 0, 1, 0.5))
 })
 
 test_that("variance_rth_order_stat works", {
@@ -131,15 +161,38 @@ test_that("variance_rth_order_stat works", {
   expect_true(variance_rth_order_stat(10, 10, 0, 1, 0.5) >= 0)
 
   expect_equal(variance_rth_order_stat_numeric(10, 5, 1, 3, 2),
-               variance_rth_order_stat(10, 5, 1, 3, 2), tolerance = 1E-6)
+               variance_rth_order_stat(10, 5, 1, 3, 2), tolerance = 1E-9)
   expect_equal(variance_rth_order_stat_numeric(10, 5, 1, 3, 1),
-               variance_rth_order_stat(10, 5, 1, 3, 1), tolerance = 1E-6)
+               variance_rth_order_stat(10, 5, 1, 3, 1), tolerance = 1E-9)
   expect_equal(variance_rth_order_stat_numeric(10, 5, 1, 3, 3),
-               variance_rth_order_stat(10, 5, 1, 3, 3), tolerance = 1E-6)
+               variance_rth_order_stat(10, 5, 1, 3, 3), tolerance = 1E-9)
   expect_equal(variance_rth_order_stat_numeric(10, 1, 1, 3, 2),
-               variance_rth_order_stat(10, 1, 1, 3, 2), tolerance = 1E-6)
+               variance_rth_order_stat(10, 1, 1, 3, 2), tolerance = 1E-9)
   expect_equal(variance_rth_order_stat_numeric(10, 10, 1, 3, 2),
-               variance_rth_order_stat(10, 10, 1, 3, 2), tolerance = 1E-3) ####
+               variance_rth_order_stat(10, 10, 1, 3, 2), tolerance = 1E-9)
+})
+
+test_that("variance_rth_order_stat matches multiple precision", {
+  testthat::skip_if_not_installed("Rmpfr")
+
+  expect_equal(variance_rth_order_stat(10, 5, 0, 1, 0.5),
+               variance_rth_order_stat_rmpfr(10, 5, 0, 1, 0.5), tolerance = 1E-9)
+
+  # a < c < b
+  for (r in 1:10) {
+    expect_equal(variance_rth_order_stat(10, r, 1, 3, 2),
+                 variance_rth_order_stat_rmpfr(10, r, 1, 3, 2), tolerance = 1E-3)
+  }
+  # a == c < b
+  for (r in 1:10) {
+    expect_equal(variance_rth_order_stat(10, r, 1, 3, 1),
+                 variance_rth_order_stat_rmpfr(10, r, 1, 3, 1), tolerance = 1E-9)
+  }
+  # a < c == b
+  for (r in 1:10) {
+    expect_equal(variance_rth_order_stat(10, r, 1, 3, 3),
+                 variance_rth_order_stat_rmpfr(10, r, 1, 3, 3), tolerance = 1E-9)
+  }
 })
 
 test_that("triangle_mle works", {

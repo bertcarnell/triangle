@@ -9,7 +9,7 @@ standard_triangle_mle(x, debug = FALSE)
 \arguments{
 \item{x}{sample from a triangle distribution}
 
-\item{debug}{if \code{TRUE} then the function will check the input parameters}
+\item{debug}{if \code{TRUE} then the function will check the input parameters and print calculation information}
 }
 \value{
 an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,

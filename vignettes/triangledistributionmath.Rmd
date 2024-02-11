@@ -356,7 +356,7 @@ $$\frac{\partial ^2 nLL}{\partial b^2} = -\frac{n}{(b-a)^2} - \frac{n_2}{(b-c)^2
 
 $$\frac{\partial ^2 nLL}{\partial a\partial b} = \frac{\partial ^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}$$
 
-### MLE Variance Co-variance
+### MLE Variance - Covariance
 
 For the optimization of $(a,b)$ given $c$, we can use the inverse of the hessian
 of the negative log likelihood for an estimate of the covariance matrix of $\hat{a}$ 
@@ -390,7 +390,7 @@ E(X_{(r)}) &= \int x f(x_{(r)}) dx \\
 \end{align}
 $$
 
-To clean up the notation a little, define:
+To simplify the notation, define:
 
 $$\gamma_0 = 2r {n \choose r}$$
 
@@ -434,7 +434,16 @@ E(X_{(r)}) &= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-
 \end{align}
 $$
 
+$$
+\begin{align}
+E(X_{(r)}) &= r {n \choose r}  \bigg[ \ \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \frac{2c(n-k)+a}{(n-k)(2(n-k) + 1)} \\
+&+ (-1)^{n-r+1} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n} (c-b)^{n-k} \frac{2c(n-k)+b}{(n-k)(2(n-k)+1)} \ \bigg]
+\end{align}
+$$
+
 #### Expected Value of $r^{th}$ order statistic squared
+
+Continuing from the above derivation:
 
 $$
 \begin{align}
@@ -460,5 +469,14 @@ $$
 #### Variance of the $r^{th}$ order statistic
 
 $$V\left(X_{(r)}\right) = E(X_{(r)}^2) - \left[E(X_{(r)})\right]^2$$
+
+#### Numerical Stability of Variance and Expected value of $r^{th}$ order statistic
+
+Although the above derivation gives an exact solution to the variance and expected
+value of the $r^{th}$ order statistic of the triangle distribution, the alternative sign
+inside the binomial sum and the large orders of magnitude over which those coefficients
+span lead to cancellation errors in the results that are not easy to solve.  Exact
+solutions can be obtained to arbitrary precision through the use a package like `Rmpfr`.
+The `triangle` package defaults to the use of numerical integration for these results.
 
 

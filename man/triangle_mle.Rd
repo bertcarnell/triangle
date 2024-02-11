@@ -9,7 +9,7 @@ triangle_mle(x, debug = FALSE, maxiter = 100)
 \arguments{
 \item{x}{sample from a triangle distribution}
 
-\item{debug}{if \code{TRUE} then the function will check the input parameters}
+\item{debug}{if \code{TRUE} then the function will check the input parameters and print calculation information}
 
 \item{maxiter}{the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
 and maximizing \code{c} given \code{a} and \code{b}}

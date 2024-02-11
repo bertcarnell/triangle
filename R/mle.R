@@ -369,27 +369,85 @@ f_rth_order_stat <- function(x, n, r, a, b, c)
 #' mean_rth_order_stat(10, 5, 0, 1, 0.5)
 mean_rth_order_stat <- function(n, r, a, b, c)
 {
-  # n <- 200
-  # r <- 100
-  # a <- 0
-  # b <- 1
-  # c <- 0.5
-  if (n > 10) {
-    return(mean_rth_order_stat_numeric(n, r, a, b, c))
-  } else {
-    coefs1 <- sapply(0:(n-r), function(k) {
-      choose(n-r, k) * (b-a)^(k-n) * (c-a)^{n-k} * (-1)^(n-r-k) *
-        (c/(n-k) - (c-a)/(n-k)/(2*n-2*k+1))
-    })
+  return(mean_rth_order_stat_numeric(n, r, a, b, c))
+}
 
-    coefs2 <- sapply(0:(r-1), function(k) {
-      choose(r-1, k) * (b-a)^(k-n) * (c-b)^{n-k} *
-        (-c/(n-k) + (c-b)/(n-k)/(2*n-2*k+1))
-    })
+#' Expected value of the rth order statistic using base precision
+#'
+#' @noRd
+#'
+#' @param n number of order statistics
+#' @param r the order statistic number
+#' @param a the minimum support of the triangle distribution \code{a < b}, \code{a <= min(z)}
+#' @param b the maximum support of the triangle distribution \code{b >= max(z)}
+#' @param c the mode of the triangle distribution
+#'
+#' @return the expected value
+#'
+#' @examples
+#' mean_rth_order_stat_base(10, 5, 0, 1, 0.5)
+mean_rth_order_stat_base <- function(n, r, a, b, c)
+{
+  coefs1 <- sapply(0:(n-r), function(k) {
+    choose(n-r, k) * (b-a)^(k-n) * (c-a)^(n-k) * (-1)^(n-r-k) *
+      (c/(n-k) - (c-a)/(n-k)/(2*n-2*k+1))
+  })
 
-    return(ifelse(c > a, r*choose(n, r)*sum(coefs1), 0) +
-             ifelse(c < b, r*choose(n, r)*(-1)^(n-r)*sum(coefs2), 0))
+  coefs2 <- sapply(0:(r-1), function(k) {
+    choose(r-1, k) * (b-a)^(k-n) * (c-b)^(n-k) *
+      (-c/(n-k) + (c-b)/(n-k)/(2*n-2*k+1))
+  })
+
+  return(ifelse(c > a, r*choose(n, r)*sum(coefs1), 0) +
+           ifelse(c < b, r*choose(n, r)*(-1)^(n-r)*sum(coefs2), 0))
+}
+
+#' Expected value of the rth order statistic using multiple precision
+#'
+#' @noRd
+#'
+#' @param n number of order statistics
+#' @param r the order statistic number
+#' @param a the minimum support of the triangle distribution \code{a < b}, \code{a <= min(z)}
+#' @param b the maximum support of the triangle distribution \code{b >= max(z)}
+#' @param c the mode of the triangle distribution
+#'
+#' @return the expected value
+#'
+#' @examples
+#' if (requireNamespace("Rmpfr", quietly = TRUE)) mean_rth_order_stat_rmpfr(10, 5, 0, 1, 0.5)
+mean_rth_order_stat_rmpfr <- function(n, r, a, b, c)
+{
+  if (!requireNamespace("Rmpfr", quietly = TRUE))
+    stop("Rmpfr is required for this function")
+
+  calc_prec <- 2^8
+  n <- as.integer(n)
+  r <- as.integer(r)
+  a <- Rmpfr::mpfr(a, calc_prec)
+  b <- Rmpfr::mpfr(b, calc_prec)
+  c <- Rmpfr::mpfr(c, calc_prec)
+
+  f1 <- function(k) {
+    (b-a)^(k-n) * (c-a)^(n-k) * (c/(n-k) - (c-a)/(n-k)/(2*n-2*k+1))
   }
+  coefs1 <- Rmpfr::sumBinomMpfr(n-r, f1, n0 = 0, alternating = TRUE, precBits = calc_prec)
+
+  f2 <- function(k) {
+    (b-a)^(k-n) * (c-b)^(n-k) * (-c/(n-k) + (c-b)/(n-k)/(2*n-2*k+1))
+  }
+  coefs2 <- Rmpfr::sumBinomMpfr(r-1, f2, n0 = 0, alternating = FALSE, precBits = calc_prec)
+
+  if (c == a) {
+    tot <- r * Rmpfr::chooseMpfr(n, r) * Rmpfr::mpfr((-1)^(n-r), calc_prec) * coefs2
+  } else if (c == b) {
+    tot <- r * Rmpfr::chooseMpfr(n, r) * coefs1
+  } else {
+    tot <- r * Rmpfr::chooseMpfr(n, r) *
+      (coefs1 + Rmpfr::mpfr((-1)^(n-r), 2^8) * coefs2)
+  }
+
+  return(as.numeric(tot))
 }
 
 #' Expected value of the rth order statistic using numeric integration
@@ -429,21 +487,86 @@ mean_rth_order_stat_numeric <- function(n, r, a, b, c)
 #' variance_rth_order_stat(10, 5, 0, 1, 0.5)
 variance_rth_order_stat <- function(n, r, a, b, c)
 {
-  if (n > 10) {
-    variance_rth_order_stat_numeric(n, r, a, b, c)
-  } else {
-    coefs1 <- sapply(0:(n-r), function(k) {
-      choose(n-r, k) * (b-a)^(k-n) * (c-a)^(n-k) * (-1)^(n-r-k) / (n-k) *
-        (c^2 - 2*c*(c-a)/(2*n-2*k+1) + 2*(c-a)^2/(2*n-2*k+1)/(2*n-2*k+2))
-    })
-    coefs2 <- sapply(0:(r-1), function(k) {
-      choose(r-1, k) * (b-a)^(k-n) * (c-b)^(n-k)/(n-k) *
-        (-c^2 + 2*c*(c-b)/(2*n-2*k+1) - 2*(c-b)^2/(2*n-2*k+1)/(2*n-2*k+2))
-    })
-    m <- mean_rth_order_stat(n, r, a, b, c)
-    return(ifelse(c > a, r*choose(n, r)*sum(coefs1), 0) +
-      ifelse(c < b, r*choose(n, r)*(-1)^(n-r)*sum(coefs2), 0) - m^2)
+  variance_rth_order_stat_numeric(n, r, a, b, c)
+}
+
+#' Variance of the rth order statistic using base summation
+#'
+#' @noRd
+#'
+#' @param n number of order statistics
+#' @param r the order statistic number
+#' @param a the minimum support of the triangle distribution \code{a < b}, \code{a <= min(z)}
+#' @param b the maximum support of the triangle distribution \code{b >= max(z)}
+#' @param c the mode of the triangle distribution
+#'
+#' @return the variance
+#'
+#' @examples
+#' variance_rth_order_stat_base(10, 5, 0, 1, 0.5)
+variance_rth_order_stat_base <- function(n, r, a, b, c)
+{
+  coefs1 <- sapply(0:(n-r), function(k) {
+    choose(n-r, k) * (b-a)^(k-n) * (c-a)^(n-k) * (-1)^(n-r-k) / (n-k) *
+      (c^2 - 2*c*(c-a)/(2*n-2*k+1) + 2*(c-a)^2/(2*n-2*k+1)/(2*n-2*k+2))
+  })
+  coefs2 <- sapply(0:(r-1), function(k) {
+    choose(r-1, k) * (b-a)^(k-n) * (c-b)^(n-k)/(n-k) *
+      (-c^2 + 2*c*(c-b)/(2*n-2*k+1) - 2*(c-b)^2/(2*n-2*k+1)/(2*n-2*k+2))
+  })
+  m <- mean_rth_order_stat_base(n, r, a, b, c)
+  return(ifelse(c > a, r*choose(n, r)*sum(coefs1), 0) +
+           ifelse(c < b, r*choose(n, r)*(-1)^(n-r)*sum(coefs2), 0) - m^2)
+}
+
+#' Variance of the rth order statistic using multi-precision computation
+#'
+#' @noRd
+#'
+#' @param n number of order statistics
+#' @param r the order statistic number
+#' @param a the minimum support of the triangle distribution \code{a < b}, \code{a <= min(z)}
+#' @param b the maximum support of the triangle distribution \code{b >= max(z)}
+#' @param c the mode of the triangle distribution
+#'
+#' @return the variance
+#'
+#' @examples
+#' if (requireNamespace("Rmpfr")) variance_rth_order_stat_rmpfr(10, 5, 0, 1, 0.5)
+variance_rth_order_stat_rmpfr <- function(n, r, a, b, c)
+{
+  if (!requireNamespace("Rmpfr", quietly = TRUE))
+    stop("Rmpfr is required for this function")
+
+  calc_prec <- 2^8
+  n <- as.integer(n)
+  r <- as.integer(r)
+  a <- Rmpfr::mpfr(a, calc_prec)
+  b <- Rmpfr::mpfr(b, calc_prec)
+  c <- Rmpfr::mpfr(c, calc_prec)
+
+  f1 <- function(k) {
+    (b-a)^(k-n) * (c-a)^(n-k) / (n-k) * (c^2 - 2*c*(c-a)/(2*n-2*k+1) + 2*(c-a)^2/(2*n-2*k+1)/(2*n-2*k+2))
   }
+  coefs1 <- Rmpfr::sumBinomMpfr(n-r, f1, n0 = 0, alternating = TRUE, precBits = calc_prec)
+
+  f2 <- function(k) {
+    (b-a)^(k-n) * (c-b)^(n-k) / (n-k) * (-c^2 + 2*c*(c-b)/(2*n-2*k+1) - 2*(c-b)^2/(2*n-2*k+1)/(2*n-2*k+2))
+  }
+  coefs2 <- Rmpfr::sumBinomMpfr(r-1, f2, n0 = 0, alternating = FALSE, precBits = calc_prec)
+
+  m <- mean_rth_order_stat_rmpfr(n, r, a, b, c)
+
+  if (c == a) {
+    tot <- r * Rmpfr::chooseMpfr(n, r) * Rmpfr::mpfr((-1)^(n-r), calc_prec) * coefs2 - m^2
+  } else if (c == b) {
+    tot <- r * Rmpfr::chooseMpfr(n, r) * coefs1 - m^2
+  } else {
+    tot <- r * Rmpfr::chooseMpfr(n, r) *
+      (coefs1 + Rmpfr::mpfr((-1)^(n-r), 2^8) * coefs2) - m^2
+  }
+
+  return(as.numeric(tot))
 }
 
 #' Variance of the rth order statistic using numeric integration
@@ -474,7 +597,7 @@ variance_rth_order_stat_numeric <- function(n, r, a, b, c)
 #' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 #'
 #' @param x sample from a triangle distribution
-#' @param debug if \code{TRUE} then the function will check the input parameters
+#' @param debug if \code{TRUE} then the function will check the input parameters and print calculation information
 #' @param maxiter the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
 #' and maximizing \code{c} given \code{a} and \code{b}
 #'
@@ -499,7 +622,7 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
   maxx <- max(x, na.rm = TRUE)
   rangex <- maxx - minx
 
-  # first determine c at a = min(x), b = max(x)
+  # first determine c at a = min(x) - 1/2 range, b = max(x) + 1/2 range
   mle_c1 <- triangle_mle_c_given_ab(x, minx - 0.5*rangex, maxx + 0.5*rangex, debug = debug)
 
   # then optimize a and b given c
@@ -521,7 +644,16 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
     count <- count + 1
   }
 
+  if (count >= maxiter)
+  {
+    warning("Maximum iterations reached in triangle_mle without convergence on c")
+  } else if (debug)
+  {
+    cat("\n", count, " iterations reached\n")
+  }
+
   var_chat <- variance_rth_order_stat(length(x), mle_c2$r_hat, mle_ab$a, mle_ab$b, mle_c2$c_hat)
+
   if (any(var_chat < 0) | debug) {
     cat("\nNegative Varince in c hat\n")
     cat("n=", length(x), "\n")
@@ -530,6 +662,7 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
     cat("b=", mle_ab$b, "\n")
     cat("c=", mle_c2$c_hat, "\n")
   }
+
   vcov <- rbind(cbind(solve(mle_ab$hessian_ab), c(0, 0)), c(0, 0, var_chat))
   dimnames(vcov) <- list(c("a", "b", "c"), c("a", "b", "c"))
 
@@ -548,7 +681,7 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
 #' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
 #'
 #' @param x sample from a triangle distribution
-#' @param debug if \code{TRUE} then the function will check the input parameters
+#' @param debug if \code{TRUE} then the function will check the input parameters and print calculation information
 #'
 #' @return an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,
 #' variance co-variance matrix, minimum negative log likelihood,
