@@ -143,7 +143,7 @@ nLL_triangle <- function(x, a, b, c, debug = FALSE)
     assertthat::assert_that(length(a) == 1, msg = "a must be a scalar")
     assertthat::assert_that(length(b) == 1, msg = "b must be a scalar")
     assertthat::assert_that(a < b, msg = "a < b")
-    assertthat::assert_that(a <= min(x), msg = "a <= min(x)")
+    assertthat::assert_that(a <= min(x), msg = paste0("a (", a, ") <= min(x) (", min(x), ")"))
     assertthat::assert_that(b >= max(x), msg = "b >= max(x)")
   }
   n <- length(x)
@@ -313,8 +313,8 @@ triangle_mle_ab_given_c <- function(x, c, debug = FALSE, start = NA, lower = NA,
   if (any(is.na(lower)) | any(is.na(upper)))
   {
     lower <- c(minx - 2*rangex, # lower end of a can be low
-               maxx + .Machine$double.eps*maxx) # lower end of b can be just above max(x)
-    upper <- c(minx - .Machine$double.eps*minx,
+               maxx + abs(.Machine$double.eps*maxx)) # lower end of b can be just above max(x)
+    upper <- c(minx - abs(.Machine$double.eps*minx),
                maxx + 2*rangex)
   }
   mle_ab <- stats::optim(par = start, fn = nLL, gr = g_nLL, x = x, c = c, debug = debug,

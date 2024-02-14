@@ -1,36 +1,28 @@
 test_that("logM works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-
-  expect_true(abs(exp(logM(xtest, 0, 1, 1)) - 0.007) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 2)) - 0.010) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 3)) - 0.011) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 4)) - 0.010) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 5)) - 0.009) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 6)) - 0.005) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 7)) - 0.004) < 0.001)
-  expect_true(abs(exp(logM(xtest, 0, 1, 8, debug = TRUE)) - 0.003) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 1)) - 0.007) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 2)) - 0.010) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 3)) - 0.011) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 4)) - 0.010) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 5)) - 0.009) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 6)) - 0.005) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 7)) - 0.004) < 0.001)
+  expect_true(abs(exp(logM(xtest_small, 0, 1, 8, debug = TRUE)) - 0.003) < 0.001)
 })
 
 test_that("rhat works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-
-  expect_equal(3, rhat(xtest, 0, 1))
-  expect_equal(3, rhat(xtest, 0, 1, debug = TRUE))
+  expect_equal(3, rhat(xtest_small, 0, 1))
+  expect_equal(3, rhat(xtest_small, 0, 1, debug = TRUE))
 })
 
 test_that("triangle_mle_c_given_ab works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+  expect_equal(0.3, triangle_mle_c_given_ab(xtest_small, 0, 1)$c_hat)
 
-  expect_equal(0.3, triangle_mle_c_given_ab(xtest, 0, 1)$c_hat)
-
-  expect_equal(0.3, triangle_mle_c_given_ab(xtest, 0, 1, debug = TRUE)$c_hat)
+  expect_equal(0.3, triangle_mle_c_given_ab(xtest_small, 0, 1, debug = TRUE)$c_hat)
 })
 
 test_that("nLL_triangle works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-
-  expect_equal(-sum(log(dtriangle(xtest, 0, 1, 0.3))),
-               nLL_triangle(xtest, 0, 1, 0.3),
+  expect_equal(-sum(log(dtriangle(xtest_small, 0, 1, 0.3))),
+               nLL_triangle(xtest_small, 0, 1, 0.3),
                tolerance = 1E-5)
 
   expect_equal(-log(1/2), nLL_triangle(1, 0, 2, 2, debug = TRUE))
@@ -39,9 +31,7 @@ test_that("nLL_triangle works", {
 })
 
 test_that("gradient_nLL_triangle_given_c works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-
-  g <- gradient_nLL_triangle_given_c(xtest, 0, 1, 0.3)
+  g <- gradient_nLL_triangle_given_c(xtest_small, 0, 1, 0.3)
 
   expect_equal(2, length(g))
   expect_true(g[1] < 0 & g[2] > 0)
@@ -52,9 +42,7 @@ test_that("gradient_nLL_triangle_given_c works", {
 })
 
 test_that("hessian_nLL_triangle_given_c works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-
-  h <- hessian_nLL_triangle_given_c(xtest, 0, 1, 0.3)
+  h <- hessian_nLL_triangle_given_c(xtest_small, 0, 1, 0.3)
 
   expect_equal(c(2, 2), dim(h))
   expect_true(all(diag(h) > 0))
@@ -64,18 +52,16 @@ test_that("hessian_nLL_triangle_given_c works", {
   expect_equal(c(-0.75, 0.75, 0.75, -0.25), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 0)))
   expect_equal(c(-1.75, 0.75, 0.75, -1.75), c(hessian_nLL_triangle_given_c(c(0,1,2), 0, 2, 1)))
 
-  h <- hessian_nLL_triangle_given_c(xtest, 0, 0.81, 0.81)
+  h <- hessian_nLL_triangle_given_c(xtest_small, 0, 0.81, 0.81)
   expect_equal(c(2, 2), dim(h))
   expect_equal(h[1,2], h[2,1])
 })
 
 test_that("triangle_mle_ab_given_c works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+  temp <- triangle_mle_ab_given_c(xtest_small, 0.3, debug = TRUE)
 
-  temp <- triangle_mle_ab_given_c(xtest, 0.3, debug = TRUE)
-
-  expect_true(temp$a < min(xtest))
-  expect_true(temp$b > max(xtest))
+  expect_true(temp$a < min(xtest_small))
+  expect_true(temp$b > max(xtest_small))
   expect_equal(0, temp$optim$convergence)
   expect_equal(c(2, 2), dim(temp$hessian_ab))
   expect_true(all(diag(temp$hessian_ab) > 0))
@@ -196,12 +182,10 @@ test_that("variance_rth_order_stat matches multiple precision", {
 })
 
 test_that("triangle_mle works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+  temp <- triangle_mle(xtest_small)
 
-  temp <- triangle_mle(xtest)
-
-  expect_true(temp$coef[1] < min(xtest))
-  expect_true(temp$coef[2] > max(xtest))
+  expect_true(temp$coef[1] < min(xtest_small))
+  expect_true(temp$coef[2] > max(xtest_small))
   expect_equivalent(0.3, temp$coef[3])
 
   expect_equal(c(3, 3), dim(temp$vcov))
@@ -209,18 +193,22 @@ test_that("triangle_mle works", {
   expect_equal(temp$vcov[1,2], temp$vcov[2,1])
 
   expect_equal(8, temp$nobs)
-  expect_true(all(temp$x == xtest))
+  expect_true(all(temp$x == xtest_small))
 
   expect_equal("triangle_mle", class(temp))
 
-  expect_equivalent(nLL_triangle(xtest, temp$coef[1], temp$coef[2], temp$coef[3]),
+  expect_equivalent(nLL_triangle(xtest_small, temp$coef[1], temp$coef[2], temp$coef[3]),
                temp$min)
   expect_equal(0, temp$details$convergence)
+
+  # check that triangles that cross 0 are fine
+  set.seed(19393)
+  xs <- rtriangle(40, -1, 5, 4)
+  expect_no_error(triangle_mle(xs))
 })
 
 test_that("standard_triangle_mle works", {
-  xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-  temp <- standard_triangle_mle(xtest)
+  temp <- standard_triangle_mle(xtest_small)
 
   expect_equivalent(0, temp$coef[1])
   expect_equivalent(1, temp$coef[2])
@@ -231,11 +219,11 @@ test_that("standard_triangle_mle works", {
   expect_equal(temp$vcov[1,2], temp$vcov[2,1])
 
   expect_equal(8, temp$nobs)
-  expect_true(all(temp$x == xtest))
+  expect_true(all(temp$x == xtest_small))
 
   expect_equal("triangle_mle", class(temp))
 
-  expect_equivalent(nLL_triangle(xtest, temp$coef[1], temp$coef[2], temp$coef[3]),
+  expect_equivalent(nLL_triangle(xtest_small, temp$coef[1], temp$coef[2], temp$coef[3]),
                     temp$min)
 })
 
