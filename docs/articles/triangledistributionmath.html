@@ -82,7 +82,7 @@
                         <h4 data-toc-skip class="author">Rob
 Carnell</h4>
             
-            <h4 data-toc-skip class="date">2024-01-28</h4>
+            <h4 data-toc-skip class="date">2024-02-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bertcarnell/triangle/blob/HEAD/vignettes/triangledistributionmath.Rmd" class="external-link"><code>vignettes/triangledistributionmath.Rmd</code></a></small>
       <div class="d-none name"><code>triangledistributionmath.Rmd</code></div>
@@ -133,23 +133,42 @@ Carnell</h4>
 \right.\ \ \ \ (3)\]</span></p>
 </div>
 <div class="section level2">
+<h2 id="triangle-distribution-function">Triangle Distribution Function<a class="anchor" aria-label="anchor" href="#triangle-distribution-function"></a>
+</h2>
+<p><span class="math display">\[F_{x \le c}(x) =
+\int_{-\infty}^{x}f(t)dt = \int_a^x \frac{2(t-a)}{(b-a)(c-a)}
+dt\]</span></p>
+<p><span class="math display">\[ =
+\frac{(x-a)^2}{(b-a)(c-a)}\]</span></p>
+<p><span class="math display">\[F_{x \gt c}(x) = 1 - \int_x^b
+\frac{2(t-b)}{(b-a)(c-b)} dt\]</span> <span class="math display">\[ = 1
++ \frac{(x - b)^2}{(b-a)(c-b)}\]</span></p>
+</div>
+<div class="section level2">
 <h2 id="triangle-mean">Triangle Mean<a class="anchor" aria-label="anchor" href="#triangle-mean"></a>
 </h2>
 <p>Integrating equation (3) to find <span class="math inline">\(E(x)\)</span>,</p>
-<p><span class="math display">\[E(X)=\int xf(x)dx =
-\frac{h}{c-a}\int_a^c (x^2-ax) dx +
-\frac{h}{c-b}\int_c^b (x^2-bx) dx\]</span></p>
-<p><span class="math display">\[=\frac{a+b+c}{3}\ \ \ \ (4)\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X) &amp;= \int xf(x)dx = \frac{2}{(b-a)(c-a)}\int_a^c (x^2-ax) dx +
+\frac{2}{(b-a)(c-b)}\int_c^b (x^2-bx) dx \\
+&amp;= \frac{a+b+c}{3}\ \ \ \ (4)
+\end{align}
+\]</span></p>
 </div>
 <div class="section level2">
 <h2 id="triangle-variance">Triangle Variance<a class="anchor" aria-label="anchor" href="#triangle-variance"></a>
 </h2>
-<p><span class="math display">\[V(X) = E(X^2) - \big(E(X)\big)^2 = \int
-x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2\]</span></p>
-<p><span class="math display">\[=\frac{h}{c-a}\int_{a}^{c} x^2(x-a) dx +
-\frac{h}{c-b} \int_{c}^{b} x^2(x-b) dx-
-\bigg(\frac{a+b+c}{3}\bigg)^2\]</span></p>
-<p><span class="math display">\[=\frac{a^2+b^2+c^2-ab-ac-bc}{18}\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+V(X) &amp;= E(X^2) - \big(E(X)\big)^2 = \int x^2f(x)dx-
+\bigg(\frac{a+b+c}{3}\bigg)^2 \\
+&amp;= \frac{2}{(b-a)(c-a)}\int_{a}^{c} x^2(x-a) dx +
+\frac{2}{(b-a)(c-b)} \int_{c}^{b} x^2(x-b) dx-
+\bigg(\frac{a+b+c}{3}\bigg)^2 \\
+&amp;= \frac{a^2+b^2+c^2-ab-ac-bc}{18}
+\end{align}
+\]</span></p>
 </div>
 <div class="section level2">
 <h2 id="logarithmic-triangle-distribution">Logarithmic Triangle distribution<a class="anchor" aria-label="anchor" href="#logarithmic-triangle-distribution"></a>
@@ -190,36 +209,46 @@ b_l}{y} &amp; \mbox{if } c &lt; y \leq b \\
 <p><span class="math display">\[\beta_1=\frac{2}{(c_l-a_l)(b_l-a_l)}\]</span></p>
 <p><span class="math display">\[\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}\]</span></p>
 <p>Finding the CDF,</p>
-<p><span class="math display">\[G(y)=\int_{-\infty}^y
+<p><span class="math display">\[G(y) = \int_{-\infty}^y
 g(y)dy\]</span></p>
-<p><span class="math display">\[\mbox{for}\ a \leq y \leq c,\ \ G(y) =
-\frac{\beta_1}{\log({\phi})} \int_a^y
-\frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy\]</span></p>
-<p><span class="math display">\[=\beta_1
-\bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2}
-+ a_l^2\bigg]\]</span></p>
-<p><span class="math display">\[\mbox{for}\ c &lt; y \leq b,\ \ G(y) =
-G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y
-\frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy\]</span></p>
-<p><span class="math display">\[=G(c) + \beta_2
-\bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2}
-+ b_l c_l\bigg]\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+\mbox{for}\ a \leq y \leq c,\ \ G(y) &amp;= \frac{\beta_1}{\log({\phi})}
+\int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy \\
+&amp;=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) -
+\frac{a_l^2}{2} + a_l^2\bigg]
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+\mbox{for}\ c &lt; y \leq b,\ \ G(y) &amp;= G(c) +
+\frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} -
+\frac{b_l}{y}dy \\
+&amp;=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l
+\log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]
+\end{align}
+\]</span></p>
 <p>Checking that the CDF is 1 at b,</p>
-<p><span class="math display">\[G(b) = \frac{c_l^2 - 2a_l c_l +
-a_l^2}{(c_l-a_l)(b_l-a_l)} +
-\frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)}\]</span></p>
-<p><span class="math display">\[= \frac{c_l-a_l}{b_l-a_l} +
-\frac{-(c_l-b_l)}{b_l-a_l} = 1\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+G(b) &amp;= \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} +
+\frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)} \\
+&amp;= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1
+\end{align}
+\]</span></p>
 <p>Now calculating <span class="math inline">\(E(y)\)</span>,</p>
-<p><span class="math display">\[E(y) = \int y\ g(y)\ dy\]</span></p>
-<p><span class="math display">\[=\frac{\beta_1}{\log({\phi})} \int_a^c
+<p><span class="math display">\[
+\begin{align}
+E(y) &amp;= \int y\ g(y)\ dy \\
+&amp;=\frac{\beta_1}{\log({\phi})} \int_a^c
 \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy +
 \frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})}
-- b_l\bigg]dy\]</span></p>
-<p><span class="math display">\[=\frac{c\beta_1}{\log^2({\phi})}
-\bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] +
-\frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 +
-\log(b) \bigg]\]</span></p>
+- b_l\bigg]dy \\
+&amp;=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) +
+\frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c}
+- \log(c) + 1 + \log(b) \bigg]
+\end{align}
+\]</span></p>
 </div>
 <div class="section level2">
 <h2 id="method-of-moments-estimation">Method of Moments Estimation<a class="anchor" aria-label="anchor" href="#method-of-moments-estimation"></a>
@@ -271,9 +300,9 @@ and <span class="math inline">\(X_{(n+1)} = 1\)</span>.</p>
 \max_{r \ \epsilon \ (0,\dots,n)} \ \ \max_{x_{(r)} \le c \le x_{(r+1)}}
 \ \ L(x|c)\]</span></p>
 <div class="section level4">
-<h4 id="case-1--c-is-between-the-first-and-second-to-last-order-statistic-r-epsilon-1-dots-n-1">Case 1. <span class="math inline">\(c\)</span> is between the first
+<h4 id="case-1-c-is-between-the-first-and-second-to-last-order-statistic-r-epsilon-1-dots-n-1">Case 1: <span class="math inline">\(c\)</span> is between the first
 and second to last order statistic <span class="math inline">\(r \
-\epsilon \ (1, \dots, n-1)\)</span><a class="anchor" aria-label="anchor" href="#case-1--c-is-between-the-first-and-second-to-last-order-statistic-r-epsilon-1-dots-n-1"></a>
+\epsilon \ (1, \dots, n-1)\)</span><a class="anchor" aria-label="anchor" href="#case-1-c-is-between-the-first-and-second-to-last-order-statistic-r-epsilon-1-dots-n-1"></a>
 </h4>
 <p>Noticing that maximizing the likelihood is equivalent to minimizing
 the denominator:</p>
@@ -300,8 +329,8 @@ c^r(n-r)(1-c)^{n-r-1}(-1) = c^{(r-1)}(1-c)^{n-r-1}(r - cn)\]</span></p>
 </div>
 </div>
 <div class="section level4">
-<h4 id="case-2--c-is-between-0-and-the-first-order-statistic-r-0">Case 2. <span class="math inline">\(c\)</span> is between 0 and the
-first order statistic <span class="math inline">\(r = 0\)</span><a class="anchor" aria-label="anchor" href="#case-2--c-is-between-0-and-the-first-order-statistic-r-0"></a>
+<h4 id="case-2-c-is-between-0-and-the-first-order-statistic-r-0">Case 2: <span class="math inline">\(c\)</span> is between 0 and the
+first order statistic <span class="math inline">\(r = 0\)</span><a class="anchor" aria-label="anchor" href="#case-2-c-is-between-0-and-the-first-order-statistic-r-0"></a>
 </h4>
 <p><span class="math display">\[\large \max L(x|c) = \max_{0 \le c \le
 x_{(1)}} \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-c} = \prod_{i=1}^{n}
@@ -313,8 +342,8 @@ using <span class="math inline">\(c\)</span> at the first sampled
 point.</p>
 </div>
 <div class="section level4">
-<h4 id="case-3--c-is-between-the-last-order-statistic-r-n-and-1">Case 3. <span class="math inline">\(c\)</span> is between the last
-order statistic <span class="math inline">\(r = n\)</span> and 1<a class="anchor" aria-label="anchor" href="#case-3--c-is-between-the-last-order-statistic-r-n-and-1"></a>
+<h4 id="case-3-c-is-between-the-last-order-statistic-r-n-and-1">Case 3: <span class="math inline">\(c\)</span> is between the last
+order statistic <span class="math inline">\(r = n\)</span> and 1<a class="anchor" aria-label="anchor" href="#case-3-c-is-between-the-last-order-statistic-r-n-and-1"></a>
 </h4>
 <p><span class="math display">\[\large \max L(x|c) = \max_{x_{(n)} \le c
 \le 1} \prod_{i=1}^{n} \frac{x_{(i)}}{c} = \prod_{i=1}^{n}
@@ -335,38 +364,50 @@ iteratively as <span class="math inline">\(a\)</span> and <span class="math inli
 <div class="section level3">
 <h3 id="negative-log-likelihood">Negative Log Likelihood<a class="anchor" aria-label="anchor" href="#negative-log-likelihood"></a>
 </h3>
-<p><span class="math display">\[nLL = -\log(L) = -\log\left(\prod_i^n
-f(x_i)\right)\]</span></p>
-<p><span class="math display">\[ = - \sum_i^n \log\left(f(x_i)\right) =
-- \sum_{i: \ a \le x_i \lt c}^{n_1} \log\left(f(x_i)\right) - \sum_{i: \
-c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+nLL &amp;= -\log(L) = -\log\left(\prod_i^n f(x_i)\right) \\
+&amp;= - \sum_i^n \log\left(f(x_i)\right) = - \sum_{i: \ a \le x_i \lt
+c}^{n_1}  \log\left(f(x_i)\right) - \sum_{i: \ c \le x_i \le b}^{n_2}
+\log\left(f(x_i)\right)
+\end{align}
+\]</span></p>
 <p>where <span class="math inline">\(n = n_1 + n_2\)</span></p>
 <div class="section level4">
-<h4 id="case-1-a-c-lt-b">Case 1 <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b"></a>
+<h4 id="case-1-a-c-lt-b">Case 1: <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b"></a>
 </h4>
-<p><span class="math display">\[ nLL = - \sum_{i}^{n} \log(2) +
-\log(b-x_i) - \log(b-a) - \log(b-c)\]</span></p>
-<p><span class="math display">\[ = -n\log(2) + n\log(b-a) + n \log(b-c)
-- \sum_{i}^{n} \log(b-x_i)\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+nLL &amp;= - \sum_{i}^{n} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c)
+\\
+&amp;= -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)
+\end{align}
+\]</span></p>
 </div>
 <div class="section level4">
-<h4 id="case-2-a-lt-c-b">Case 2 <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b"></a>
+<h4 id="case-2-a-lt-c-b">Case 2: <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b"></a>
 </h4>
-<p><span class="math display">\[ nLL = - \sum_{i}^{n} \log(2) + \log(x_i
-- a) - \log(b-a) - \log(c-a) \]</span></p>
-<p><span class="math display">\[ = -n\log(2) + n\log(b-a) + n\log(c-a) -
-\sum_{i}^{n} \log(x_i - a)\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+nLL &amp;= - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) -
+\log(c-a) \\
+&amp;= -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)
+\end{align}
+\]</span></p>
 </div>
 <div class="section level4">
-<h4 id="case-3-a-c-b">Case 3 a c b<a class="anchor" aria-label="anchor" href="#case-3-a-c-b"></a>
+<h4 id="case-3-a-lt-c-lt-b">Case 3: <span class="math inline">\(a \lt c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-3-a-lt-c-lt-b"></a>
 </h4>
-<p><span class="math display">\[ nLL = - \sum_{i: \ a \lt x_i \lt
-c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c
-\le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) -
-\log(b-c)\]</span></p>
-<p><span class="math display">\[ = -n\log(2) + n\log(b-a) + n_1\log(c-a)
-+ n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) -
-\sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+nLL &amp;= - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) -
+\log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) +
+\log(b-x_i) - \log(b-a) - \log(b-c) \\
+&amp;= -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i:
+\ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt
+b}^{n_2} \log(b-x_i)
+\end{align}
+\]</span></p>
 </div>
 </div>
 <div class="section level3">
@@ -377,7 +418,7 @@ c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c
 (<span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>) are functions of <span class="math inline">\(c\)</span>. Therefore the gradient and hessian are
 derived as if <span class="math inline">\(c\)</span> is fixed.</p>
 <div class="section level4">
-<h4 id="case-1-a-c-lt-b-1">Case 1 <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b-1"></a>
+<h4 id="case-1-a-c-lt-b-1">Case 1: <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b-1"></a>
 </h4>
 <p><span class="math display">\[\frac{\partial nLL}{\partial a} = -
 \frac{n}{b-a}\]</span></p>
@@ -385,7 +426,7 @@ derived as if <span class="math inline">\(c\)</span> is fixed.</p>
 \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}\]</span></p>
 </div>
 <div class="section level4">
-<h4 id="case-2-a-lt-c-b-1">Case 2 <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b-1"></a>
+<h4 id="case-2-a-lt-c-b-1">Case 2: <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b-1"></a>
 </h4>
 <p><span class="math display">\[\frac{\partial nLL}{\partial a} = -
 \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i -
@@ -394,7 +435,7 @@ a}\]</span></p>
 \frac{n}{b-a}\]</span></p>
 </div>
 <div class="section level4">
-<h4 id="case-3-a-lt-c-lt-b">Case 3 <span class="math inline">\(a \lt c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-3-a-lt-c-lt-b"></a>
+<h4 id="case-3-a-lt-c-lt-b-1">Case 3: <span class="math inline">\(a \lt c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-3-a-lt-c-lt-b-1"></a>
 </h4>
 <p><span class="math display">\[\frac{\partial nLL}{\partial a} = -
 \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i -
@@ -408,7 +449,7 @@ a}\]</span></p>
 <h3 id="hessian-of-the-negative-log-likelihood-given-c">Hessian of the negative Log Likelihood Given <span class="math inline">\(c\)</span>:<a class="anchor" aria-label="anchor" href="#hessian-of-the-negative-log-likelihood-given-c"></a>
 </h3>
 <div class="section level4">
-<h4 id="case-1-a-c-lt-b-2">Case 1 <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b-2"></a>
+<h4 id="case-1-a-c-lt-b-2">Case 1: <span class="math inline">\(a = c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-1-a-c-lt-b-2"></a>
 </h4>
 <p><span class="math display">\[\frac{\partial^2nLL}{\partial a^2} = -
 \frac{n}{(b-a)^2}\]</span></p>
@@ -420,7 +461,7 @@ b} = \frac{\partial^2 nLL}{\partial b\partial a} = -
 \frac{n}{(b-a)^2}\]</span></p>
 </div>
 <div class="section level4">
-<h4 id="case-2-a-lt-c-b-2">Case 2 <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b-2"></a>
+<h4 id="case-2-a-lt-c-b-2">Case 2: <span class="math inline">\(a \lt c = b\)</span><a class="anchor" aria-label="anchor" href="#case-2-a-lt-c-b-2"></a>
 </h4>
 <p><span class="math display">\[\frac{\partial^2 nLL}{\partial a^2} = -
 \frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i -
@@ -432,7 +473,7 @@ b} = \frac{\partial^2 nLL}{\partial b\partial a} = -
 \frac{n}{(b-a)^2}\]</span></p>
 </div>
 <div class="section level4">
-<h4 id="case-3-a-lt-c-lt-b-1">Case 3 <span class="math inline">\(a \lt c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-3-a-lt-c-lt-b-1"></a>
+<h4 id="case-3-a-lt-c-lt-b-2">Case 3: <span class="math inline">\(a \lt c \lt b\)</span><a class="anchor" aria-label="anchor" href="#case-3-a-lt-c-lt-b-2"></a>
 </h4>
 <p><span class="math display">\[\frac{\partial^2 nLL}{\partial a^2} = -
 \frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i -
@@ -446,7 +487,7 @@ a\partial b} = \frac{\partial ^2 nLL}{\partial b\partial a} = -
 </div>
 </div>
 <div class="section level3">
-<h3 id="mle-variance-co-variance">MLE Variance Co-variance<a class="anchor" aria-label="anchor" href="#mle-variance-co-variance"></a>
+<h3 id="mle-variance---covariance">MLE Variance - Covariance<a class="anchor" aria-label="anchor" href="#mle-variance---covariance"></a>
 </h3>
 <p>For the optimization of <span class="math inline">\((a,b)\)</span>
 given <span class="math inline">\(c\)</span>, we can use the inverse of
@@ -468,12 +509,137 @@ and let <span class="math inline">\(H^{-1}[1,1]\)</span> be the <span class="mat
 <h4 id="rth-order-statistic">
 <span class="math inline">\(r^{th}\)</span> order statistic<a class="anchor" aria-label="anchor" href="#rth-order-statistic"></a>
 </h4>
-<p><span class="math display">\[f(x_{(r)}) = \frac{n!}{(r-1)!(n-r)!}
-f(x) [F(x)]^{(r-1)}[1-F(x)]^{(n-r)}\]</span></p>
-<p>A closed form solution to <span class="math inline">\(V(X_{(r)})\)</span> is not easily obtainable for
-the triangle, so numerical integration is used with <span class="math inline">\(f(x)\)</span> as <code>dtriangle</code> and <span class="math inline">\(F(x)\)</span> as <code>ptriangle</code>.</p>
-<p><span class="math display">\[V\left(X_{(r)}\right) = \int_a^b x^2
-f(x_{(r)}) dx - \left[\int_a^b x f(x_{(r)}) dx \right]^2\]</span></p>
+<p><span class="math display">\[f(x_{(r)}) = r {n \choose r} f(x)
+[F(x)]^{r-1}[1-F(x)]^{n-r}\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="expected-value-of-the-rth-order-statistic">Expected value of the <span class="math inline">\(r^{th}\)</span>
+order statistic<a class="anchor" aria-label="anchor" href="#expected-value-of-the-rth-order-statistic"></a>
+</h4>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}) &amp;= \int x f(x_{(r)}) dx \\
+&amp;= \int_a^c xr {n \choose r} \frac{2(x-a)}{(b-a)(c-a)}
+\left(\frac{(x-a)^2}{(b-a)(c-a)}\right)^{r-1}\left(1 -
+\frac{(x-a)^2}{(b-a)(c-a)}\right)^{n-r}dx \\
+&amp;+ \int_c^b xr {n \choose r} \frac{2(x-b)}{(b-a)(c-b)}
+\left(1+\frac{(x-b)^2}{(b-a)(c-b)}\right)^{r-1}\left(-
+\frac{(x-b)^2}{(b-a)(c-b)}\right)^{n-r}dx
+\end{align}
+\]</span></p>
+<p>To simplify the notation, define:</p>
+<p><span class="math display">\[\gamma_0 = 2r {n \choose r}\]</span></p>
+<p><span class="math display">\[\gamma_1 = (b-a)(c-a)\]</span></p>
+<p><span class="math display">\[\gamma_2 = (b-a)(c-b)\]</span></p>
+<p>Continuing:</p>
+<p><span class="math display">\[E(X_{(r)}) = \int_a^c
+\frac{\gamma_0}{\gamma_1^n} x(x-a)^{2r-1} \left(\gamma_1 -
+(x-a)^2\right)^{n-r}dx + \int_c^b \frac{\gamma_0}{\gamma_2^n}
+(-1)^{n-r}x(x-b)^{2n-2r+1} \left(\gamma_2 +
+(x-b)^2\right)^{r-1}dx\]</span></p>
+<p>By using a binomial expansion, we can prevent having to integrate by
+parts multiple times.</p>
+<p><span class="math display">\[(a+b)^n = \sum_{k=0}^n {n \choose k}
+a^kb^{n-k}\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}) &amp;= \int_a^c \frac{\gamma_0}{\gamma_1^n} x(x-a)^{2r-1}
+\sum_{k=0}^{n-r} {n-r \choose k} \gamma_1^k
+(-1)^{n-r-k}(x-a)^{2n-2r-2k}dx \\
+&amp;+ \int_c^b \frac{\gamma_0}{\gamma_2^n} (-1)^{n-r}x(x-b)^{2n-2r+1}
+\sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k (x-b)^{2r-2-2k}dx
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}) &amp;= \frac{\gamma_0}{\gamma_1^n} \sum_{k=0}^{n-r}   {n-r
+\choose k} \gamma_1^k (-1)^{n-r-k}\int_a^c x(x-a)^{2n-2k-1}dx \\
+&amp;+ \frac{\gamma_0}{\gamma_2^n} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1
+\choose k} \gamma_2^k \int_c^b x(x-b)^{2n-2k-1}dx
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}) &amp;= \gamma_0 \sum_{k=0}^{n-r}   {n-r \choose k}
+\gamma_1^{k-n} (-1)^{n-r-k} \left[\frac{c(c-a)^{2n-2k}}{2n-2k} -
+\frac{(c-a)^{2n-2k+1}}{(2n-2k)(2n-2k+1)}\right] \\
+&amp;+ \gamma_0 (-1)^{n-r} \sum_{k=0}^{r-1} {r-1 \choose k}
+\gamma_2^{k-n}  \left[\frac{-c(c-b)^{2n-2k}}{2n-2k}+\frac{(c-b)^{2n-2k+1}}{(2n-2k)(2n-2k+1)}\right]
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}) &amp;= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k}
+(b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \left[\frac{c}{n-k} -
+\frac{c-a}{(n-k)(2n-2k+1)}\right] \\
+&amp;+ r {n \choose r} (-1)^{n-r} \sum_{k=0}^{r-1} {r-1 \choose k}
+(b-a)^{k-n} (c-b)^{n-k}
+\left[\frac{-c}{n-k}+\frac{c-b}{(n-k)(2n-2k+1)}\right]
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}) &amp;= r {n \choose r}  \bigg[ \ \sum_{k=0}^{n-r}   {n-r
+\choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k}
+\frac{2c(n-k)+a}{(n-k)(2(n-k) + 1)} \\
+&amp;+ (-1)^{n-r+1} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n}
+(c-b)^{n-k} \frac{2c(n-k)+b}{(n-k)(2(n-k)+1)} \ \bigg]
+\end{align}
+\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="expected-value-of-rth-order-statistic-squared">Expected Value of <span class="math inline">\(r^{th}\)</span> order
+statistic squared<a class="anchor" aria-label="anchor" href="#expected-value-of-rth-order-statistic-squared"></a>
+</h4>
+<p>Continuing from the above derivation:</p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}^2) &amp;= \frac{\gamma_0}{\gamma_1^n} \sum_{k=0}^{n-r}   {n-r
+\choose k} \gamma_1^k (-1)^{n-r-k}\int_a^c x^2(x-a)^{2n-2k-1}dx \\
+&amp;+ \frac{\gamma_0}{\gamma_2^n} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1
+\choose k} \gamma_2^k \int_c^b x^2(x-b)^{2n-2k-1}dx
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}^2) &amp;= \gamma_0 \sum_{k=0}^{n-r}   {n-r \choose k}
+\gamma_1^{k-n} (-1)^{n-r-k} \frac{(c-a)^{2n-2k}}{2n-2k}\left[c^2 -
+\frac{2c(c-a)}{2n-2k+1} + \frac{2(c-a)^2}{(2n-2k+1)(2n-2k+2)}\right] \\
+&amp;+ \gamma_0 (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k}
+\gamma_2^{k-n}  \frac{(c-b)^{2n-2k}}{2n-2k}\left[-c^2 +
+\frac{2c(c-b)}{2n-2k+1}-\frac{2(c-b)^2}{(2n-2k+1)(2n-2k+2)}\right]
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(X_{(r)}^2) &amp;= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k}
+(b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \frac{1}{n-k}\left[c^2 -
+\frac{2c(c-a)}{2n-2k+1} + \frac{2(c-a)^2}{(2n-2k+1)(2n-2k+2)}\right] \\
+&amp;+ r {n \choose r} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k}
+(b-a)^{k-n} (c-b)^{n-k} \frac{1}{n-k}\left[-c^2 +
+\frac{2c(c-b)}{2n-2k+1}-\frac{2(c-b)^2}{(2n-2k+1)(2n-2k+2)}\right]
+\end{align}
+\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="variance-of-the-rth-order-statistic">Variance of the <span class="math inline">\(r^{th}\)</span> order
+statistic<a class="anchor" aria-label="anchor" href="#variance-of-the-rth-order-statistic"></a>
+</h4>
+<p><span class="math display">\[V\left(X_{(r)}\right) = E(X_{(r)}^2) -
+\left[E(X_{(r)})\right]^2\]</span></p>
+</div>
+<div class="section level4">
+<h4 id="numerical-stability-of-variance-and-expected-value-of-rth-order-statistic">Numerical Stability of Variance and Expected value of <span class="math inline">\(r^{th}\)</span> order statistic<a class="anchor" aria-label="anchor" href="#numerical-stability-of-variance-and-expected-value-of-rth-order-statistic"></a>
+</h4>
+<p>Although the above derivation gives an exact solution to the variance
+and expected value of the <span class="math inline">\(r^{th}\)</span>
+order statistic of the triangle distribution, the alternative sign
+inside the binomial sum and the large orders of magnitude over which
+those coefficients span lead to cancellation errors in the results that
+are not easy to solve. Exact solutions can be obtained to arbitrary
+precision through the use a package like <code>Rmpfr</code>. The
+<code>triangle</code> package defaults to the use of numerical
+integration for these results.</p>
 </div>
 </div>
 </div>
