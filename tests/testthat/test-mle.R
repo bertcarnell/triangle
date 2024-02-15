@@ -205,6 +205,19 @@ test_that("triangle_mle works", {
   set.seed(19393)
   xs <- rtriangle(40, -1, 5, 4)
   expect_no_error(triangle_mle(xs))
+
+  xs <- rtriangle(40, -5, 4,-1)
+  expect_no_error(mle2 <- triangle_mle(xs))
+  ci <- confint(mle2)
+  expect_gte(ci[1,2], -5)
+  expect_lte(ci[1,1], -5)
+  expect_gte(ci[2,2], 4)
+  expect_lte(ci[2,1], 4)
+  expect_gte(ci[3,2], -1)
+  expect_lte(ci[3,1], -1)
+
+  xs <- rtriangle(40, -5, -1, -3)
+  expect_no_error(mle2 <- triangle_mle(xs))
 })
 
 test_that("standard_triangle_mle works", {
