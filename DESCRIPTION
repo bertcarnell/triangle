@@ -11,7 +11,7 @@ License: GPL (>= 2)
 URL: https://bertcarnell.github.io/triangle/, https://bertcarnell.github.io/triangle/
 BugReports: https://github.com/bertcarnell/triangle/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2
 Depends: R (>= 2.14.1)
 Collate: 
     'cdfe.R'
