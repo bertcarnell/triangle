@@ -55,7 +55,7 @@ Install the R package:
 
 ```{r echo=TRUE, eval=FALSE}
 # Stable CRAN version
-install.packages(triangle)
+install.packages("triangle")
 
 # OR development version from GitHub
 require(devtools)

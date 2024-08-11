@@ -34,7 +34,7 @@ Install the R package:
 
 ``` r
 # Stable CRAN version
-install.packages(triangle)
+install.packages("triangle")
 
 # OR development version from GitHub
 require(devtools)
@@ -122,8 +122,7 @@ x <- rtriangle(20, 0, 2, 1.5)
 triangle_mom(x)
 ```
 
-    ##         a         b         c 
-    ## 0.6341961 1.9096262 1.4197678
+    ## [1] 0.6341961 1.9096262 1.4197678
 
 #### triangle maximum likelihood estimates
 
