@@ -65,14 +65,16 @@ dtriangle <- function(x, a=0, b=1, c=(a + b)/2)
     cc <- 4
     if (any(is.na(X))) # is.na is TRUE for NA, NaN, and FALSE
     {
-      if (any(is.nan(X))) return(NaN) # to conform to qunif
+      if (any(is.nan(X))) return(NaN) # to conform to dunif
       else return(NA) # to conform to qunif
     } else if (X[aa] > X[cc] | X[bb] < X[cc] | (X[aa]==X[cc] & X[bb]==X[cc]))
     {
       warning("values required to be  a <= c <= b (at least one strict inequality)")
-      return(NaN) # to conform to behavior of qunif
-    } else if (any(is.infinite(X[aa:cc]))){
-      return(NaN)
+      return(NaN) # to conform to behavior of dunif
+    } else if (any(is.infinite(X[aa:cc])))
+    {
+      # If the statistics are in the right order, then return 0 to be consistent with dunif
+      return(0)
     } else if (X[xx] < X[aa]) {
       return(0)
     } else if (X[xx] == X[aa] & X[aa] == X[cc])

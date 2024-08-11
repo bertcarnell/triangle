@@ -4,13 +4,35 @@
 #' @rdname triangle
 #' @importFrom stats runif
 #' @export
-rtriangle <- function(n=1, a=0, b=1, c=(a + b)/2){
-  if (length(n) > 1) n <- length(n)
-  if (n < 1 | is.na(n)) stop(paste("invalid argument: n =", n))
+rtriangle <- function(n=1, a=0, b=1, c=(a + b)/2)
+{
+  if (length(n) > 1)
+  {
+    n <- length(n)
+  }
+  # this is not how runif works runif(4, c(1,2,3), c(1,2,3)) gives 1,2,3,1
+  if (length(a) > 1 | length(b) > 1 | length(c) > 1)
+  {
+    stop("a, b, and c must be atomic")
+  }
+  if (n < 1 | is.na(n))
+  {
+    stop(paste("invalid argument: n =", n))
+  }
   n <- floor(n)
-  if (any(is.na(c(a,b,c)))) return(rep(NaN, times = n)) # to match behavior of runif
-  if (a > c | b < c) return(rep(NaN, times = n)) # to match behavior of runif
-  if (any(is.infinite(c(a,b,c)))) return(rep(NaN, times = n))
+  if (any(is.na(c(a,b,c))) ||
+      any(is.infinite(c(a,b,c))) ||
+      any(a > c) ||
+      any(b < c) ||
+      any(b < a))
+  {
+    warning("NAs produced")
+    return(rep(NaN, times = n)) # to match behavior of runif
+  }
+  if (a > c | b < c)
+  {
+    return(rep(NaN, times = n)) # to match behavior of runif
+  }
 
   p <- runif(n)
 
