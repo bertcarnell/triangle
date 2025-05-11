@@ -34,162 +34,189 @@ box()
 - $c$ = mode
 - $h$ = density at the mode = $\frac{2}{b-a}$
 
-## Triangle PDF
+## Triangle Probability Density Funciton (PDF)
 
-$$f(x) =
-\left\{
-	\begin{array}{ll}
-		\frac{h}{c-a}(x-a)  & \mbox{if } a \leq x \leq c \\
-		\frac{h}{c-b}(x-b) & \mbox{if } c < x \leq b \\
-		0 & \mbox{otherwise}
-	\end{array}
-\right.\ \ \ \ (1)$$
+**Lemma 1: (Triangle PDF).**
 
-Integrating the pdf in equation (1) to solve for h
+*Given, * $x, a, b, c  \in \mathbb{R}$ *and* $a \le c \lt b$ *or* $a \lt c \le b$ 
+*the triangle probability density function is given by*
 
-$$\int f(x) dx = 1$$
-
-$$\frac{h}{c-a}\int_{a}^{c} (x-a) dx + \frac{h}{c-b} \int_{c}^{b} (x-b) dx = \frac{h(b-a)}{2}$$
-
-$$h=\frac{2}{b-a}\ \ \ \ (2)$$
-
-Substituting back into equation (1),
-
-$$f(x) =
-\left\{
-	\begin{array}{ll}
+$$
+\begin{equation}
+f(x) = \begin{cases}
 		\frac{2}{(b-a)(c-a)}(x-a)  & \mbox{if } a \leq x \leq c \\
 		\frac{2}{(b-a)(c-b)}(x-b) & \mbox{if } c < x \leq b \\
 		0 & \mbox{otherwise}
-	\end{array}
-\right.\ \ \ \ (3)$$
+\end{cases}
+\end{equation}
+$$
 
-## Triangle Distribution Function
+*if a random variable X has a PDF f(x), then we say* $X \sim triangle(a, b, c)$
 
-$$F_{x \le c}(x) = \int_{-\infty}^{x}f(t)dt = \int_a^x \frac{2(t-a)}{(b-a)(c-a)} dt$$
+**Proof**
 
-$$ = \frac{(x-a)^2}{(b-a)(c-a)}$$
+The triangle is made of two lines:
 
-$$F_{x \gt c}(x) = 1 - \int_x^b \frac{2(t-b)}{(b-a)(c-b)} dt$$
-$$ = 1 + \frac{(x - b)^2}{(b-a)(c-b)}$$
+$$(y-0) = \frac{h-0}{c-a}(x-a)$$
+
+$$(y-0)=\frac{h-0}{c-b}(x-b)$$
+
+
+Integrating the pdf under these two equations to solve for $h$:
+
+$$\int f(x) dx = 1$$
+
+$$\frac{h}{c-a}\int_{a}^{c} (x-a) dx + \frac{h}{c-b} \int_{c}^{b} (x-b) dx = \frac{h(b-a)}{2} = 1$$
+
+$$h=\frac{2}{b-a}$$
+
+The PDF should be zero at each end of the interval and be continuous at $c$
+
+$$f(a) = \frac{2}{(b-a)(c-a)}(a-a) = 0$$
+
+$$f(b) = \frac{2}{(b-a)(c-b)}(b-b)$$
+
+$$f_{a \le x \le c}(c) = \frac{2}{(b-a)(c-a)}(c-a) = \frac{2}{(b-a)}$$
+
+$$\lim_{x \to c} f_{c \lt x \le b}(x) = \lim_{x \to c} \frac{2}{(b-a)(c-b)}(x-b) = \frac{2}{(b-a)}$$
+
+## Triangle Cumulative Distribution Function (CDF)
+
+**Lemma 2: (Triangle CDF).**
+
+*Given, * $x, a, b, c  \in \mathbb{R}$ *and* $a \le c \lt b$ *or* $a \lt c \le b$ 
+*the cumulative distribution function over* $x$ *is*
+
+$$
+\begin{equation}
+F(x) = \begin{cases}
+    0 & \mbox{if } x < a \\
+		\frac{(x-a)^2}{(b-a)(c-a)}  & \mbox{if } a \leq x \leq c \\
+		1 + \frac{(x-b)^2}{(b-a)(c-b)} & \mbox{if } c < x \leq b \\
+		1 & \mbox{if } x > b
+\end{cases}
+\end{equation}
+$$
+
+**Proof**
+
+$$F(x) = \int_{-\infty}^{x} f(t) dt$$
+
+$$
+\begin{align}
+F_{a \le x \le c}(x) &= \int_a^x \frac{2(t-a)}{(b-a)(c-a)} dt \\
+&= \frac{(x-a)^2}{(b-a)(c-a)}
+\end{align}
+$$
+
+$$
+\begin{align}
+F_{c \lt x \lt b}(x) &= F_{a \le x \le c}(c) + \int_c^x \frac{2(t-b)}{(b-a)(c-b)} dt = 1 - \int_x^b \frac{2(t-b)}{(b-a)(c-b)} dt \\
+&= 1 + \frac{(x - b)^2}{(b-a)(c-b)} = 1 - \frac{(b - x)^2}{(b-a)(b - c)}
+\end{align}
+$$
+
+The CDF should be zero at $a$, continuous at $c$, and one at $b$
+
+$$F_{a \le x \le c}(a) = \frac{(a-a)^2}{(b-a)(c-a)} = 0$$
+
+$$F_{c \lt x \lt b}(b) = 1 - \frac{(b - b)^2}{(b-a)(b - c)} = 1$$
+
+$$F_{a \le x \le c}(c) = \frac{(c-a)^2}{(b-a)(c-a)} = \frac{(c-a)}{(b-a)}$$
+
+$$\lim_{x \to c} F_{c \lt x \lt b}(c) = \lim_{x \to c} \left[ 1 - \frac{(b - x)^2}{(b-a)(b - c)} \right] = 1 - \frac{(b - c)}{(b-a)} = \frac{(c-a)}{(b-a)}$$
 
 ## Triangle Mean
 
-Integrating equation (3) to find $E(x)$,
+**Lemma 3: (Triangle Mean).**
+
+*The mean of the triangle distribution is*
+
+$$E(X) = \frac{a+b+c}{3}$$
+
+**Proof**
 
 $$
 \begin{align}
 E(X) &= \int xf(x)dx = \frac{2}{(b-a)(c-a)}\int_a^c (x^2-ax) dx + 
 \frac{2}{(b-a)(c-b)}\int_c^b (x^2-bx) dx \\
-&= \frac{a+b+c}{3}\ \ \ \ (4)
+&= \frac{2}{(b-a)(c-a)} \left[\frac{1}{3}x^3-\frac{a}{2}x^2\right]_a^c + \frac{2}{(b-a)(c-b)}\left[\frac{1}{3}x^2-\frac{b}{2}x^2\right]_c^b dx \\
+&= \frac{a+b+c}{3}
 \end{align}
 $$
 
 ## Triangle Variance
 
+**Lemma 4: (Triangle Variance).**
+
+*The variance of the triangle distribution is*
+
+$$V(X) = \frac{a^2+b^2+c^2-ab-ac-bc}{18}$$
+
+**Proof**
+
 $$
 \begin{align}
 V(X) &= E(X^2) - \big(E(X)\big)^2 = \int x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2 \\
 &= \frac{2}{(b-a)(c-a)}\int_{a}^{c} x^2(x-a) dx + \frac{2}{(b-a)(c-b)} \int_{c}^{b} x^2(x-b) dx- \bigg(\frac{a+b+c}{3}\bigg)^2 \\
+&= \frac{2}{(b-a)(c-a)} \left[\frac{1}{4}x^4-\frac{a}{3}x^3\right]_a^c + \frac{2}{(b-a)(c-b)}\left[\frac{1}{4}x^4-\frac{b}{3}x^3\right]_c^b - \bigg(\frac{a+b+c}{3}\bigg)^2 \\
 &= \frac{a^2+b^2+c^2-ab-ac-bc}{18}
-\end{align}
-$$
-
-## Logarithmic Triangle distribution
-
-Define:
-
-$$a_l=\log_{\phi}(a),\ \ b_l=\log_{\phi}(b),\ \ c_l=\log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}$$
-
-$$f(z) = 
-\left\{
-  \begin{array}{ll}
-    \frac{h}{c_l - a_l}(z - a_l) & \mbox{if } a_l \leq z \leq c_l \\
-    \frac{h}{c_l - b_l}(z - b_l) & \mbox{if } c_l < z \leq b_l \\
-    0 & \mbox{otherwise}
-  \end{array}
-\right.\ \ \ \ (5)$$
-
-However,
-
-$$E({\phi}^z) \neq {\phi}^{E(z)}\ \ \ \ (6)$$
-
-Therefore, transforming...
-
-$$Y={\phi}^Z$$
-
-$$Z=\log_{\phi}(Y)$$
-
-$$w(y)=\log_{\phi}(y)$$
-
-$$w'(y)=\frac{dz}{dy} = \frac{1}{y\log({\phi})}$$
-
-$$g(y)=f(w(y))w'(y)$$
-
-$$g(y) = 
-\left\{
-  \begin{array}{ll}
-    \frac{2}{(c_l-a_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - a_l}{y} & \mbox{if } 0 < a \leq y \leq c \\
-    \frac{2}{(c_l-b_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
-    0 & \mbox{otherwise}
-  \end{array}
-\right.\ \ \ \ (7)$$
-
-Define:
-
-$$\beta_1=\frac{2}{(c_l-a_l)(b_l-a_l)}$$
-
-$$\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}$$
-
-Finding the CDF, 
-
-$$G(y) = \int_{-\infty}^y g(y)dy$$
-
-$$
-\begin{align}
-\mbox{for}\ a \leq y \leq c,\ \ G(y) &= \frac{\beta_1}{\log({\phi})} \int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy \\
-&=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]
-\end{align}
-$$
-
-$$
-\begin{align}
-\mbox{for}\ c < y \leq b,\ \ G(y) &= G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy \\
-&=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]
-\end{align}
-$$
-
-Checking that the CDF is 1 at b,
-
-$$
-\begin{align}
-G(b) &= \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} + \frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)} \\
-&= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1
-\end{align}
-$$
-
-Now calculating $E(y)$,
-
-$$
-\begin{align}
-E(y) &= \int y\ g(y)\ dy \\
-&=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy + 
-\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})} - b_l\bigg]dy \\
-&=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]
 \end{align}
 $$
 
 ## Method of Moments Estimation
 
-$$E(x) = \frac{a + b + c}{3}$$
+The Type 1 and 2 notation is used in the package, but are not externally accepted "types" of
+Methods of Moments.
 
-$$c = 3E(x) - a - b$$
+### Type 1
 
-$$\hat{a} = min(x)$$
+**Lemma 5: (Method of Moments Estimator 1).**
 
-$$\hat{b} = max(x)$$
+*Estimators for the Triangle parameters are*
+
+$$\hat{a} = min(x) = X_{(1)}$$
+
+$$\hat{b} = max(x) = X_{(n)}$$
 
 $$\hat{c} = 3\bar{x} - \min(x) - \max(x)$$
+
+**Motivation**
+
+$$E(X) = \frac{a + b + c}{3}$$
+
+$$c = 3E(X) - a - b$$
+
+The sample minimum is an overestimate for $a$ and the sample maximum is an 
+underestimate for $b$.
+
+$\hat{c}$ is a biased estimator for $c$.  
+
+$$
+\begin{align}
+E(\hat{c}) =& 3E(\bar{x}) - E(X_{(1)}) - E(X_{(n)}) \\
+=& \frac{3}{n} \sum_{i=1}^n E(X_i) \\
+ &- n \left[\sum_{k=0}^{n-1} {n-1 \choose k} \left(\frac{c-a}{b-a}\right)^{n-k} (-1)^{n-1-k} \frac{2c(n-k)+a}{(n-k)(2(n-k) + 1)} - \left(\frac{b-c}{b-a}\right)^n \frac{2cn+b}{n(2n+1)} \right] \\
+ &- n \left[ \left(\frac{c-a}{b-a}\right)^n \frac{2cn+a}{n(2n + 1)} + \sum_{k=0}^{n-1} {n-1 \choose k} \left(\frac{c-b}{b-a}\right)^{n-k} \frac{2c(n-k)+b}{(n-k)(2(n-k)+1)} \right] \\
+=& a + b + c - [expansion] - [expansion]\\
+\neq & c
+\end{align}
+$$
+
+Simulation shows that $\hat{c}$ is consistent for $c$.
+
+### Type 2
+
+**Lemma 6: (Method of Moments Estimator 2).**
+
+*Estimators for the Triangle parameters are the solution to these equations for the mean, variance, and skewness*
+
+$$\bar{x} = \frac{1}{n} \sum_i x_i = \frac{\hat{a} + \hat{b} + \hat{c}}{3}$$
+
+$$\frac{1}{n-1} \sum_i (x_i - \bar{x})^2 = \frac{\hat{a}^2+\hat{b}^2+\hat{c}^2-\hat{a}\hat{b}-\hat{a}\hat{c}-\hat{b}\hat{c}}{18}$$
+
+$$\frac{\sqrt{n} \sum_i (x_i-\bar{x})^3}{\left[\sum_i (x_i-\bar{x})^2\right]^{3/2}} = \frac{\sqrt{2} (\hat{a} + \hat{b} - 2\hat{c}) (2\hat{a} - \hat{b} - \hat{c}) (\hat{a} - 2\hat{b} + \hat{c})}{5(\hat{a}^2+\hat{b}^2+\hat{c}^2-\hat{a}\hat{b}-\hat{a}\hat{c}-\hat{b}\hat{c})^{3/2}}$$
+
 
 ## Maximum Likelihood Estimation
 
@@ -198,7 +225,7 @@ likelihood with respect to $c$ for a fixed $a$ and $b$,
 followed by minimizing the negative log likelihood with respect to $a$ and $b$
 for a fixed $c$.  
 
-###  Maximizing the Likelihood with respect to $c$
+###  Maximizing the Likelihood with respect to $c$ (given $a$ and $b$)
 
 This discussion follows the results from [Samuel Kotz and Johan Rene van Dorp. Beyond Beta](https://doi.org/10.1142/5720)
 
@@ -480,3 +507,88 @@ solutions can be obtained to arbitrary precision through the use a package like 
 The `triangle` package defaults to the use of numerical integration for these results.
 
 
+
+
+## Logarithmic Triangle distribution
+
+Define:
+
+$$a_l=\log_{\phi}(a),\ \ b_l=\log_{\phi}(b),\ \ c_l=\log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}$$
+
+$$f(z) = 
+\left\{
+  \begin{array}{ll}
+    \frac{h}{c_l - a_l}(z - a_l) & \mbox{if } a_l \leq z \leq c_l \\
+    \frac{h}{c_l - b_l}(z - b_l) & \mbox{if } c_l < z \leq b_l \\
+    0 & \mbox{otherwise}
+  \end{array}
+\right.\ \ \ \ (5)$$
+
+However,
+
+$$E({\phi}^z) \neq {\phi}^{E(z)}\ \ \ \ (6)$$
+
+Therefore, transforming...
+
+$$Y={\phi}^Z$$
+
+$$Z=\log_{\phi}(Y)$$
+
+$$w(y)=\log_{\phi}(y)$$
+
+$$w'(y)=\frac{dz}{dy} = \frac{1}{y\log({\phi})}$$
+
+$$g(y)=f(w(y))w'(y)$$
+
+$$g(y) = 
+\left\{
+  \begin{array}{ll}
+    \frac{2}{(c_l-a_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - a_l}{y} & \mbox{if } 0 < a \leq y \leq c \\
+    \frac{2}{(c_l-b_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
+    0 & \mbox{otherwise}
+  \end{array}
+\right.\ \ \ \ (7)$$
+
+Define:
+
+$$\beta_1=\frac{2}{(c_l-a_l)(b_l-a_l)}$$
+
+$$\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}$$
+
+Finding the CDF, 
+
+$$G(y) = \int_{-\infty}^y g(y)dy$$
+
+$$
+\begin{align}
+\mbox{for}\ a \leq y \leq c,\ \ G(y) &= \frac{\beta_1}{\log({\phi})} \int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy \\
+&=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]
+\end{align}
+$$
+
+$$
+\begin{align}
+\mbox{for}\ c < y \leq b,\ \ G(y) &= G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy \\
+&=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]
+\end{align}
+$$
+
+Checking that the CDF is 1 at b,
+
+$$
+\begin{align}
+G(b) &= \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} + \frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)} \\
+&= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1
+\end{align}
+$$
+
+Now calculating $E(y)$,
+
+$$
+\begin{align}
+E(y) &= \int y\ g(y)\ dy \\
+&=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy + 
+\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})} - b_l\bigg]dy \\
+&=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]
+\end{align}
+$$

@@ -12,8 +12,6 @@
 #' @param r the order statistic at which M is to be calculated \code{1 <= r <= length(z)}
 #' @param debug if \code{TRUE} then \code{logM} will check the input parameters
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @return The \code{log(M)} from equation 1.43
 #'
 #' @examples
@@ -24,14 +22,14 @@ logM <- function(z, a, b, r, debug = FALSE)
   s <- length(z)
   if (debug)
   {
-    assertthat::assert_that(length(r) == 1, msg = "r must be a scalar")
-    assertthat::assert_that(length(a) == 1, msg = "a must be a scalar")
-    assertthat::assert_that(length(b) == 1, msg = "b must be a scalar")
-    assertthat::assert_that(r <= s & r >= 1, msg = "r must be on [1, length(z)]")
-    assertthat::assert_that(a < b, msg = "a < b")
-    assertthat::assert_that(a <= min(z), msg = "a <= min(z)")
-    assertthat::assert_that(b >= max(z), msg = "b >= max(z)")
-    assertthat::assert_that(all(order(z) == 1:s), msg = "z must be sorted")
+    if (length(r) != 1) stop("r must be a scalar")
+    if (length(a) != 1) stop("a must be a scalar")
+    if (length(b) != 1) stop("b must be a scalar")
+    if (r > s | r < 1) stop("r must be on [1, length(z)]")
+    if (a >= b) stop("a < b")
+    if (a > min(z)) stop("a <= min(z)")
+    if (b < max(z)) stop("b >= max(z)")
+    if (!(all(order(z) == 1:s))) stop("z must be sorted")
   }
   if (r > 1 & r < s)
   {
@@ -60,8 +58,6 @@ logM <- function(z, a, b, r, debug = FALSE)
 #' @param b the maximum support of the triangle distribution \code{b >= max(z)}
 #' @param debug if \code{TRUE} then the function will check the input parameters
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @return the order statistic number
 #'
 #' @examples
@@ -72,12 +68,12 @@ rhat <- function(z, a, b, debug = FALSE)
   s <- length(z)
   if (debug)
   {
-    assertthat::assert_that(length(a) == 1, msg = "a must be a scalar")
-    assertthat::assert_that(length(b) == 1, msg = "b must be a scalar")
-    assertthat::assert_that(a < b, msg = "a < b")
-    assertthat::assert_that(a <= min(z), msg = "a <= min(z)")
-    assertthat::assert_that(b >= max(z), msg = "b >= max(z)")
-    assertthat::assert_that(all(order(z) == 1:s), msg = "z must be sorted")
+    if (length(a) != 1) stop("a must be a scalar")
+    if (length(b) != 1) stop("b must be a scalar")
+    if (a >= b) stop("a < b")
+    if (a > min(z)) stop("a <= min(z)")
+    if (b < max(z)) stop("b >= max(z)")
+    if (!(all(order(z) == 1:s))) stop("z must be sorted")
   }
   res <- sapply(1:s, function(r) logM(z, a, b, r, debug))
   return(which.max(res))
@@ -92,8 +88,6 @@ rhat <- function(z, a, b, debug = FALSE)
 #' @param b the maximum support of the triangle distribution \code{b >= max(z)}
 #' @param debug if \code{TRUE} then the function will check the input parameters
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @return a list containing the estimate of \code{c} and \code{r}
 #'
 #' @examples
@@ -103,18 +97,18 @@ triangle_mle_c_given_ab <- function(x, a, b, debug = FALSE)
 {
   if (debug)
   {
-    assertthat::assert_that(length(a) == 1, msg = "a must be a scalar")
-    assertthat::assert_that(length(b) == 1, msg = "b must be a scalar")
-    assertthat::assert_that(a < b, msg = "a < b")
-    assertthat::assert_that(a <= min(x), msg = "a must be <= min(x)")
-    assertthat::assert_that(b >= max(x), msg = "b must be >= max(x)")
+    if (length(a) != 1) stop("a must be a scalar")
+    if (length(b) != 1) stop("b must be a scalar")
+    if (a >= b) stop("a < b")
+    if (a > min(x)) stop("a must be <= min(x)")
+    if (b < max(x)) stop("b must be >= max(x)")
   }
   sx <- sort(x)
   r <- rhat(sx, a, b, debug)
   c_hat <- sx[r]
   if (debug)
   {
-    assertthat::assert_that(a <= c_hat & c_hat <= b)
+    stopifnot(a <= c_hat & c_hat <= b)
   }
   return(list(c_hat = c_hat, r_hat = r))
 }
@@ -129,8 +123,6 @@ triangle_mle_c_given_ab <- function(x, a, b, debug = FALSE)
 #' @param c the mode of the triangle distribution
 #' @param debug if \code{TRUE} then the function will check the input parameters
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @return the negative log likelihood
 #'
 #' @examples
@@ -138,28 +130,37 @@ triangle_mle_c_given_ab <- function(x, a, b, debug = FALSE)
 #' nLL_triangle(xtest, 0, 1, 0.3)
 nLL_triangle <- function(x, a, b, c, debug = FALSE)
 {
+  n <- length(x)
   if (debug)
   {
-    assertthat::assert_that(length(a) == 1, msg = "a must be a scalar")
-    assertthat::assert_that(length(b) == 1, msg = "b must be a scalar")
-    assertthat::assert_that(a < b, msg = "a < b")
-    assertthat::assert_that(a <= min(x), msg = paste0("a (", a, ") <= min(x) (", min(x), ")"))
-    assertthat::assert_that(b >= max(x), msg = "b >= max(x)")
+    if (length(a) != 1) stop("a must be a scalar")
+    if (length(b) != 1) stop("b must be a scalar")
+    if (a >= b) stop("a < b")
+    if (a > min(x)) stop(paste0("a (", a, ") <= min(x) (", min(x), ")"))
+    if (b < max(x)) stop("b >= max(x)")
   }
-  n <- length(x)
-  ind1 <- which(x < c)
-  ind2 <- which(x >= c)
-  n1 <- length(ind1)
-  n2 <- length(ind2)
-  if (n1 > 0 & n2 > 0)
-  {
-    ret <- -n*log(2) + n*log(b-a) + n1*log(c-a) + n2*log(b-c) - sum(log(x[ind1] - a)) - sum(log(b-x[ind2]))
-  } else if (n1 == 0)
-  {
-    ret <- -n*log(2) + n*log(b-a) + n2*log(b-c) - sum(log(b-x[ind2]))
-  } else if (n2 == 0)
-  {
-    ret <- -n*log(2) + n*log(b-a) + n1*log(c-a) - sum(log(x[ind1] - a))
+  # a_hat = min(x) when a = c < b
+  if (a == min(x) & a == c) {
+    ret <- -n*log(2) + n*log(b-a) + n*log(b-c) - sum(log(b - x))
+  } else if (b == max(x) & b == c) {
+    ret <- -n*log(2) + n*log(b-a) + n*log(c-a) - sum(log(x - a))
+  } else if (a == min(x) | b == max(x)) {
+    ret <- Inf
+  } else {
+    ind1 <- which(x < c)
+    ind2 <- which(x >= c)
+    n1 <- length(ind1)
+    n2 <- length(ind2)
+    if (n1 > 0 & n2 > 0)
+    {
+      ret <- -n*log(2) + n*log(b-a) + n1*log(c-a) + n2*log(b-c) - sum(log(x[ind1] - a)) - sum(log(b - x[ind2]))
+    } else if (n1 == 0)
+    {
+      ret <- -n*log(2) + n*log(b-a) + n*log(b-c) - sum(log(b - x[ind2]))
+    } else if (n2 == 0)
+    {
+      ret <- -n*log(2) + n*log(b-a) + n*log(c-a) - sum(log(x[ind1] - a))
+    }
   }
   return(ret)
 }
@@ -174,8 +175,6 @@ nLL_triangle <- function(x, a, b, c, debug = FALSE)
 #' @param c the mode of the triangle distribution
 #' @param debug if \code{TRUE} then the function will check the input parameters
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @return the gradient of the negative log likelihood with components for \code{d/da} and \code{d/db}
 #'
 #' @examples
@@ -185,11 +184,11 @@ gradient_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
 {
   if (debug)
   {
-    assertthat::assert_that(length(a) == 1, msg = "a must be a scalar")
-    assertthat::assert_that(length(b) == 1, msg = "b must be a scalar")
-    assertthat::assert_that(a < b, msg = "a < b")
-    assertthat::assert_that(a <= min(x), msg = "a <= min(x)")
-    assertthat::assert_that(b >= max(x), msg = "b >= max(x)")
+    if (length(a) != 1) stop("a must be a scalar")
+    if (length(b) != 1) stop("b must be a scalar")
+    if (a >= b) stop("a < b")
+    if (a > min(x)) stop(paste0("a (", a, ") <= min(x) (", min(x), ")"))
+    if (b < max(x)) stop("b >= max(x)")
   }
   n <- length(x)
   ind1 <- which(x < c)
@@ -224,8 +223,6 @@ gradient_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
 #' @param c the mode of the triangle distribution
 #' @param debug if \code{TRUE} then the function will check the input parameters
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @return the hessian of the negative log likelihood with respect to a and b
 #'
 #' @examples
@@ -235,7 +232,7 @@ hessian_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
 {
   if (debug)
   {
-    assertthat::assert_that(a < b, msg = "a must be less than b")
+    if (a >= b) stop("a must be less than b")
   }
   n <- length(x)
   ind1 <- which(x < c)
@@ -274,7 +271,6 @@ hessian_nLL_triangle_given_c <- function(x, a, b, c, debug = FALSE)
 #' @param lower lower bounds for a and b
 #' @param upper upper bounds for a and b
 #'
-#' @importFrom assertthat assert_that
 #' @importFrom stats optim
 #'
 #' @return a list containing a, b, the results of stats::optim, and the analytic hessian
@@ -286,9 +282,9 @@ triangle_mle_ab_given_c <- function(x, c, debug = FALSE, start = NA, lower = NA,
 {
   if (debug)
   {
-    assertthat::assert_that(length(c) == 1, msg = "c must be a scalar")
-    assertthat::assert_that(c <= max(x), msg = "c <= min(x)")
-    assertthat::assert_that(c >= min(x), msg = "c >= max(x)")
+    if (length(c) != 1) stop("c must be a scalar")
+    if (c > max(x)) stop("c <= min(x)")
+    if (c < min(x)) stop("c >= max(x)")
   }
   # x <- triangle::rtriangle(100, 0.001, 0.005, 0.004)
   nLL <- function(p, x, c, debug)
@@ -307,8 +303,8 @@ triangle_mle_ab_given_c <- function(x, c, debug = FALSE, start = NA, lower = NA,
   if (any(is.na(start)))
   {
     # start at method of moments estimates, but a little wider
-    start <- c(minx - 0.5*rangex,
-               maxx + 0.5*rangex)
+    start <- c(minx - 0.05*rangex,
+               maxx + 0.05*rangex)
   }
   if (any(is.na(lower)) | any(is.na(upper)))
   {
@@ -592,41 +588,30 @@ variance_rth_order_stat_numeric <- function(n, r, a, b, c)
   E_x2$value - E_x * E_x
 }
 
-#' Maximum likelihood estimate of the triangle distribution parameters
-#'
-#' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
-#'
-#' @param x sample from a triangle distribution
-#' @param debug if \code{TRUE} then the function will check the input parameters and print calculation information
-#' @param maxiter the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
-#' and maximizing \code{c} given \code{a} and \code{b}
-#'
-#' @return an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,
-#' variance co-variance matrix, minimum negative log likelihood, details of the optimization
-#' number of observations, and the sample
-#' @export
-#'
-#' @examples
-#' xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
-#' triangle_mle(xtest)
-#'
-#' xtest <- rtriangle(20, 1, 5, 3.5)
-#' triangle_mle(xtest)
-triangle_mle <- function(x, debug = FALSE, maxiter = 100)
+iterative_triangle_mle <- function(x, debug = FALSE, maxiter = 100)
 {
-  # x <- triangle::rtriangle(100, 0, 1, 0.5)
-  # debug <- TRUE
-  # maxiter <- 100
-  my_call <- match.call()
-  minx <- min(x, na.rm = TRUE)
-  maxx <- max(x, na.rm = TRUE)
-  rangex <- maxx - minx
+  sx <- sort(x)
+  n <- length(x)
+  # if c = sx[1] then a will optimize to c = a = sx[1]
+  # if c = sx[n] then b will optimize to c = b = sx[n]
+  # start at MOM estimate
+  mom <- triangle_mom(x, na.rm = TRUE, type = 2)
+  # find x closest to mom["c"]
+  rhat1 <- which.min(abs(sx - mom["c"]))
+  mle_c0 <- sx[rhat1]
+  if (rhat1 == 1) {
+    mle_ab <- triangle_mle_ab_given_c(x, c = mle_c0, debug = debug, start = c(mle_c0, mom["b"]))
+  } else if (rhat1 == n) {
+    mle_ab <- triangle_mle_ab_given_c(x, c = mle_c0, debug = debug, start = c(mom["a"], mle_c0))
+  } else {
+    mle_ab <- triangle_mle_ab_given_c(x, c = mle_c0, debug = debug, start = c(mom["a"], mom["b"]))
+  }
 
-  # first determine c at a = min(x) - 1/2 range, b = max(x) + 1/2 range
-  mle_c1 <- triangle_mle_c_given_ab(x, minx - 0.5*rangex, maxx + 0.5*rangex, debug = debug)
+  # then determine c given a and b
+  mle_c1 <- triangle_mle_c_given_ab(x, mle_ab$a, mle_ab$b, debug = debug)
 
   # then optimize a and b given c
-  mle_ab <- triangle_mle_ab_given_c(x, c = mle_c1$c_hat, debug = debug)
+  mle_ab <- triangle_mle_ab_given_c(x, c = mle_c1$c_hat, debug = debug, start = c(mle_ab$a, mle_ab$b))
 
   # then check to see if c has changed
   mle_c2 <- triangle_mle_c_given_ab(x, mle_ab$a, mle_ab$b, debug = debug)
@@ -637,7 +622,7 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
   {
     mle_c1 <- mle_c2
 
-    mle_ab <- triangle_mle_ab_given_c(x, c = mle_c1$c_hat, debug = debug)
+    mle_ab <- triangle_mle_ab_given_c(x, c = mle_c1$c_hat, debug = debug, start = c(mle_ab$a, mle_ab$b))
 
     mle_c2 <- triangle_mle_c_given_ab(x, mle_ab$a, mle_ab$b, debug = debug)
 
@@ -651,26 +636,127 @@ triangle_mle <- function(x, debug = FALSE, maxiter = 100)
   {
     cat("\n", count, " iterations reached\n")
   }
+  return(list(a=unname(mle_ab$a), b=unname(mle_ab$b),
+              c=mle_c2$c_hat, r=mle_c2$r_hat,
+              hessian_ab=mle_ab$hessian_ab, optim=mle_ab$optim))
+}
 
-  var_chat <- variance_rth_order_stat(length(x), mle_c2$r_hat, mle_ab$a, mle_ab$b, mle_c2$c_hat)
+enumerative_triangle_mle <- function(x, debug = FALSE)
+{
+  #x <- xtest_small
+  sx <- sort(x)
+  n <- length(x)
+  mom <- triangle_mom(x, na.rm = TRUE, type = 2)
+  res <- sapply(sx, function(ci) {
+    mle_ab <- triangle_mle_ab_given_c(x, c = ci, debug = FALSE,
+                                      start = c(min(mom["a"], sx[1]),
+                                                max(mom["b"], sx[n])))
+    nLL <- nLL_triangle(x, mle_ab$a, mle_ab$b, ci, debug = FALSE)
+    return(list(a=mle_ab$a, b=mle_ab$b, c=ci, nLL = nLL,
+                hessian_ab = mle_ab$hessian_ab,
+                optim = mle_ab$optim))
+  })
+  ind <- which.min(res["nLL",])
 
-  if (any(var_chat < 0) | debug) {
-    cat("\nNegative Varince in c hat\n")
-    cat("n=", length(x), "\n")
-    cat("r=", mle_c2$r_hat, "\n")
-    cat("a=", mle_ab$a, "\n")
-    cat("b=", mle_ab$b, "\n")
-    cat("c=", mle_c2$c_hat, "\n")
+  return(list(a=res[,ind]$a, b=res[,ind]$b,
+              c=res[,ind]$c, r=ind,
+              hessian_ab=res[,ind]$hessian_ab,
+              optim=res[,ind]$optim))
+}
+
+#' Maximum likelihood estimate of the triangle distribution parameters
+#'
+#' @references Samuel Kotz and Johan Rene van Dorp. Beyond Beta \doi{10.1142/5720}
+#'
+#' @param x sample from a triangle distribution
+#' @param debug if \code{TRUE} then the function will check the input parameters and print calculation information
+#' @param maxiter the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
+#' and maximizing \code{c} given \code{a} and \code{b}
+#' @param boot_var should the variance be computed with a bootstrap sample?
+#' @param boot_rep The number of bootstrap replications
+#'
+#' @return an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,
+#' variance co-variance matrix, minimum negative log likelihood, details of the optimization
+#' number of observations, and the sample
+#' @export
+#'
+#' @importFrom boot boot
+#' @importFrom stats var
+#'
+#' @examples
+#' xtest <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+#' triangle_mle(xtest)
+#'
+#' xtest <- rtriangle(20, 1, 5, 3.5)
+#' triangle_mle(xtest)
+triangle_mle <- function(x, debug = FALSE, maxiter = 100, boot_var = FALSE, boot_rep = 500)
+{
+  # x <- triangle::rtriangle(100, 0, 1, 0.5)
+  # debug <- TRUE
+  # maxiter <- 100
+  # boot_var <- TRUE
+  # boot_rep <- 100
+  my_call <- match.call()
+  minx <- min(x, na.rm = TRUE)
+  maxx <- max(x, na.rm = TRUE)
+  rangex <- maxx - minx
+
+  if (length(x) <= 20) {
+    mle <- enumerative_triangle_mle(x, debug = debug)
+  } else {
+    mle <- iterative_triangle_mle(x, debug = debug, maxiter = maxiter)
   }
 
-  vcov <- rbind(cbind(solve(mle_ab$hessian_ab), c(0, 0)), c(0, 0, var_chat))
-  dimnames(vcov) <- list(c("a", "b", "c"), c("a", "b", "c"))
+  # check to see if there is an NA in the coefficients
+  if (any(is.na(mle))) {
+    print(x)
+    print(minx)
+    print(maxx)
+    print(rangex)
+    stop("NA coefficient")
+  }
+
+  var_chat <- variance_rth_order_stat(length(x), mle$r, mle$a, mle$b, mle$c)
+
+  if (any(var_chat < 0) | debug) {
+    if (any(var_chat < 0)) {
+      cat("\nNegative Varince in c hat\n")
+    }
+    cat("n=", length(x), "\n")
+    cat("r=", mle$r, "\n")
+    cat("a=", mle$a, "\n")
+    cat("b=", mle$b, "\n")
+    cat("c=", mle$c, "\n")
+  }
+
+  if (boot_var) {
+    b <- boot::boot(x, statistic = function(d, i) {
+      mle <- iterative_triangle_mle(d[i], debug = FALSE, maxiter = maxiter)
+      return(c(mle$a, mle$b, mle$c))
+    }, R = boot_rep)
+
+    vcov_theta <- stats::var(b$t)
+    dimnames(vcov_theta) <- list(c("a", "b", "c"), c("a", "b", "c"))
+  } else {
+    hess <- hessian_nLL_triangle_given_c(x, mle$a, mle$b, mle$c, debug = debug)
+    # or hess <- mle$hessian_ab
+    var_hess <- NA
+    try({
+      var_hess <- solve(hess)
+    }, silent = TRUE)
+    if (inherits(var_hess, "matrix") & all(diag(var_hess) >= 0)) {
+      vcov_theta <- rbind(cbind(var_hess, c(0, 0)), c(0, 0, var_chat))
+    } else {
+      vcov_theta <- matrix(NA, nrow = 3, ncol = 3)
+    }
+    dimnames(vcov_theta) <- list(c("a", "b", "c"), c("a", "b", "c"))
+  }
 
   structure(list(call = my_call,
-                 coef = c(a = mle_ab$a, b = mle_ab$b, c = mle_c2$c_hat),
-                 vcov = vcov,
-                 min = mle_ab$optim$value,
-                 details = mle_ab$optim,
+                 coef = c(a = mle$a, b = mle$b, c = mle$c),
+                 vcov = vcov_theta,
+                 min = mle$optim$value,
+                 details = mle$optim,
                  nobs = length(x),
                  x = x),
             class = "triangle_mle")
@@ -700,7 +786,7 @@ standard_triangle_mle <- function(x, debug = FALSE)
   minx <- min(x, na.rm = TRUE)
   maxx <- max(x, na.rm = TRUE)
 
-  assertthat::assert_that(minx >= 0 & maxx <= 1, msg = "standard triangle requires all samples be between [0, 1]")
+  if (minx < 0 | maxx > 1) stop("standard triangle requires all samples be between [0, 1]")
 
   # determine c at a = min(x), b = max(x)
   mle_c1 <- triangle_mle_c_given_ab(x, 0, 1, debug = debug)

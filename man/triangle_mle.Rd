@@ -4,7 +4,7 @@
 \alias{triangle_mle}
 \title{Maximum likelihood estimate of the triangle distribution parameters}
 \usage{
-triangle_mle(x, debug = FALSE, maxiter = 100)
+triangle_mle(x, debug = FALSE, maxiter = 100, boot_var = FALSE, boot_rep = 500)
 }
 \arguments{
 \item{x}{sample from a triangle distribution}
@@ -13,6 +13,10 @@ triangle_mle(x, debug = FALSE, maxiter = 100)
 
 \item{maxiter}{the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
 and maximizing \code{c} given \code{a} and \code{b}}
+
+\item{boot_var}{should the variance be computed with a boostrap sample?}
+
+\item{boot_rep}{The number of boostrap replications}
 }
 \value{
 an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,

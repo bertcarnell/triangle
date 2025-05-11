@@ -1,0 +1,631 @@
+---
+title: "Triangle Fourier Series"
+author: "Rob Carnell"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, include=FALSE}
+require(reticulate)
+```
+
+```{r reticulate.setup, include=FALSE}
+# reticulate::virtualenv_create() # only once
+reticulate::virtualenv_exists("r-reticulate")
+
+reticulate::use_virtualenv("r-reticulate")
+reticulate::py_available(initialize = TRUE)
+
+avail_packages <- reticulate::py_list_packages("r-reticulate")
+if (!("sympy" %in% avail_packages$package)) {
+  reticulate::virtualenv_install("r-reticulate", "sympy")
+}
+```
+
+```{python}
+import sympy as sy
+```
+
+Define the density function
+
+```{python}
+x = sy.Symbol('x', real=True)
+a = sy.Symbol('a', real=True)
+ac = sy.Symbol('ac', real=True, positive=True)
+cb = sy.Symbol('cb', real=True, positive=True)
+n = sy.Symbol('n', integer=True, positive=True)
+c = a + ac
+b = c + cb
+
+f = sy.Piecewise((2*(x-a)/(b-a)/(c-a), x <= c), (2*(x-b)/(b-a)/(c-b), x > c))
+```
+
+Check that the triangle density integrates to 1
+
+```{python}
+# integrate to 1
+sy.integrate(f, (x, a, b)).simplify()
+```
+
+Check the mean of the triangle density
+
+```{python}
+# mean
+sy.integrate(x*f, (x, a, b)).simplify()
+(a + b + c)/3
+```
+
+Check the variance of the triangle density
+
+```{python}
+# variance
+(sy.integrate(x*x*f, (x, a, b)) - ((a + b + c)/3)**2).simplify()
+((a**2+b**2+c**2-a*b-a*c-b*c)/18).simplify()
+```
+
+Use the sympy fourier series
+
+```{python}
+s = sy.fourier_series(f, limits=(x, a, b))
+
+s3 = s.truncate(3)
+```
+
+$A_0$
+
+```{python}
+1/(b-a)*(sy.integrate(f, (x, a, b))).simplify()
+s.a0.simplify()
+```
+
+$A_n$
+
+```{python}
+(2/(b-a)*(sy.integrate(f*sy.cos(2*sy.pi*n*x/(b-a)), (x, a, b)))).simplify()
+s.an.gen.simplify()
+```
+
+$B_n$
+
+```{python}
+(2/(b-a)*(sy.integrate(f*sy.sin(2*sy.pi*n*x/(b-a)), (x, a, b)))).simplify()
+s.bn.gen.simplify()
+```
+
+Redefine the triangle density with two functions instead of the Piecewise
+
+```{python}
+x = sy.Symbol('x', real=True)
+a = sy.Symbol('a', real=True)
+b = sy.Symbol('b', real=True)
+c = sy.Symbol('c', real=True)
+n = sy.Symbol('n', integer=True, positive=True)
+
+fleft = 2*(x-a)/(b-a)/(c-a)
+fright = 2*(x-b)/(b-a)/(c-b)
+```
+
+Show that it integrates to 1
+
+```{python}
+(sy.integrate(fleft, (x, a, c)) + sy.integrate(fright, (x, c, b))).simplify()
+```
+
+Mean
+
+```{python}
+(sy.integrate(x*fleft, (x, a, c)) + sy.integrate(fright, (x, c, b))).simplify()
+```
+
+Variance
+
+```{python}
+(sy.integrate(x*x*fleft, (x, a, c)) + sy.integrate(x*x*fright, (x, c, b)) - ((a + b + c)/3)**2).simplify()
+```
+
+$A_0$
+
+```{python}
+1/(b-a)*(sy.integrate(fleft, (x, a, c)) + sy.integrate(fright, (x, c, b))).simplify()
+1/(b-a)
+```
+
+$A_n$
+
+```{python}
+2/(b-a)*(sy.integrate(fleft*sy.cos(2*sy.pi*n*x/(b-a)), (x, a, c)) + sy.integrate(fright*sy.cos(2*sy.pi*n*x/(b-a)), (x, c, b)))
+```
+
+Try a different parameterization
+
+```{python}
+x = sy.Symbol('x', real=True)
+a = sy.Symbol('a', real=True)
+b = sy.Symbol('b', real=True)
+c = sy.Symbol('c', real=True)
+n = sy.Symbol('n', integer=True, positive=True)
+
+k = 2*sy.pi/(b-a)
+bn = 4/(b-a)**2/k/n*(1/(c-a)* ( -(c-a)*sy.cos(k*n*c) + 1/k/n*sy.sin(k*n*c)  - 1/k/n*sy.sin(k*n*a) )  + 
+                     1/(c-b)* ( 1/k/n*sy.sin(k*n*b) +(c-b)*sy.cos(k*n*c) - 1/k/n*sy.sin(k*n*c)))
+an = 4/(b-a)**2/k/n*(1/(c-a)* ( (c-a)*sy.sin(k*n*c) + 1/k/n*sy.cos(k*n*c)  - 1/k/n*sy.cos(k*n*a) )  +
+                     1/(c-b)* ( 1/k/n*sy.cos(k*n*b) -(c-b)*sy.sin(k*n*c) - 1/k/n*sy.cos(k*n*c)))
+```
+
+Derivatives of the coefficients with respect to the parameters
+
+```{python}
+bn_a = sy.diff(bn, a)
+an_a = sy.diff(an, a)
+bn_b = sy.diff(bn, b)
+an_b = sy.diff(an, b)
+bn_c = sy.diff(bn, c)
+an_c = sy.diff(an, c)
+```
+
+Second derivatives of the Fourier coefficients with respect to the parameters
+
+```{python}
+bn_aa = sy.diff(bn_a, a)
+bn_ab = sy.diff(bn_a, b)
+bn_ac = sy.diff(bn_a, c)
+
+an_aa = sy.diff(an_a, a)
+an_ab = sy.diff(an_a, b)
+an_ac = sy.diff(an_a, c)
+
+bn_ba = sy.diff(bn_b, a)
+bn_bb = sy.diff(bn_b, b)
+bn_bc = sy.diff(bn_b, c)
+
+an_ba = sy.diff(an_b, a)
+an_bb = sy.diff(an_b, b)
+an_bc = sy.diff(an_b, c)
+
+bn_ca = sy.diff(bn_c, a)
+bn_cb = sy.diff(bn_c, b)
+bn_cc = sy.diff(bn_c, c)
+
+an_ca = sy.diff(an_c, a)
+an_cb = sy.diff(an_c, b)
+an_cc = sy.diff(an_c, c)
+```
+
+Output to take to other programs
+
+```{python}
+print('bn_a <- function(a, b, c, n) {' + str(bn_a).replace("**", "^") + '}')
+print('')
+print('an_a <- function(a, b, c, n) {' + str(an_a).replace("**", "^") + '}')
+print('')
+print('bn_b <- function(a, b, c, n) {' + str(bn_b).replace("**", "^") + '}')
+print('')
+print('an_b <- function(a, b, c, n) {' + str(an_b).replace("**", "^") + '}')
+print('')
+print('bn_c <- function(a, b, c, n) {' + str(bn_c).replace("**", "^") + '}')
+print('')
+print('an_c <- function(a, b, c, n) {' + str(an_c).replace("**", "^") + '}')
+print('')
+```
+
+## Fourier Series
+
+$$f(x) = A_0 + \sum_{n=1}^\infty \left[ A_n cos\left(\frac{2\pi n x}{P}\right) + B_n sin\left( \frac{2\pi n x}{P}\right) \right]$$
+
+$$A_0 = \frac{1}{P} \int_P f(x) dx$$
+
+$$A_n = \frac{2}{P} \int_P f(x) cos\left(\frac{2\pi n x}{P}\right) dx$$
+
+$$B_n = \frac{2}{P} \int_P f(x) sin\left(\frac{2\pi n x}{P}\right) dx$$
+
+$$A_0 = \frac{1}{b-a} \int_a^b f(x) dx = \frac{1}{b-a} (1) = \frac{1}{b-a}$$
+
+In general,
+
+$$\int \alpha (x - \beta) cos(\gamma x) dx = \alpha \left[ (x-\beta)\frac{1}{\gamma}sin(\gamma x) - \frac{1}{\gamma}\int sin(\gamma x) dx\right]$$
+
+$$=\frac{\alpha}{\gamma} \left[ (x-\beta)sin(\gamma x) + \frac{1}{\gamma} cos(\gamma x) \right]$$
+
+And
+
+$$\int \alpha (x - \beta) sin(\gamma x) dx = \alpha \left[ -(x-\beta)\frac{1}{\gamma}cos(\gamma x) + \frac{1}{\gamma}\int cos(\gamma x) dx\right]$$
+
+$$=\frac{\alpha}{\gamma} \left[ -(x-\beta)cos(\gamma x) + \frac{1}{\gamma} sin(\gamma x) \right]$$
+
+Let $k = \frac{2\pi}{b-a}$
+
+$$A_n = \frac{2}{b-a} \left[ \int_a^c \frac{2(x-a)}{(b-a)(c-a)} cos(knx) dx + \int_c^b \frac{2(x-b)}{(b-a)(c-b)} cos(knx) dx \right]$$
+
+$$= \frac{4}{(b-a)^2} \left[ \frac{1}{(c-a)k n} \left( (x-a) sin(knx) + \frac{1}{k n} cos(knx)  \right) \bigg|_a^c + \frac{1}{(c-b)k n} \left( (x-b) sin(knx) + \frac{1}{k n} cos(knx)  \right) \bigg|_c^b\right]$$
+
+$$= \frac{4}{(b-a)^2k n} \left[ \frac{1}{(c-a)} \left( (c-a) sin(k n c) + \frac{1}{k n} cos(k n c)  - \frac{1}{kn}cos(k n a)  \right)  + \\
+\frac{1}{(c-b)} \left( \frac{1}{k n} cos(k n b) -(c-b) sin(k n c) - \frac{1}{k n} cos(k n c)  \right) \right]$$
+
+$$B_n = \frac{2}{b-a} \left[ \int_a^c \frac{2(x-a)}{(b-a)(c-a)} sin(knx) dx + \int_c^b \frac{2(x-b)}{(b-a)(c-b)} sin(knx) dx \right]$$
+
+$$= \frac{4}{(b-a)^2} \left[ \frac{1}{(c-a)k n} \left( -(x-a) cos(knx) + \frac{1}{k n} sin(knx)  \right) \bigg|_a^c + \frac{1}{(c-b)k n} \left( -(x-b) cos(knx) + \frac{1}{k n} sin(knx)  \right) \bigg|_c^b\right]$$
+
+$$= \frac{4}{(b-a)^2k n} \left[ \frac{1}{(c-a)} \left( -(c-a) cos(k n c) + \frac{1}{k n} sin(k n c)  - \frac{1}{kn}sin(k n a)  \right)  + \\
+\frac{1}{(c-b)} \left( \frac{1}{k n} sin(k n b) +(c-b) cos(k n c) - \frac{1}{k n} sin(k n c)  \right) \right]$$
+
+$$f(x) = \frac{1}{b-a} + \sum_{n=1}^\infty A_n cos(knx) + B_n sin(knx)$$
+
+$$nLL = -log\left(\prod_{i=1}^N f(x_i)\right) = -\sum_{i=1}^N log(f(x_i))=-\sum_{i=1}^N log\left(\frac{1}{b-a} + \sum_{n=1}^\infty A_n cos(knx_i) + B_n sin(knx_i) \right)$$
+
+$$\frac{\partial nLL}{\partial a} = -\sum_{i=1}^N \frac{1}{f(x)}\left( \frac{1}{(b-a)^2} + \sum_{n=1}^\infty \frac{\partial A_n}{\partial a}cos(knx_i) + A_n (-1)sin(knx_i)\frac{knx_i}{(b-a)} \\ + \frac{\partial B_n}{\partial a}sin(knx_i)+B_n cos(knx_i) \frac{knx_i}{(b-a)} \right)$$
+
+$$\frac{\partial nLL}{\partial b} = -\sum_{i=1}^N \frac{1}{f(x)}\left( \frac{-1}{(b-a)^2} + \sum_{n=1}^\infty \frac{\partial A_n}{\partial b}cos(knx) + A_n (-1)sin(knx)\frac{-knx_i}{(b-a)} \\ + \frac{\partial B_n}{\partial b}sin(knx)+B_n cos(knx) \frac{-knx_i}{(b-a)} \right)$$
+
+$$\frac{\partial nLL}{\partial c} = -\sum_{i=1}^N \frac{1}{f(x)}\left( \sum_{n=1}^\infty \frac{\partial A_n}{\partial c}cos(knx_i) + \frac{\partial B_n}{\partial c}sin(knx_i) \right)$$
+
+### Figures
+
+```{r}
+bn <- function(a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  4/(b-a)^2/k/ns*( 1/(c-a)* ( -(c-a)*cos(k*ns*c) + 1/k/ns*sin(k*ns*c)  - 1/k/ns*sin(k*ns*a) )  + 
+                  1/(c-b)* ( 1/k/ns*sin(k*ns*b) +(c-b)*cos(k*ns*c) - 1/k/ns*sin(k*ns*c)))
+}
+
+an <- function(a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  4/(b-a)^2/k/ns* ( 1/(c-a)* ( (c-a)*sin(k*ns*c) + 1/k/ns*cos(k*ns*c)  - 1/k/ns*cos(k*ns*a) )  +
+                  1/(c-b)* ( 1/k/ns*cos(k*ns*b) -(c-b)*sin(k*ns*c) - 1/k/ns*cos(k*ns*c) ))
+}
+
+a0 <- function(a, b) {
+  1/(b-a)
+}
+
+fourier_f <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  a0(a, b) + sum(an(a, b, c, n)*cos(k*ns*x)) + sum(bn(a, b, c, n)*sin(k*ns*x))
+}
+
+#fourier_f(0, 0, 5, 2, 100) # 0
+#fourier_f(5, 0, 5, 2, 100) # 0
+#fourier_f(2, 0, 5, 2, 100) # 4/5
+
+plot(seq(0, 5, length=100), sapply(seq(0, 5, length=100), fourier_f, a=0, b=5, c=2, n=1), 
+     type = "l", col="red", ylim = c(0, 0.5), xlab = "x", ylab = "f(x)")
+lines(seq(0, 5, length=100), sapply(seq(0, 5, length=100), fourier_f, a=0, b=5, c=2, n=5), col = "green")
+lines(seq(0, 5, length=100), sapply(seq(0, 5, length=100), fourier_f, a=0, b=5, c=2, n=100), col = "blue")
+legend("topright", c("n=1", "n=5", "n=100"), col = c("red", "green", "blue"), lwd = 2)
+```
+
+### Jacobian
+
+```{r}
+bn_a <- function(a, b, c, n) {2*((b*cos(2*pi*b*n/(-a + b))/(-a + b) - 2*pi*c*n*(-b + c)*sin(2*pi*c*n/(-a + b))/(-a + b)^2 - c*cos(2*pi*c*n/(-a + b))/(-a + b) - sin(2*pi*b*n/(-a + b))/(2*pi*n) + sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + (-2*pi*c*n*(a - c)*sin(2*pi*c*n/(-a + b))/(-a + b)^2 + c*cos(2*pi*c*n/(-a + b))/(-a + b) + cos(2*pi*c*n/(-a + b)) - (-a + b)*(2*pi*a*n/(-a + b)^2 + 2*pi*n/(-a + b))*cos(2*pi*a*n/(-a + b))/(2*pi*n) + sin(2*pi*a*n/(-a + b))/(2*pi*n) - sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c) + ((a - c)*cos(2*pi*c*n/(-a + b)) - (-a + b)*sin(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c)^2)/(pi*n*(-a + b)) + 2*(((-b + c)*cos(2*pi*c*n/(-a + b)) + (-a + b)*sin(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + ((a - c)*cos(2*pi*c*n/(-a + b)) - (-a + b)*sin(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c))/(pi*n*(-a + b)^2)}
+
+an_a <- function(a, b, c, n) {2*((-b*sin(2*pi*b*n/(-a + b))/(-a + b) - 2*pi*c*n*(-b + c)*cos(2*pi*c*n/(-a + b))/(-a + b)^2 + c*sin(2*pi*c*n/(-a + b))/(-a + b) - cos(2*pi*b*n/(-a + b))/(2*pi*n) + cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + (2*pi*c*n*(-a + c)*cos(2*pi*c*n/(-a + b))/(-a + b)^2 - c*sin(2*pi*c*n/(-a + b))/(-a + b) - sin(2*pi*c*n/(-a + b)) + (-a + b)*(2*pi*a*n/(-a + b)^2 + 2*pi*n/(-a + b))*sin(2*pi*a*n/(-a + b))/(2*pi*n) + cos(2*pi*a*n/(-a + b))/(2*pi*n) - cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c) + ((-a + c)*sin(2*pi*c*n/(-a + b)) - (-a + b)*cos(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c)^2)/(pi*n*(-a + b)) + 2*((-(-b + c)*sin(2*pi*c*n/(-a + b)) + (-a + b)*cos(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + ((-a + c)*sin(2*pi*c*n/(-a + b)) - (-a + b)*cos(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c))/(pi*n*(-a + b)^2)}
+
+bn_b <- function(a, b, c, n) {2*((2*pi*c*n*(-b + c)*sin(2*pi*c*n/(-a + b))/(-a + b)^2 + c*cos(2*pi*c*n/(-a + b))/(-a + b) - cos(2*pi*c*n/(-a + b)) + (-a + b)*(-2*pi*b*n/(-a + b)^2 + 2*pi*n/(-a + b))*cos(2*pi*b*n/(-a + b))/(2*pi*n) + sin(2*pi*b*n/(-a + b))/(2*pi*n) - sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + ((-b + c)*cos(2*pi*c*n/(-a + b)) + (-a + b)*sin(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c)^2 + (a*cos(2*pi*a*n/(-a + b))/(-a + b) + 2*pi*c*n*(a - c)*sin(2*pi*c*n/(-a + b))/(-a + b)^2 - c*cos(2*pi*c*n/(-a + b))/(-a + b) - sin(2*pi*a*n/(-a + b))/(2*pi*n) + sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c))/(pi*n*(-a + b)) - 2*(((-b + c)*cos(2*pi*c*n/(-a + b)) + (-a + b)*sin(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + ((a - c)*cos(2*pi*c*n/(-a + b)) - (-a + b)*sin(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c))/(pi*n*(-a + b)^2)}
+
+an_b <- function(a, b, c, n) {2*((2*pi*c*n*(-b + c)*cos(2*pi*c*n/(-a + b))/(-a + b)^2 - c*sin(2*pi*c*n/(-a + b))/(-a + b) + sin(2*pi*c*n/(-a + b)) - (-a + b)*(-2*pi*b*n/(-a + b)^2 + 2*pi*n/(-a + b))*sin(2*pi*b*n/(-a + b))/(2*pi*n) + cos(2*pi*b*n/(-a + b))/(2*pi*n) - cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + (-(-b + c)*sin(2*pi*c*n/(-a + b)) + (-a + b)*cos(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c)^2 + (-a*sin(2*pi*a*n/(-a + b))/(-a + b) - 2*pi*c*n*(-a + c)*cos(2*pi*c*n/(-a + b))/(-a + b)^2 + c*sin(2*pi*c*n/(-a + b))/(-a + b) - cos(2*pi*a*n/(-a + b))/(2*pi*n) + cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c))/(pi*n*(-a + b)) - 2*((-(-b + c)*sin(2*pi*c*n/(-a + b)) + (-a + b)*cos(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c) + ((-a + c)*sin(2*pi*c*n/(-a + b)) - (-a + b)*cos(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c))/(pi*n*(-a + b)^2)}
+
+bn_c <- function(a, b, c, n) {2*(-2*pi*n*sin(2*pi*c*n/(-a + b))/(-a + b) - 2*pi*n*(a - c)*sin(2*pi*c*n/(-a + b))/((-a + b)*(-a + c)) - ((-b + c)*cos(2*pi*c*n/(-a + b)) + (-a + b)*sin(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c)^2 - ((a - c)*cos(2*pi*c*n/(-a + b)) - (-a + b)*sin(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*sin(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c)^2)/(pi*n*(-a + b))}
+
+an_c <- function(a, b, c, n) {2*(-(-(-b + c)*sin(2*pi*c*n/(-a + b)) + (-a + b)*cos(2*pi*b*n/(-a + b))/(2*pi*n) - (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-b + c)^2 - ((-a + c)*sin(2*pi*c*n/(-a + b)) - (-a + b)*cos(2*pi*a*n/(-a + b))/(2*pi*n) + (-a + b)*cos(2*pi*c*n/(-a + b))/(2*pi*n))/(-a + c)^2)/(pi*n*(-a + b))}
+```
+
+```{r}
+fourier_dfdc <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  sum(an_c(a, b, c, ns)*cos(k*ns*x) + bn_c(a, b, c, ns)*sin(k*ns*x))
+}
+
+plot(seq(0, 5, length=100), sapply(seq(0, 5, length=100), function(ci) fourier_dfdc(x=2, a=0, b=5, c=ci, n=1)), 
+     type = "l", col="red", ylim = c(-.2, .2), xlab = "c", ylab = "df(x)/dc at x=2")
+lines(seq(0, 5, length=100), sapply(seq(0, 5, length=100), function(ci) fourier_dfdc(x=2, a=0, b=5, c=ci, n=5)), col = "green")
+lines(seq(0, 5, length=100), sapply(seq(0, 5, length=100), function(ci) fourier_dfdc(x=2, a=0, b=5, c=ci, n=100)), col = "blue")
+abline(h=0, lty =2)
+legend("topright", c("n=1", "n=5", "n=100"), col = c("red", "green", "blue"), lwd = 2)
+```
+
+```{r}
+fourier_dfda <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  1/(b-a)^2 + sum(an_a(a, b, c, ns) * cos(k*ns*x) - an(a, b, c, n) * sin(k*ns*x) * (k*ns*x/(b-a)) + bn_a(a, b, c, ns)*sin(k*ns*x) + bn(a, b, c, n)*cos(k*ns*x)*(k*ns*x)/(b-a))
+}
+
+plot(seq(-1, 2, length=100), sapply(seq(-1, 2, length=100), function(ai) fourier_dfda(x=0, a=ai, b=5, c=2, n=1)), 
+     type = "l", col="red", ylim = c(-.5, .2), xlab = "a", ylab = "df(x)/da at x=0")
+lines(seq(-1, 2, length=100), sapply(seq(-1, 2, length=100), function(ai) fourier_dfda(x=0, a=ai, b=5, c=2, n=5)), col = "green")
+lines(seq(-1, 2, length=100), sapply(seq(-1, 2, length=100), function(ai) fourier_dfda(x=0, a=ai, b=5, c=2, n=100)), col = "blue")
+abline(h=0, lty =2)
+legend("topright", c("n=1", "n=5", "n=100"), col = c("red", "green", "blue"), lwd = 2)
+```
+
+```{r}
+nLL_a <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  N <- length(x)
+  
+  xs <- sapply(1:N, function(i) {
+    1/dtriangle(x[i], a, b, c)*(1/(b-a)^2 + sum(
+      an_a(a, b, c, ns)*cos(k*ns*x[i]) - 
+        an(a, b, c, n)*sin(k*ns*x[i])*k*ns*x[i]/(b-a) + 
+        bn_a(a, b, c, ns)*sin(k*ns*x[i]) + 
+        bn(a, b, c, n)*cos(k*ns*x[i])*k*ns*x[i]/(b-a)))
+  })
+  return(-1*sum(xs))
+}
+
+nLL_b <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  N <- length(x)
+  
+  xs <- sapply(1:N, function(i) {
+    1/dtriangle(x[i], a, b, c)*(-1/(b-a)^2 + sum(
+      an_b(a, b, c, ns)*cos(k*ns*x[i]) + 
+        an(a, b, c, n)*sin(k*ns*x[i])*k*ns*x[i]/(b-a) + 
+        bn_b(a, b, c, ns)*sin(k*ns*x[i]) - 
+        bn(a, b, c, n)*cos(k*ns*x[i])*k*ns*x[i]/(b-a)))
+  })
+  return(-1*sum(xs))
+}
+
+nLL_c <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  N <- length(x)
+  
+  xs <- sapply(1:N, function(i) {
+    1/dtriangle(x[i], a, b, c)*(sum(
+      an_c(a, b, c, ns)*cos(k*ns*x[i]) + 
+        bn_c(a, b, c, ns)*sin(k*ns*x[i]) ))
+  })
+  return(-1*sum(xs))
+}
+
+# want to minimize negative log likelihood.
+#   if the partial of the nll is positive, move left to minimize nll
+require(triangle)
+set.seed(1383)
+temp <- triangle::rtriangle(20, 0, 5, 2)
+
+o1 <- optim(c(min(temp)-0.1, max(temp)+0.1, median(temp)), 
+      fn = function(p, x) triangle:::nLL_triangle(x, p[1], p[2], p[3]),
+      gr = function(p, x) {
+        c(nLL_a(x, p[1], p[2], p[3], 500),
+          nLL_b(x, p[1], p[2], p[3], 500),
+          nLL_c(x, p[1], p[2], p[3], 500))
+      }, x = temp, method = "L-BFGS-B", hessian = TRUE,
+      lower = c(min(temp) - (max(temp) - min(temp)), min(temp), max(temp)),
+      upper = c(min(temp), max(temp), max(temp) + (max(temp) - min(temp))))
+
+o2 <- triangle::triangle_mle(temp)
+
+o3 <- optim(c(min(temp)-0.1, max(temp)+0.1, median(temp)), 
+      fn = function(p, x) triangle:::nLL_triangle(x, p[1], p[2], p[3]), 
+      x = temp, method = "L-BFGS-B", hessian = TRUE,
+      lower = c(min(temp) - (max(temp) - min(temp)), min(temp), max(temp)),
+      upper = c(min(temp), max(temp), max(temp) + (max(temp) - min(temp))))
+
+
+rbind(o1$par, o2$coef, o3$par)
+
+solve(o1$hessian)
+o2$vcov
+
+triangle:::nLL_triangle(temp, o1$par[1], o1$par[2], o1$par[3])
+triangle:::nLL_triangle(temp, o2$coef[1], o2$coef[2], o2$coef[3]) # better
+triangle:::nLL_triangle(temp, o3$par[1], o3$par[2], o3$par[3])
+
+nx <- sapply(1:400, function(n) nLL_a(temp, 0, 5, 2, n))
+plot(1:400, nx)
+
+nx <- sapply(1:400, function(n) nLL_b(temp, 0, 5, 2, n))
+plot(1:400, nx)
+
+nx <- sapply(1:400, function(n) nLL_c(temp, 0, 5, 2, n))
+plot(1:400, nx)
+
+```
+
+Try to characterize the true variance in the estimate of a, b, c
+
+```{r}
+sims <- 1000
+results <- vector("list", sims)
+for (i in 1:sims) {
+  x <- triangle::rtriangle(20, 0, 5, 2)
+  results[[i]] <- triangle::triangle_mle(x)
+}
+apply(sapply(results, coef), 1, mean) # mean estimate
+var(t(sapply(results, coef))) # variance of estimate
+```
+
+
+```{r}
+devtools::load_all()
+
+x <- triangle::rtriangle(20, 0, 5, 2)
+triangle::ptriangle(sort(x), 0, 5, 2)
+triangle::qtriangle(2/5, 0, 5, 2)
+results2 <- triangle::triangle_mle(x, boot_var = TRUE, boot_rep = 500)
+which(sort(x) == results2$coef["c"])
+(2-0)/(5-0)*20
+results2$coef
+results2$vcov
+
+triangle:::variance_rth_order_stat_rmpfr(20, 8, 0, 5, 2)
+triangle:::variance_rth_order_stat_rmpfr(20, 1, 0, 5, 2)
+triangle:::variance_rth_order_stat_rmpfr(20, 20, 0, 5, 2)
+
+dbinom(8, size=20, prob = (2-0)/(5-0))
+dbinom(1, size=20, prob = (2-0)/(5-0))
+dbinom(20, size=20, prob = (2-0)/(5-0))
+
+sum(sapply(1:20, function(n1) dbinom(n1, size=20, prob=(2-0)/(5-0))*triangle:::variance_rth_order_stat_rmpfr(20, n1, 0, 5, 2)))
+
+# var(XY) = E(Y)^2 * var(X) + E(X)^2 * var(Y)
+(2/5)^2 * triangle:::variance_rth_order_stat_rmpfr(20, 8, 0, 5, 2) +
+  triangle:::mean_rth_order_stat_rmpfr(20, 8, 0, 5, 2)^2 * ((2/5)*(3/5))
+
+# does the order statistic that is chosen follow a binomial dist?
+temp <- replicate(10000, {
+  x <- triangle::rtriangle(20, 0, 5, 2)
+  mle <- triangle::triangle_mle(x)
+  which(sort(x) == mle$coef["c"])
+})
+
+hist(temp, main = "Histogram of order statistics n = 20")
+
+temp <- replicate(1000, {
+  x <- triangle::rtriangle(20, 0, 5, 2)
+  mom <- triangle::triangle_mom(x, type = 2)
+  mom["c"]
+})
+
+hist(temp, main = "Histogram of the method of moments mode n = 20")
+
+temp <- replicate(10000, {
+  x <- triangle::rtriangle(20, 0, 5, 2)
+  mle <- triangle::triangle_mle(x)
+  mle$coef["c"]
+})
+
+hist(temp, main = "Histogram of the maximum likelihood mode n = 20")
+
+temp <- replicate(1000, {
+  x <- triangle::rtriangle(100, 0, 5, 2)
+  mle <- triangle::triangle_mle(x)
+  which(sort(x) == mle$coef["c"])
+})
+
+hist(temp, main = "Histogram of order statistics n = 100", breaks = 30)
+
+temp <- replicate(1000, {
+  x <- triangle::rtriangle(200, 0, 5, 2)
+  mle <- triangle::triangle_mle(x)
+  which(sort(x) == mle$coef["c"])
+})
+
+hist(temp, main = "Histogram of order statistics n = 200", breaks = 30)
+
+
+ind = 5
+while (ind != 1) {
+  x <- triangle::rtriangle(20, 0, 5, 2)
+  mle <- triangle::triangle_mle(x)
+  ind <- which(sort(x) == mle$coef["c"])
+}
+
+mle$coef["c"]
+min(x)
+max(x)
+nLL_triangle(x, mle$coef["a"], mle$coef["b"], mle$coef["c"])
+nLL_triangle(x, 0, 5, 2)
+
+yplot <- sapply(seq(0, 5, length=1000), function(ci) nLL_triangle(x, mle$coef["a"], mle$coef["b"], ci))
+xplot <- seq(0, 5, length=1000)
+plot(xplot, yplot, type = "l", xlim = c(min(c(0, mle$coef["a"])), max(c(5, mle$coef["b"]))))
+abline(v=mle$coef["a"], col = "green")
+abline(v=mle$coef["b"], col = "blue")
+abline(v=x, lty = 2, col = "red")
+
+yplot <- sapply(seq(0, 5, length=1000), function(ci) nLL_triangle(x, mle$coef["a"], mle$coef["b"], ci))
+xplot <- seq(0, 5, length=1000)
+plot(xplot, yplot, type = "l", xlim = c(min(c(0, mle$coef["a"])), max(c(5, mle$coef["b"]))))
+abline(v=mle$coef["a"], col = "green")
+abline(v=mle$coef["b"], col = "blue")
+abline(v=x, lty = 2, col = "red")
+
+clist <- vector("list", length=20)
+for (i in 1:20) {
+  clist[[i]] <- triangle:::triangle_mle_ab_given_c(x = x, c = x[i])
+}
+
+sapply(clist, function(ci) ci$optim$value)
+
+```
+
+```{r}
+sims <- 1000
+results <- vector("list", sims)
+for (i in 1:sims) {
+  x <- triangle::rtriangle(200, 0, 5, 2)
+  results[[i]] <- triangle::triangle_mle(x)
+}
+apply(sapply(results, coef), 1, mean) # mean estimate
+var(t(sapply(results, coef))) # variance of estimate
+```
+
+
+```{r}
+x <- triangle::rtriangle(200, 0, 5, 2)
+results2 <- triangle::triangle_mle(x, boot_var = TRUE, boot_rep = 1000)
+results2$coef
+results2$vcov
+
+```
+
+
+```{r}
+xtest_small <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+sapply(xtest_small, function(ci) nLL_triangle(xtest_small, 0, 1, ci))
+sapply(xtest_small, function(ci) nLL_triangle(xtest_small, -0.1, 0.8, ci))
+
+temp <- triangle_mle(xtest_small, debug = TRUE)
+
+  expect_true(temp$coef[1] < min(xtest_small))
+  expect_true(temp$coef[2] > max(xtest_small))
+  expect_equivalent(0.3, temp$coef[3])
+  
+
+
+```
+
+```{python}
+x = sy.Symbol('x', real=True)
+x_1 = sy.Symbol('x_1', real=True)
+x_2 = sy.Symbol('x_2', real=True)
+x_3 = sy.Symbol('x_3', real=True)
+a = sy.Symbol('a', real=True)
+b = sy.Symbol('b', real=True)
+c = sy.Symbol('c', real=True)
+
+f = sy.Piecewise((2*(x-a)/(b-a)/(c-a), x <= c), (2*(b-x)/(b-a)/(b-c), x > c))
+F = sy.Piecewise(((x-a)**2/(b-a)/(c-a), x <= c), ((b-x)**2/(b-a)/(b-c), x > c))
+
+F.subs({x: x_1})
+
+sy.solve(2/(b-a) + 1/(c-a) - 1/(x_1 - a), a)
+
+```
+
+```{r}
+qtriangle(0.25, 0, 2, 1) # sqrt(2)/2
+qtriangle(0.5, 0, 2, 1) # 1
+qtriangle(0.75, 0, 2, 1) # 2-sqrt(2)/2
+
+three_points <- c(sqrt(2)/2, 1, 2-sqrt(2)/2)
+
+triangle:::triangle_mle_ab_given_c(three_points, sqrt(2)/2)
+nLL_triangle(three_points, sqrt(2)/2, 1.53204, sqrt(2)/2)
+
+triangle:::triangle_mle_ab_given_c(three_points, 1)
+nLL_triangle(three_points, 0.5118446, 1.4881554, 1)
+
+triangle:::triangle_mle_ab_given_c(three_points, 2-sqrt(2)/2)
+nLL_triangle(three_points, 0.4679605, 2-sqrt(2)/2, 2-sqrt(2)/2)
+
+triangle_mom(three_points, type = 2)
+triangle:::triangle_mle_ab_given_c(three_points, 1)
+nLL_triangle(three_points, 0.5118446, 1.4881554, 1)
+
+
+```
