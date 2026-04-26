@@ -30,21 +30,33 @@ knitr::opts_chunk$set(fig.path = "man/figures/")
 An R package to work with the triangle distribution and logarithmic triangle distribution
 
 ```{r badges, echo=FALSE, results = 'asis'}
-cat(paste0("|<sub>", 
-           paste0(
-             c("Github Actions", "Windows", "Code Coverage", "CRAN Downloads", "CRAN"), 
-             collapse="</sub>|<sub>"), 
-           "</sub>|\n"))
-cat(paste0("|", paste0(rep(":---:", 5), collapse="|"), "|\n"))
-cat(paste0("|", 
-           paste0(c("[![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml)",
-                    "[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/bertcarnell/triangle?branch=master&svg=true)](https://ci.appveyor.com/project/bertcarnell/triangle)",
-                    "[![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master)",
-                    "[![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle)",
-                    "[![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle)"),
-                  collapse="|"), 
-           "|"))
+print_header_badges <- function(header_vec, badge_vec) {
+  stopifnot(length(header_vec) == length(badge_vec))
+  c(paste0("|<sub>", paste0(header_vec, collapse="</sub>|<sub>"), "</sub>|\n"),
+    paste0("|", paste0(rep(":---:", length(header_vec)), collapse="|"), "|\n"),
+    paste0("|", paste0(badge_vec, collapse="|"), "|\n"))
+}
 
+header_vec <- c("Actions", "Code Coverage", "Website", "CRAN Downloads", "CRAN")
+badge_vec <- c(
+  "[![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml)",
+  "[![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master)",
+  "[![](https://img.shields.io/badge/pkgdown-triangle-blue.svg)](https://bertcarnell.github.io/triangle/)",
+  "[![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle)",
+  "[![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle)")
+
+cat(print_header_badges(header_vec, badge_vec))
+
+cat("\n")
+
+header_vec <- c("R-Universe", "CRAN Packages", "DOI")
+badge_vec <- c(
+  "[![name status badge](https://bertcarnell.r-universe.dev/badges/:name)](https://bertcarnell.r-universe.dev/)",
+	"[![Static Badge](https://img.shields.io/badge/CRAN-All_Packages-blue)](https://cran.r-project.org/web/checks/check_results_bertcarnell_at_gmail.com.html)", 
+	"[![Static Badge](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.triangle-blue)](https://cran.r-project.org/package=triangle)"  
+)
+
+cat(print_header_badges(header_vec, badge_vec))
 ```
 
 See the package documentation [here:](https://bertcarnell.github.io/triangle/)

@@ -3,6 +3,7 @@
 #' Triangle distribution method of moments estimate
 #'
 #' @param x triangle distribution sample
+#' @param na.rm whether to remove NA samples.  Default is FALSE.
 #' @param type the type of method of moments.  Type 1 uses the min and max.  Type2
 #' minimizes the distance from the calculated mean, variance, and skewness to the
 #' sample mean, variance, and skewness

@@ -1,0 +1,214 @@
+# triangle
+
+|                                 |
+|---------------------------------|
+| ![](reference/figures/logo.svg) |
+
+© Copyright 2024 Robert Carnell
+
+An R package to work with the triangle distribution and logarithmic
+triangle distribution
+
+| _(Actions) | _(Code Coverage) | _(Website) | _(CRAN Downloads) | _(CRAN) |
+|:--:|:--:|:--:|:--:|:--:|
+| [![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master) | [![](https://img.shields.io/badge/pkgdown-triangle-blue.svg)](https://bertcarnell.github.io/triangle/) | [![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle) | [![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle) |
+
+| _(R-Universe) | _(CRAN Packages) | _(DOI) |
+|:--:|:--:|:--:|
+| [![name status badge](https://bertcarnell.r-universe.dev/badges/:name)](https://bertcarnell.r-universe.dev/) | [![Static Badge](https://img.shields.io/badge/CRAN-All_Packages-blue)](https://cran.r-project.org/web/checks/check_results_bertcarnell_at_gmail.com.html) | [![Static Badge](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.triangle-blue)](https://cran.r-project.org/package=triangle) |
+
+See the package documentation
+[here:](https://bertcarnell.github.io/triangle/)
+
+## Getting Started
+
+Install the R package:
+
+``` r
+
+# Stable CRAN version
+install.packages("triangle")
+
+# OR development version from GitHub
+require(devtools)
+devtools::install_github("bertcarnell/triangle")
+```
+
+use the functions:
+
+- `a` = minimum
+- `b` = maximum
+- `c` = mode
+
+``` r
+
+require(triangle)
+```
+
+### Triangle distribution
+
+``` r
+
+# rtriangle(n, a, b, c)
+set.seed(42)
+rtriangle(5, 1, 5, 2)
+```
+
+``` R
+## [1] 3.988898 4.131038 2.073171 3.573596 2.926584
+```
+
+``` r
+
+# ptriangle(x, a, b, c)
+ptriangle(0:5, 0, 10, 5)
+```
+
+``` R
+## [1] 0.00 0.02 0.08 0.18 0.32 0.50
+```
+
+``` r
+
+# qtriangle(p, a, b, c)
+qtriangle(seq(0, 1, by = 0.2), 1, 10, 3)
+```
+
+``` R
+## [1]  1.000000  2.897367  3.851830  4.980040  6.450352 10.000000
+```
+
+``` r
+
+# dtriangle(x, a, b, c)
+dtriangle(0:4, 0, 10, 5)
+```
+
+``` R
+## [1] 0.00 0.04 0.08 0.12 0.16
+```
+
+### Logarithmic triangle distribution
+
+``` r
+
+# rltriangle(n, a, b, c, logbase)
+set.seed(2001)
+rltriangle(5, 1, 100, 10)
+```
+
+``` R
+## [1] 20.195183 13.001831  4.579489  4.753026  3.572658
+```
+
+``` r
+
+# pltriangle(x, a, b, c, logbase)
+pltriangle(10^(0:3), 1, 1000, 10)
+```
+
+``` R
+## [1] 0.0000000 0.3333333 0.8333333 1.0000000
+```
+
+``` r
+
+# qltriangle(p, a, b, c, logbase)
+qltriangle(seq(0, 1, by = 0.2), 1, 100, 20)
+```
+
+``` R
+## [1]   1.00000   5.26497  10.47630  17.76210  29.59642 100.00000
+```
+
+``` r
+
+# dltriangle(x, a, b, c, logbase)
+dltriangle(0:5, 1, 10, 5)
+```
+
+``` R
+## [1] 0.0000000 0.0000000 0.8613531 1.3652124 1.7227062 2.0000000
+```
+
+### Parameter estimates
+
+#### triangle method of moments estimates
+
+``` r
+
+x <- rtriangle(20, 0, 2, 1.5)
+triangle_mom(x)
+```
+
+``` R
+##         a         b         c 
+## 0.6341961 1.9096262 1.4197678
+```
+
+#### triangle maximum likelihood estimates
+
+``` r
+
+x <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
+# triangle_mle(x, debug = FALSE, maxiter = 100)
+triangle_mle(x)
+```
+
+``` R
+## Triangle Maximum Likelihood Estimates
+## 
+## Call:  triangle_mle(x = x) 
+## 
+## Estimates:
+##   Estimate Std.Err
+## a -0.10366      NA
+## b  0.80000      NA
+## c  0.80000      NA
+## 
+## Convergence Code:  0
+##   CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH
+```
+
+``` r
+
+# standard triangle (0,1) likelihood estimates
+standard_triangle_mle(x)
+```
+
+``` R
+## Triangle Maximum Likelihood Estimates
+## 
+## Call:  standard_triangle_mle(x = x) 
+## 
+## Estimates:
+##   Estimate Std.Err
+## a      0.0  0.0000
+## b      1.0  0.0000
+## c      0.3  0.0871
+## 
+## Convergence Code:  NA
+##  
+```
+
+``` r
+
+set.seed(1976)
+x <- rtriangle(100, 1, 5, 3.5)
+triangle_mle(x)
+```
+
+``` R
+## Triangle Maximum Likelihood Estimates
+## 
+## Call:  triangle_mle(x = x) 
+## 
+## Estimates:
+##   Estimate Std.Err
+## a  0.69536      NA
+## b  4.73677      NA
+## c  4.73677      NA
+## 
+## Convergence Code:  0
+##   CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH
+```

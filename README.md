@@ -3,16 +3,22 @@
 <div>
 
 <table style="border: 0">
+
 <tr>
+
 <td>
+
 <img align="left" width="200" height="200" src="man/figures/logo.svg"/>
 </td>
+
 </tr>
+
 </table>
 
 </div>
 
 <footer>
+
 © Copyright 2024 Robert Carnell
 </footer>
 
@@ -21,9 +27,13 @@
 An R package to work with the triangle distribution and logarithmic
 triangle distribution
 
-|                                                                            <sub>Github Actions</sub>                                                                             |                                                                                <sub>Windows</sub>                                                                                |                                                                   <sub>Code Coverage</sub>                                                                   |                                   <sub>CRAN Downloads</sub>                                    |                                               <sub>CRAN</sub>                                                |
-|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|
-| [![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml) | [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/bertcarnell/triangle?branch=master&svg=true)](https://ci.appveyor.com/project/bertcarnell/triangle) | [![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master) | [![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle) | [![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle) |
+| <sub>Actions</sub> | <sub>Code Coverage</sub> | <sub>Website</sub> | <sub>CRAN Downloads</sub> | <sub>CRAN</sub> |
+|:--:|:--:|:--:|:--:|:--:|
+| [![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master) | [![](https://img.shields.io/badge/pkgdown-triangle-blue.svg)](https://bertcarnell.github.io/triangle/) | [![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle) | [![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle) |
+
+| <sub>R-Universe</sub> | <sub>CRAN Packages</sub> | <sub>DOI</sub> |
+|:--:|:--:|:--:|
+| [![name status badge](https://bertcarnell.r-universe.dev/badges/:name)](https://bertcarnell.r-universe.dev/) | [![Static Badge](https://img.shields.io/badge/CRAN-All_Packages-blue)](https://cran.r-project.org/web/checks/check_results_bertcarnell_at_gmail.com.html) | [![Static Badge](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.triangle-blue)](https://cran.r-project.org/package=triangle) |
 
 See the package documentation
 [here:](https://bertcarnell.github.io/triangle/)
@@ -138,10 +148,10 @@ triangle_mle(x)
     ## Call:  triangle_mle(x = x) 
     ## 
     ## Estimates:
-    ##    Estimate Std.Err
-    ## a 0.0076277  0.0996
-    ## b 0.9939370  0.1649
-    ## c 0.3000000  0.0861
+    ##   Estimate Std.Err
+    ## a -0.10366      NA
+    ## b  0.80000      NA
+    ## c  0.80000      NA
     ## 
     ## Convergence Code:  0
     ##   CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH
@@ -176,9 +186,9 @@ triangle_mle(x)
     ## 
     ## Estimates:
     ##   Estimate Std.Err
-    ## a   0.9060  0.1259
-    ## b   4.8254  0.0770
-    ## c   3.6853  0.0924
+    ## a  0.69536      NA
+    ## b  4.73677      NA
+    ## c  4.73677      NA
     ## 
     ## Convergence Code:  0
     ##   CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH

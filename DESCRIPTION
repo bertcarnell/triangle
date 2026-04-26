@@ -15,17 +15,6 @@ BugReports: https://github.com/bertcarnell/triangle/issues
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 Depends: R (>= 2.14.1)
-Collate: 
-    'cdfe.R'
-    'dtriangle.R'
-    'fit-plots.R'
-    'ltriangle.r'
-    'mle-utils.R'
-    'mle.R'
-    'mom.R'
-    'ptriangle.r'
-    'qtriangle.R'
-    'rtriangle.r'
 Imports:
     stats4,
     methods,
@@ -37,3 +26,14 @@ Suggests:
     MASS,
     Rmpfr
 VignetteBuilder: knitr
+Collate: 
+    'cdfe.R'
+    'dtriangle.R'
+    'fit-plots.R'
+    'ltriangle.r'
+    'mle-utils.R'
+    'mle.R'
+    'mom.R'
+    'ptriangle.r'
+    'qtriangle.R'
+    'rtriangle.r'

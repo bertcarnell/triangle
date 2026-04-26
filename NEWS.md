@@ -51,3 +51,8 @@ based on Randall Pruim's suggestion as well.
 # version 1.0.1
 
 - Documentation fixes and website formatting
+
+# version 1.1.0
+
+- Fixed a mismatch in documentation
+- Other minor updates

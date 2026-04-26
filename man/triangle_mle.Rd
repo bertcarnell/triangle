@@ -14,9 +14,9 @@ triangle_mle(x, debug = FALSE, maxiter = 100, boot_var = FALSE, boot_rep = 500)
 \item{maxiter}{the maximum number of cycles of optimization between maximizing \code{a} and \code{b} given \code{c}
 and maximizing \code{c} given \code{a} and \code{b}}
 
-\item{boot_var}{should the variance be computed with a boostrap sample?}
+\item{boot_var}{should the variance be computed with a bootstrap sample?}
 
-\item{boot_rep}{The number of boostrap replications}
+\item{boot_rep}{The number of bootstrap replications}
 }
 \value{
 an object of S3 class \code{triangle_mle} containing a list with the call, coefficients,

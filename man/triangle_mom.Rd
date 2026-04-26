@@ -4,10 +4,16 @@
 \alias{triangle_mom}
 \title{Triangle distribution method of moments estimate}
 \usage{
-triangle_mom(x)
+triangle_mom(x, na.rm = FALSE, type = 1)
 }
 \arguments{
 \item{x}{triangle distribution sample}
+
+\item{na.rm}{whether to remove NA samples.  Default is FALSE.}
+
+\item{type}{the type of method of moments.  Type 1 uses the min and max.  Type2
+minimizes the distance from the calculated mean, variance, and skewness to the
+sample mean, variance, and skewness}
 }
 \value{
 a named vector of the parameter estimates
