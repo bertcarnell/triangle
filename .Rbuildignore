@@ -12,3 +12,5 @@
 ^README.md$
 ^\.github
 ^_pkgdown\.yml$
+^\.positai$
+^\.claude$

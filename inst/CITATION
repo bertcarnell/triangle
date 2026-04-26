@@ -1,0 +1,9 @@
+bibentry(
+  bibtype = "Manual",
+  title = "{triangle}: Distribution Functions and Parameter Estimates for the Triangle Distribution",
+  author = "Rob Carnell",
+  year = "2026",
+  note = "R package version 1.1.0",
+  url = "https://cran.r-project.org/package=triangle",
+  doi = "10.32614/CRAN.package.triangle"
+)
