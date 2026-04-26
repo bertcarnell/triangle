@@ -1,4 +1,4 @@
-context("test-rtriangle")
+# Copyright 2026 Rob Carnell
 
 test_that("rtriangle works", {
   expect_true(max(rtriangle(100)) <= 1)
@@ -36,9 +36,10 @@ test_that("rtriangle is consistent with runif", {
   # runif(-1) errors
   expect_error(rtriangle(-5))
   # runif(2, NaN, 5) returns c(NaN, NaN) and warning
-  expect_warning(expect_equal(rtriangle(2, NaN, 3, 1), c(NaN, NaN)))
+  expect_warning(expect_true(all(is.nan(rtriangle(2, NaN, 3, 1)))))
+  expect_warning(expect_length(rtriangle(2, NaN, 3, 1), 2))
   # runif(1, 3, NA) returns NaN and warning
-  expect_warning(expect_equal(rtriangle(1, 3, NA, 4), NaN))
+  expect_warning(expect_true(is.nan(rtriangle(1, 3, NA, 4))))
   # runif(NA) errors
   expect_error(rtriangle(NA))
   # runif(Inf) errors

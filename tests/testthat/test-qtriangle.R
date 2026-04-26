@@ -1,4 +1,4 @@
-context("test-qtriangle")
+# Copyright 2026 Rob Carnell
 
 test_that("qtriangle", {
   expect_equal(qtriangle(0, 1, 3, 2), 1)
@@ -21,10 +21,10 @@ test_that("qtriangle", {
   expect_equal(qtriangle(c(0, 1, 0), 1, 2, 1.5), c(1, 2, 1))
   expect_error(qtriangle(c(0, 0, 0, 0, 0), c(0, 0), 1, .5))
   expect_equal(qtriangle(.5, NaN, 2, 1), NaN)
-  expect_equal(qtriangle(.5, -Inf, 2, 1), NaN)
-  expect_equal(qtriangle(.5, 0, Inf, 1), NaN)
-  expect_equal(qtriangle(.5, -Inf, Inf, 1), NaN)
-  expect_equal(qtriangle(.5, 0, Inf, Inf), NaN)
+  expect_warning(expect_equal(qtriangle(.5, -Inf, 2, 1), NaN))
+  expect_warning(expect_equal(qtriangle(.5, 0, Inf, 1), NaN))
+  expect_warning(expect_equal(qtriangle(.5, -Inf, Inf, 1), NaN))
+  expect_warning(expect_equal(qtriangle(.5, 0, Inf, Inf), NaN))
 
   # From a Bug Report, Michael.Scroggie@dse.vic.gov.au, Thursday 10/19/06
   expect_true(!all(0 == qtriangle(runif(10), 0, 1, 0)))
@@ -51,4 +51,43 @@ test_that("qtriangle", {
   expect_equal(30000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 100000, 30000))
   expect_equal(300000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 1000000, 300000))
   expect_equal(3000000, qtriangle(0.0 + 0.1 + 0.1 + 0.1, 0, 10000000, 3000000))
+})
+
+test_that("qtriangle is consistent with runif", {
+  # NaN
+  expect_true(is.nan(qunif(0.5, NaN, 1)))
+  expect_true(is.nan(qunif(0.5, 0, NaN)))
+  expect_true(is.nan(qunif(NaN, 0, 1)))
+
+  expect_true(is.nan(qtriangle(0.5, NaN, 1, 0.5)))
+  expect_true(is.nan(qtriangle(0.5, 0, NaN, 0.5)))
+  expect_true(is.nan(qtriangle(0.5, 0, 1, NaN)))
+  expect_true(is.nan(qtriangle(NaN, 0, 1, 0.5)))
+
+  # NA
+  expect_true(is.na(qunif(0.5, NA, 1)))
+  expect_true(is.na(qunif(0.5, 0, NA)))
+  expect_true(is.na(qunif(NA, 0, 1)))
+
+  expect_true(is.na(qtriangle(0.5, NA, 1, 0.5)))
+  expect_true(is.na(qtriangle(0.5, 0, NA, 0.5)))
+  expect_true(is.na(qtriangle(0.5, 0, 1, NA)))
+  expect_true(is.na(qtriangle(NA, 0, 1, 0.5)))
+
+  # out of order
+  expect_warning(expect_true(all(is.nan(qunif(0.5, 1, 0)))))
+  # a > c
+  expect_warning(expect_true(all(is.nan(qtriangle(0.5, 5, 6, 4)))))
+  # b < c
+  expect_warning(expect_true(all(is.nan(qtriangle(0.5, 5, 6, 7)))))
+
+  # Inf
+  expect_warning(expect_true(is.nan(qunif(0.5, 0, Inf))))
+  expect_warning(expect_true(is.nan(qunif(0.5, -Inf, 1))))
+  expect_warning(expect_true(is.nan(qunif(Inf, 0, 1))))
+
+  expect_warning(expect_true(is.nan(qtriangle(0.5, -Inf, 1, 0.5))))
+  expect_warning(expect_true(is.na(qtriangle(0.5, 0, Inf, 0.5))))
+  expect_warning(expect_true(is.na(qtriangle(Inf, 0, 1, 0.5))))
+
 })

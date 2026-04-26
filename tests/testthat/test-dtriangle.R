@@ -1,4 +1,4 @@
-context("test-dtriangle")
+# Copyright 2026 Rob Carnell
 
 test_that("dtriangle", {
   expect_equal(dtriangle(1, 1, 3, 2), 0) # x < a

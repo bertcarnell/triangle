@@ -1,3 +1,5 @@
+# Copyright 2026 Rob Carnell
+
 test_that("qqtriangle works", {
   set.seed(10304)
   xtest <- rtriangle(100, 1, 5, 2)

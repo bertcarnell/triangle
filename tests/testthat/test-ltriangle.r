@@ -1,4 +1,4 @@
-context("test-ltriangle")
+# Copyright 2026 Rob Carnell
 
 test_that("rltriangle",
 {

@@ -1,3 +1,5 @@
+# Copyright 2026 Rob Carnell
+
 test_that("method of moments works", {
   set.seed(103930)
   x <- rtriangle(20, 0, 2, 1.5)

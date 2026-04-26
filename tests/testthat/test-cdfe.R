@@ -1,3 +1,5 @@
+# Copyright 2026 Rob Carnell
+
 test_that("triangle_cdfe works", {
   set.seed(10304)
   xtest2 <- rtriangle(100, 1, 5, 2)

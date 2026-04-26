@@ -1,3 +1,5 @@
+# Copyright 2026 Rob Carnell
+
 test_that("summary works", {
   summ <- summary(mle1)
 

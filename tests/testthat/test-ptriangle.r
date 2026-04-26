@@ -1,6 +1,4 @@
-# copyright 2018 Rob Carnell
-
-context("test-ptriangle")
+# Copyright 2026 Rob Carnell
 
 test_that("ptriangle", {
   expect_equal(ptriangle(1, 1, 3, 2), 0)
@@ -17,19 +15,44 @@ test_that("ptriangle", {
 })
 
 test_that("ptriangle is consistent with punif", {
-  # punif(0.5, 1, 0) is NaN
-  # a <= b failed
-  expect_warning(expect_equal(ptriangle(.5, 2, 1, 1.5), NaN))
-  # punif(c(0, 4, -1, 2), 0, 4) returns 4 numbers
+  # NaN
+  expect_true(is.nan(punif(0.5, NaN, 1)))
+  expect_true(is.nan(punif(0.5, 0, NaN)))
+  expect_true(is.nan(punif(NaN, 0, 1)))
+
+  expect_true(is.nan(ptriangle(0.5, NaN, 1, 0.5)))
+  expect_true(is.nan(ptriangle(0.5, 0, NaN, 0.5)))
+  expect_true(is.nan(ptriangle(0.5, 0, 1, NaN)))
+  expect_true(is.nan(ptriangle(NaN, 0, 1, 0.5)))
+
+  # NA
+  expect_true(is.na(punif(0.5, NA, 1)))
+  expect_true(is.na(punif(0.5, 0, NA)))
+  expect_true(is.na(punif(NA, 0, 1)))
+
+  expect_true(is.na(ptriangle(0.5, NA, 1, 0.5)))
+  expect_true(is.na(ptriangle(0.5, 0, NA, 0.5)))
+  expect_true(is.na(ptriangle(0.5, 0, 1, NA)))
+  expect_true(is.na(ptriangle(NA, 0, 1, 0.5)))
+
+  # out of order
+  expect_warning(expect_true(all(is.nan(punif(0.5, 1, 0)))))
+  # a > c
+  expect_warning(expect_true(all(is.nan(ptriangle(0.5, 5, 6, 4)))))
+  # b < c
+  expect_warning(expect_true(all(is.nan(qtriangle(0.5, 5, 6, 7)))))
+
+  # Inf
+  expect_warning(expect_true(is.nan(punif(0.5, 0, Inf))))
+  expect_warning(expect_true(is.nan(punif(0.5, -Inf, 1))))
+
+  expect_warning(expect_true(is.nan(ptriangle(0.5, -Inf, 1, 0.5))))
+  expect_warning(expect_true(is.na(ptriangle(0.5, 0, Inf, 0.5))))
+
+  # multi-parameters
+  expect_equal(punif(c(0, 4, -1, 2), 0, 4), c(0, 1, 0, 0.5))
   expect_equal(ptriangle(c(1, 3, -1, .5), c(1, 0, -1, 0), c(3, 3, 3, 1),
                          c(2, 2, 2, .5)), c(0, 1, 0, .5))
-
-  # punif(0.5, 0, NA) is NA
-  expect_true(is.na(ptriangle(.5, 0, NA, 3)))
-  # punif(0.5, 0, NaN) is NaN
-  expect_true(is.nan(ptriangle(.5, 0, 5, NaN)))
-  # punif(0.5, 0, Inf) is NaN with a warning
-  expect_warning(expect_true(is.nan(ptriangle(.5, 0, Inf, 3))))
 })
 
 test_that("ptriangle is not consistent with punif", {

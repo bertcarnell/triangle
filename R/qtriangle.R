@@ -20,7 +20,8 @@ qtriangle <- function(p, a=0, b=1, c=(a + b)/2) {
     } else if (X[1] < 0 | X[1] > 1) {
       warning("at least one p is outside [0,1]")
       return(NaN) # to conform to behavior of qunif
-    } else if (any(is.infinite(X))) {
+    } else if (any(is.infinite(X[2:4]))) {
+      warning("at least one parameters is Infinite")
       return(NaN)
     } else if ((X[2] != X[4] &&
                (X[2] + sqrt(X[1]*(X[3] - X[2])*(X[4] - X[2]))) <= X[4]) |

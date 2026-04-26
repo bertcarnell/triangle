@@ -1,3 +1,5 @@
+# Copyright 2026 Rob Carnell
+
 test_that("logM works", {
   expect_true(abs(exp(logM(xtest_small, 0, 1, 1)) - 0.007) < 0.001)
   expect_true(abs(exp(logM(xtest_small, 0, 1, 2)) - 0.010) < 0.001)
