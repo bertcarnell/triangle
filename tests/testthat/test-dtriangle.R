@@ -40,29 +40,52 @@ test_that("dtriangle", {
 })
 
 test_that("dtriangle is consistent with dunif", {
-  # dunif(0.5, 1, 0) is NaN with a warning
-  expect_warning(expect_true(is.nan(dtriangle(.5, 0, -1, 0))))
-  # dunif(0.5, 0, NA) is NA
-  expect_true(is.na(dtriangle(.5, 0, NA, 3)))
-  # dunif(0.5, 0, NaN) is NaN
-  expect_true(is.nan(dtriangle(.5, 0, 5, NaN)))
-  expect_true(is.nan(dtriangle(.5, 0, NaN, 1)))
-  expect_true(is.nan(dtriangle(.5, NaN, 5, 1)))
-  # dunif(0.5, 0, Inf) is 0
-  # dunif(0.5, -Inf, 1) is 0
+  # NaN
+  expect_true(is.nan(dunif(0.5, NaN, 1)))
+  expect_true(is.nan(dunif(0.5, 0, NaN)))
+  expect_true(is.nan(dunif(NaN, 0, 1)))
+
+  expect_true(is.nan(dtriangle(0.5, NaN, 1, 0.5)))
+  expect_true(is.nan(dtriangle(0.5, 0, NaN, 0.5)))
+  expect_true(is.nan(dtriangle(0.5, 0, 1, NaN)))
+  expect_true(is.nan(dtriangle(NaN, 0, 1, 0.5)))
+
+  # NA
+  expect_true(is.na(dunif(0.5, NA, 1)))
+  expect_true(is.na(dunif(0.5, 0, NA)))
+  expect_true(is.na(dunif(NA, 0, 1)))
+
+  expect_true(is.na(dtriangle(0.5, NA, 1, 0.5)))
+  expect_true(is.na(dtriangle(0.5, 0, NA, 0.5)))
+  expect_true(is.na(dtriangle(0.5, 0, 1, NA)))
+  expect_true(is.na(dtriangle(NA, 0, 1, 0.5)))
+
+  # out of order
+  expect_warning(expect_true(all(is.nan(dunif(0.5, 1, 0)))))
+  # a > c
+  expect_warning(expect_true(all(is.nan(dtriangle(0.5, 5, 6, 4)))))
+  # b < c
+  expect_warning(expect_true(all(is.nan(dtriangle(0.5, 5, 6, 7)))))
+
+  # Inf
+  expect_equal(dunif(1, -Inf, 2), 0)
+  expect_equal(dunif(1, 0, Inf), 0)
+  expect_equal(dunif(1, -Inf, Inf), 0)
+  expect_equal(dunif(Inf, 0, 1), 0)
+
   expect_equal(dtriangle(.5, 0, Inf, 3), 0)
   expect_equal(dtriangle(.5, -Inf, 5, 3), 0)
   expect_equal(dtriangle(.5, 0, Inf, Inf), 0)
-  # dunif(NA, 0, 1) is NA
-  expect_true(is.na(dtriangle(NA, 0, 1, 0.5)))
-  # dunif(NaN, 0, 1) is NaN
-  expect_true(is.na(dtriangle(NaN, 0, 1, 0.5)))
-  # dunif(Inf, 0, 1) is 0
   expect_equal(dtriangle(Inf, 0, 1, 0.5), 0)
   expect_equal(dtriangle(-Inf, 0, 1, 0.5), 0)
+
+  # multi-parameters
+  expect_equal(dunif(c(0, 4, -1, 2), 0, 4), c(0.25, 0.25, 0, 0.25))
+  expect_equal(dtriangle(c(1, 3, -1, .5), c(1, 0, -1, 0), c(3, 3, 3, 1),
+                         c(2, 2, 2, .5)), c(0, 0, 0, 2))
 })
 
 test_that("dtriangle is not consistent with dunif", {
-  # dunif recycles arguments even in non-recylcable lengths
+  # dunif recycles arguments even in non-recyclable lengths
   expect_error(dtriangle(c(1,2,3), c(1,2,3), c(4,5), c(1,2,3)))
 })
