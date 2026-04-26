@@ -1,0 +1,22 @@
+---
+title: "Triangle Theorems"
+author: "Rob Carnell"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Blah
+
+<div class="theorem" text='CLT'>
+  The CLT states that, as $n$ goes to infinity, the sample average $\bar{X}$
+  converges in distribution to $\mathcal{N}(\mu,\sigma^2/n)$.
+</div>
+
+$$X = y$$
+

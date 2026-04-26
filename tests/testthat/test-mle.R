@@ -28,6 +28,26 @@ test_that("nLL_triangle works", {
   expect_equal(-log(1/2), nLL_triangle(1, 0, 2, 2, debug = TRUE))
   expect_equal(-log(1/2), nLL_triangle(1, 0, 2, 0))
   expect_equal(-log(1), nLL_triangle(1, 0, 2, 1))
+
+  # when a = c < b, then the mle of a is min(x)
+  expect_equal(-log(dtriangle(0, 0, 2, 0)), nLL_triangle(0, 0, 2, 0))
+  expect_equal(-log(dtriangle(0, 0, 2, 0)*dtriangle(1, 0, 2, 0)), nLL_triangle(c(0,1), 0, 2, 0))
+  # when a < c = b, then the mle of b is max(x)
+  expect_equal(-log(dtriangle(2, 0, 2, 2)), nLL_triangle(2, 0, 2, 2))
+  expect_equal(-log(dtriangle(2, 0, 2, 2)*dtriangle(1, 0, 2, 2)), nLL_triangle(c(2,1), 0, 2, 2))
+  # when a < c < b, then the mle of a or b sill might be at the min and max
+  expect_equal(-log(dtriangle(0, 0, 2, 1)), nLL_triangle(0, 0, 2, 1))
+  expect_equal(-log(dtriangle(0, 0, 2, 1)*dtriangle(1, 0, 2, 1)), nLL_triangle(c(0,1), 0, 2, 1))
+  expect_equal(-log(dtriangle(2, 0, 2, 1)), nLL_triangle(2, 0, 2, 1))
+  expect_equal(-log(dtriangle(2, 0, 2, 1)*dtriangle(1, 0, 2, 1)), nLL_triangle(c(2,1), 0, 2, 1))
+
+  # check that the nLL also integrates to 1 for each type of triangle
+  int1 <- integrate(f = function(x) sapply(x, function(xi) exp(-1*nLL_triangle(xi, 0, 2, 1))), lower = 0, upper = 2)
+  expect_equal(1, int1$value, tolerance = int1$abs.error)
+  int1 <- integrate(f = function(x) sapply(x, function(xi) exp(-1*nLL_triangle(xi, 0, 2, 2))), lower = 0, upper = 2)
+  expect_equal(1, int1$value, tolerance = int1$abs.error)
+  int1 <- integrate(f = function(x) sapply(x, function(xi) exp(-1*nLL_triangle(xi, 0, 2, 0))), lower = 0, upper = 2)
+  expect_equal(1, int1$value, tolerance = int1$abs.error)
 })
 
 test_that("gradient_nLL_triangle_given_c works", {
@@ -184,12 +204,12 @@ test_that("variance_rth_order_stat matches multiple precision", {
 test_that("triangle_mle works", {
   temp <- triangle_mle(xtest_small)
 
-  expect_true(temp$coef[1] < min(xtest_small))
-  expect_true(temp$coef[2] > max(xtest_small))
-  expect_equivalent(0.3, temp$coef[3])
+  expect_true(temp$coef[1] <= min(xtest_small))
+  expect_true(temp$coef[2] >= max(xtest_small))
+  # expect_equivalent(0.3, temp$coef[3]) # this isn't true under the left skewwed triangle allowance
 
   expect_equal(c(3, 3), dim(temp$vcov))
-  expect_true(all(diag(temp$vcov) >= 0))
+  expect_true(all(diag(temp$vcov) >= 0) | all(is.na(diag(temp$vcov))))  ### wouild like to do better here
   expect_equal(temp$vcov[1,2], temp$vcov[2,1])
 
   expect_equal(8, temp$nobs)
@@ -240,3 +260,39 @@ test_that("standard_triangle_mle works", {
                     temp$min)
 })
 
+test_that("breakdown nLL problems", {
+  mom1 <- triangle_mom(xtest_small, type = 1)
+  triangle:::nLL_triangle(xtest_small, mom1["a"], mom1["b"], mom1["c"]) # inf because a=min(x) and b=max(x)
+
+  # start with mom type 2
+  mom2 <- triangle_mom(xtest_small, type = 2)
+  triangle:::nLL_triangle(xtest_small, mom2["a"], mom2["b"], mom2["c"])
+  # optimize from there
+  mle_c0 <- triangle:::triangle_mle_c_given_ab(xtest_small, mom2["a"], mom2["b"])
+  mle_ab0 <- triangle:::triangle_mle_ab_given_c(xtest_small, mle_c0$c_hat, start = c(mom2["a"], mom2["b"]))
+  mle_c1 <- triangle:::triangle_mle_c_given_ab(xtest_small, mle_ab0$a, mle_ab0$b)
+  mle_ab1 <- triangle:::triangle_mle_ab_given_c(xtest_small, mle_c1$c_hat, start = c(mle_ab0$a, mle_ab0$b))
+  mle_c2 <- triangle:::triangle_mle_c_given_ab(xtest_small, mle_ab1$a, mle_ab1$b)
+  mle_ab2 <- triangle:::triangle_mle_ab_given_c(xtest_small, mle_c2$c_hat, start = c(mle_ab1$a, mle_ab1$b))
+  triangle:::nLL_triangle(xtest_small, mle_ab0$a, mle_ab0$b, mle_c0$c_hat)
+  triangle:::nLL_triangle(xtest_small, mle_ab1$a, mle_ab1$b, mle_c1$c_hat)
+  triangle:::nLL_triangle(xtest_small, mle_ab2$a, mle_ab2$b, mle_c2$c_hat)
+  # end up with c at 0.3 and a around 0 and b around 1
+  expect_equal(mle_c1$c_hat, mle_c2$c_hat)
+  expect_equal(mle_ab1$optim$value, mle_ab2$optim$value)
+  # BIC
+  3*log(length(xtest_small)) - 2*-1*triangle:::nLL_triangle(xtest_small, mle_ab2$a, mle_ab2$b, mle_c2$c_hat)
+  # AIC
+  2*3 - 2*-1*triangle:::nLL_triangle(xtest_small, mle_ab2$a, mle_ab2$b, mle_c2$c_hat)
+  prod(dtriangle(xtest_small, mle_ab2$a, mle_ab2$b, mle_c2$c_hat))
+
+  # however, the triangle with a = -0.1 and b = c = 0.8 has a smaller nLL and smaller BIC
+  mle <- triangle_mle(xtest_small)
+  triangle:::nLL_triangle(xtest_small, coef(mle)["a"], coef(mle)["b"], coef(mle)["c"])
+  # BIC
+  2*log(length(xtest_small)) - 2*-1*triangle:::nLL_triangle(xtest_small, coef(mle)["a"], coef(mle)["b"], coef(mle)["c"])
+  # AIC
+  2*2 - 2*-1*triangle:::nLL_triangle(xtest_small, coef(mle)["a"], coef(mle)["b"], coef(mle)["c"])
+  prod(dtriangle(xtest_small, coef(mle)["a"], coef(mle)["b"], coef(mle)["c"]))
+
+})

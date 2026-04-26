@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          install.packages(c('pkgbuild', 'knitr', 'rmarkdown', 'assertthat', 'testthat', 'rhub'))
+          install.packages(c('pkgbuild', 'knitr', 'rmarkdown', 'testthat', 'rhub'))
         shell: Rscript {0}
 
       - name: Build Package and Run through Rhub

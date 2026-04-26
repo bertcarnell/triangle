@@ -27,9 +27,9 @@ Collate:
     'qtriangle.R'
     'rtriangle.r'
 Imports:
-    assertthat,
     stats4,
-    methods
+    methods,
+    boot
 Suggests: 
     testthat,
     knitr,

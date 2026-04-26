@@ -1,0 +1,366 @@
+---
+title: "Maximum Likelihood Estimation with the Triangle Distribution"
+subtitle: "2025 Data Expo"
+author: "Rob Carnell"
+format: revealjs
+editor: visual
+---
+
+## Intro
+
+I have been the creator and maintainer of the [`triangle`](https://cran.r-project.org/package=triangle) package in `R` since 2006 when we were on `R 2.3.0`. I got started because there isn't a built-in triangle distribution in R.
+
+. . .
+
+### Question
+
+In 2022, I got this question from one of my package users:
+
+*I'm from Colombia and I'm doing some fitting analysis with the Triangle package. Do you know if I can obtain the AIC, BIC, and maximum likelihood of a triangle-fitting distribution?*
+
+I gave a brute-force numerical answer, and then started digging into the theory...
+
+## Maximum Likelihood Estimation (MLE)
+
+### Process:
+
+-   Start with $N$ observations of a quantity, or vector of quantities from random variable $X$
+-   Compute the likelihood that those $N$ observations came from a probability density function $f(x)$ with parameters $\theta$
+-   Find the $\theta$ that maximizes the likelihood of observing those $N$ observations
+-   This process creates an **estimator** of $\theta$ denoted as $\hat{\theta}$
+-   The specific values are known as **estimates** of $\theta$
+
+$$\hat{\theta} = \textbf{arg max}_{\theta}\ \  L(\theta)$$
+
+## Example: Normal Distribution
+
+$$\large L(x) = \prod_{i=1}^{N} \frac{1}{\sqrt{2\pi} \sigma} e^{\frac{-(x_i-\mu)^2}{2\sigma^2}}$$
+
+Maximizing the likelihood is equivalent to maximizing the log-likelihood
+
+$$\small \log(L(x)) = \sum_{i=1}^{N} -\frac{1}{2}\log(2\pi) - \log(\sigma) - \frac{(x_i-\mu)^2}{2\sigma^2}$$
+
+. . . 
+
+To maximize a function with respect to a variable, set equal to zero and solve
+
+$$\small \frac{d}{d\mu} \log(L(x)) = \sum_{i=1}^{N} \frac{(x_i-\mu)}{\sigma^2} = 0$$
+
+$$\small \frac{d}{d\sigma} \log(L(x)) = \sum_{i=1}^{N} -\frac{1}{\sigma} + \frac{(x_i-\mu)^2}{\sigma^3} = 0$$
+
+## Example: Normal Distribution (cont)
+
+$$\small \frac{d}{d\mu} \log(L(x)) = \sum_{i=1}^{N} \frac{(x_i-\mu)}{\sigma^2} = 0$$ $$\small \left[\sum_{i=1}^{N} x_i\right]-N\mu = 0$$
+
+$$\small \hat{\mu} = \frac{1}{N} \sum_{i=1}^{N} x_i$$
+
+. . . 
+ 
+<hr>
+
+$$\small \frac{d}{d\sigma} \log(L(x)) = \sum_{i=1}^{N} -\frac{1}{\sigma} + \frac{(x_i-\mu)^2}{\sigma^3} = 0$$
+
+$$\small -N\sigma^2 + \sum_{i=1}^{N} (x_i-\mu)^2 = 0$$
+
+$$\small \hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i-\mu)^2$$
+
+## Example: Normal Distribution (cont)
+
+### Homework
+
+-   Notice that this requires you to know $\mu$. Therefore, we estimate that as well
+
+$$\hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i-\hat{\mu})^2  = \frac{1}{N} \sum_{i=1}^{N} (x_i-\bar{x})^2$$
+
+-   Check the second derivatives to ensure that these are maxima
+-   Show that $\hat{\mu}$ is unbiased, i.e. $E(\hat{\mu}) = \mu$
+-   Show that $\hat{\sigma}^2$ is biased and determine how to correct it
+
+## Triangle Distribution
+
+```{r triangle_drawing}
+#| fig_height: 400
+#| fig_width: 700
+#| fig_format: png
+#| fig-dpi: 300
+
+plot(c(-1,5), c(0,4), type = "n", xlab = "x", ylab = "f(x)", axes = FALSE)
+lines(c(0,1), c(0,3), col = "red")
+lines(c(1,4), c(3,0), col = "red")
+axis(2, at = c(0,3), labels = c("0","h"), las = 2)
+axis(1, at = c(0,1,4), labels = c("a", "c", "b"))
+box()
+```
+
+## Triangle Distribution Uses
+
+-   Used When you know the minimum, maximum, and some central tendency
+-   Known as the lack of knowledge distribution by some people (fake news)
+-   PERT - Program Review and Evaluation Technique - Used in project management simulations for the critical path
+
+## Triangle Probability Density Funciton (PDF)
+
+*Given,* $x, a, b, c  \in \mathbb{R}$ *and* $a \le c \lt b$ *or* $a \lt c \le b$ *the triangle probability density function is given by*
+
+$$
+\begin{equation}
+f(x) = \begin{cases}
+        \frac{2}{(b-a)(c-a)}(x-a)  & \mbox{if } a \leq x \leq c \\
+        \frac{2}{(b-a)(c-b)}(x-b) & \mbox{if } c < x \leq b \\
+        0 & \mbox{otherwise}
+\end{cases}
+\end{equation}
+$$
+
+. . .
+
+### Homework
+
+-   Prove that $f(x)$ is a PDF
+-   Compute the CDF
+-   Show that $E(X) = (a + b + c)/3$
+
+## Triangle Distribution Maximum Likelihood Estimation
+
+#### Problems
+
+-   The PDF is only piecewise differentiable, so we have to keep track of the pieces
+-   The algebra is tedious. Not all of it will be shown
+-   We have to keep track of 3 cases
+    -   Case 1: $a = c \lt b$
+    -   Case 2: $a \lt c = b$
+    -   Case 3: $a \lt c \lt b$
+
+## Triangle Distribution: Likelihood
+
+$$
+\begin{align}
+nLL &= -\log(L) = -\log\left(\prod_i^n f(x_i)\right) = - \sum_i^n \log\left(f(x_i)\right) \\
+&= - \sum_{i: \ a \le x_i \lt c}^{n_1}  \log\left(f(x_i)\right) - \sum_{i: \ c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)
+\end{align}
+$$
+
+where $n = n_1 + n_2$
+
+. . .
+
+#### Problem
+
+Differentiating with respect to $a$ and $b$ will be straightforward, but $c$ appears in the limits of the summation!
+
+## Triangle Distribution: Likelihood
+
+#### Case 1: $a = c \lt b$
+
+$$\small nLL = -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)$$
+
+. . .
+
+#### Case 2: $a \lt c = b$
+
+$$\small nLL = -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)$$
+
+. . .
+
+#### Case 3: $a \lt c \lt b$
+
+$$
+\begin{align}
+\small nLL =& -n\log(2) + n\log(b-a)\\ 
+\small &+ n_1\log(c-a) + n_2 \log(b-c) \\  
+\small &- \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)
+\end{align}
+$$
+
+## Triangle Distribution: First derivatives
+
+**Case 1:** $\scriptsize a = c \lt b$
+
+$$\scriptsize \frac{\partial nLL}{\partial a} = - \frac{n}{b-a}$$
+
+$$\scriptsize \frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}$$
+
+. . .
+
+**Case 2:** $\scriptsize a \lt c = b$
+
+$$\scriptsize \frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i - a}$$
+
+$$\scriptsize \frac{\partial nLL}{\partial b} = \frac{n}{b-a}$$
+
+. . .
+
+**Case 3:** $\scriptsize a \lt c \lt b$
+
+$$\scriptsize \frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}$$
+
+$$\scriptsize \frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_2} \frac{1}{b-x_i}$$
+
+## Triangle Distribution: Maximizing the Likelihood with respect to $c$
+
+This discussion follows the results from [Samuel Kotz and Johan Rene van Dorp. Beyond Beta](https://doi.org/10.1142/5720)
+
+For the purposes of this section, with a fixed $a$ and $b$, the sample can be easily re-scaled to $a=0$ and $b=1$. This section will proceed on $[0,1]$ with the mode at $0 \le c \le 1$
+
+$$f(x) = 
+\left\{
+  \begin{array}{ll}
+    \frac{2x}{c} & \mbox{if } 0 \le x \lt c \\
+    \frac{2(1-x)}{1-c} & \mbox{if } c \le x \leq 1 \\
+    0 & \mbox{otherwise}
+  \end{array}
+\right.$$
+
+Assume that the sample is ordered into order statistics $X_{(1)} \lt \dots \lt X_{(n)}$. Also, note that $X_{(r)} \le c \lt X_{(r+1)}$. In other words, the mode falls between the $r^{th}$ and $r+1$ order statistics.
+
+## Likelihood
+
+$$\begin{align}
+L(x|c) &= \prod_{i=1}^{r} \frac{2x_{(i)}}{c} \prod_{i=r+1}^{n} \frac{2(1-x_{(i)})}{1-c} \\
+&= \frac{2^n \prod_{i=1}^{r} x_{(i)} \prod_{i=r+1}^{n} (1-x_{(i)})}{c^r(1-c)^{n-r}}
+\end{align}
+$$
+
+To maximize the likelihood, we can first maximize with respect to $r$ and then locate $c$ between the $r^{th}$ and $r+1$ order statistics. For notation purposes, also define $X_{(0)} = 0$ and $X_{(n+1)} = 1$.
+
+$$\large \max_{0 \le c \le 1} L(x|c) = \max_{r \ \epsilon \ (0,\dots,n)} \ \ \max_{x_{(r)} \le c \le x_{(r+1)}} \ \ L(x|c)$$
+
+## Case A
+
+**Case A:** $c$ is between the first and second to last order statistic $r \ \epsilon \ (1, \dots, n-1)$
+
+Noticing that maximizing the likelihood is equivalent to minimizing the denominator:
+
+$$\max L(x|c) = \max_{r \ \epsilon \ (1,\dots,n-1)} \ \ \min_{x_{(r)} \le c \le x_{(r+1)}} \ \ c^r(1-c)^{n-r}$$
+
+Since $c^r(1-c)^{n-r}$ is unimodal with respect to $c$, it should be sufficient to test the end points of an interval to find the minimum on the interval
+
+$$= \max_{r \ \epsilon \ (1,\dots,n-1)} \ \ \min_{c \ \epsilon \ (x_{(r)},\ \ x_{(r+1)})} \ \ c^r(1-c)^{n-r}$$
+
+Therefore, for this case, it is sufficient to test the likelihood using $c$ at each of the sampled points $x_{(i)}$ and find the largest.
+
+##### Homework: Show $z=c^r(1-c)^{n-r}$ has one maximum on (0,1)
+
+## Case B
+
+**Case B:** $c$ is between 0 and the first order statistic $r = 0$
+
+$$\max L(x|c) = \max_{0 \le c \le x_{(1)}} \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-c} = \prod_{i=1}^{n} \frac{1-x_{(i)}}{1-x_{(1)}}$$
+
+Choosing the largest endpoint in the interval, creates the smallest denominator, and the largest likelihood.
+
+Therefore, for this case, it is sufficient to test the likelihood using $c$ at the first sampled point.
+
+## Case C
+
+**Case C:** $c$ is between the last order statistic $r = n$ and $1$
+
+$$\max L(x|c) = \max_{x_{(n)} \le c \le 1} \prod_{i=1}^{n} \frac{x_{(i)}}{c} = \prod_{i=1}^{n} \frac{x_{(i)}}{x_{(n)}}$$
+
+Choosing the smallest option in the denominator creates the largest likelihood. Again, it is sufficient to test the likelihood using $c$ at the largest sample point.
+
+## All Cases
+
+For all cases, it is sufficient to compute the sample likelihood using $c$ equal to each of the samples, and choosing the largest likelihood from the $n$ options to find the corresponding $c$.
+
+This calculation is performed with a fixed $a$ and $b$, so the test must be performed iteratively as $a$ and $b$ are separately optimized.
+
+. . . 
+
+##### Process
+
+-   Set $a$ and $b$ to something reasonable (like the sample min and max)
+-   Find $c$ by using each sample point, computing the likelihood, and picking the largest
+-   Find $a$ and $b$ given $c$ using the gradient
+-   Repeat until $c$ doesn't move on subsequent iterations
+
+## Can we do better?
+
+There are a few problems with this method:
+
+-   Need to solve iteratively
+-   very difficult to determine when $c$ should be equal to $a$ or $b$ from the sample
+
+**What if we could turn the non-differentiable point into something differentiable?**
+
+## Fourier Series
+
+$$f(x) = A_0 + \sum_{n=1}^\infty \left[ A_n cos\left(\frac{2\pi n x}{P}\right) + B_n sin\left( \frac{2\pi n x}{P}\right) \right]$$
+
+$$A_0 = \frac{1}{P} \int_P f(x) dx$$
+
+$$A_n = \frac{2}{P} \int_P f(x) cos\left(\frac{2\pi n x}{P}\right) dx$$
+
+$$B_n = \frac{2}{P} \int_P f(x) sin\left(\frac{2\pi n x}{P}\right) dx$$
+
+## Triangle Distribution Fourier Series
+
+$$\scriptsize A_0 = \frac{1}{b-a} \int_a^b f(x) dx = \frac{1}{b-a} (1) = \frac{1}{b-a}$$
+
+Let $k = \frac{2\pi}{b-a}$
+
+$$\scriptsize A_n = \frac{4}{(b-a)^2k n} \left[ \frac{1}{(c-a)} \left( (c-a) sin(k n c) + \frac{1}{k n} cos(k n c)  - \frac{1}{kn}cos(k n a)  \right) \\  
++ \frac{1}{(c-b)} \left( \frac{1}{k n} cos(k n b) -(c-b) sin(k n c) - \frac{1}{k n} cos(k n c)  \right) \right]$$
+
+$$\scriptsize B_n = \frac{4}{(b-a)^2k n} \left[ \frac{1}{(c-a)} \left( -(c-a) cos(k n c) + \frac{1}{k n} sin(k n c)  - \frac{1}{kn}sin(k n a)  \right)  \\
++ \frac{1}{(c-b)} \left( \frac{1}{k n} sin(k n b) +(c-b) cos(k n c) - \frac{1}{k n} sin(k n c)  \right) \right]$$
+
+## Triangle Distribution Fourier Series
+
+```{r}
+bn <- function(a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  4/(b-a)^2/k/ns*( 1/(c-a)* ( -(c-a)*cos(k*ns*c) + 1/k/ns*sin(k*ns*c)  - 1/k/ns*sin(k*ns*a) )  + 
+                  1/(c-b)* ( 1/k/ns*sin(k*ns*b) +(c-b)*cos(k*ns*c) - 1/k/ns*sin(k*ns*c)))
+}
+
+an <- function(a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  4/(b-a)^2/k/ns* ( 1/(c-a)* ( (c-a)*sin(k*ns*c) + 1/k/ns*cos(k*ns*c)  - 1/k/ns*cos(k*ns*a) )  +
+                  1/(c-b)* ( 1/k/ns*cos(k*ns*b) -(c-b)*sin(k*ns*c) - 1/k/ns*cos(k*ns*c) ))
+}
+
+a0 <- function(a, b) {
+  1/(b-a)
+}
+
+fourier_f <- function(x, a, b, c, n) {
+  ns <- 1:n
+  k <- 2*pi/(b-a)
+  a0(a, b) + sum(an(a, b, c, n)*cos(k*ns*x)) + sum(bn(a, b, c, n)*sin(k*ns*x))
+}
+
+#fourier_f(0, 0, 5, 2, 100) # 0
+#fourier_f(5, 0, 5, 2, 100) # 0
+#fourier_f(2, 0, 5, 2, 100) # 4/5
+
+plot(seq(0, 5, length=100), sapply(seq(0, 5, length=100), fourier_f, a=0, b=5, c=2, n=1), 
+     type = "l", col="red", ylim = c(0, 0.5), xlab = "x", ylab = "f(x)")
+lines(seq(0, 5, length=100), sapply(seq(0, 5, length=100), fourier_f, a=0, b=5, c=2, n=5), col = "green")
+lines(seq(0, 5, length=100), sapply(seq(0, 5, length=100), fourier_f, a=0, b=5, c=2, n=100), col = "blue")
+legend("topright", c("n=1", "n=5", "n=100"), col = c("red", "green", "blue"), lwd = 2)
+```
+
+## Fourier Series Likelihood
+
+$$
+\begin{align}
+\scriptsize nLL &= \scriptsize -log\left(\prod_{i=1}^N f(x_i)\right) = -\sum_{i=1}^N log(f(x_i)) \\
+\scriptsize &= \scriptsize -\sum_{i=1}^N log\left(\frac{1}{b-a} + \sum_{n=1}^\infty A_n cos(knx_i) + B_n sin(knx_i) \right)
+\end{align}
+$$
+
+$$\scriptsize \frac{\partial nLL}{\partial a} = -\sum_{i=1}^N \frac{1}{f(x)}\left( \frac{1}{(b-a)^2} + \sum_{n=1}^\infty \frac{\partial A_n}{\partial a}cos(knx_i) + A_n (-1)sin(knx_i)\frac{knx_i}{(b-a)} \\ + \frac{\partial B_n}{\partial a}sin(knx_i)+B_n cos(knx_i) \frac{knx_i}{(b-a)} \right)$$
+
+$$\scriptsize \frac{\partial nLL}{\partial b} = -\sum_{i=1}^N \frac{1}{f(x)}\left( \frac{-1}{(b-a)^2} + \sum_{n=1}^\infty \frac{\partial A_n}{\partial b}cos(knx) + A_n (-1)sin(knx)\frac{-knx_i}{(b-a)} \\ + \frac{\partial B_n}{\partial b}sin(knx)+B_n cos(knx) \frac{-knx_i}{(b-a)} \right)$$
+
+$$\scriptsize \frac{\partial nLL}{\partial c} = -\sum_{i=1}^N \frac{1}{f(x)}\left( \sum_{n=1}^\infty \frac{\partial A_n}{\partial c}cos(knx_i) + \frac{\partial B_n}{\partial c}sin(knx_i) \right)$$
+
+## On-going Research
+
+-   Now, instead of a non-differentiability issue, we have an infinite sum
+-   How many components of the Fourier Series do we include?
+-   How does accuracy change with Fourier components?
+-   How does the Variance of the estimates decrease with sample size, with Fourier components, with both?
