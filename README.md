@@ -3,22 +3,16 @@
 <div>
 
 <table style="border: 0">
-
 <tr>
-
 <td>
-
 <img align="left" width="200" height="200" src="man/figures/logo.svg"/>
 </td>
-
 </tr>
-
 </table>
 
 </div>
 
 <footer>
-
 © Copyright 2024 Robert Carnell
 </footer>
 
@@ -27,12 +21,12 @@
 An R package to work with the triangle distribution and logarithmic
 triangle distribution
 
-| <sub>Actions</sub> | <sub>Code Coverage</sub> | <sub>Website</sub> | <sub>CRAN Downloads</sub> | <sub>CRAN</sub> |
-|:--:|:--:|:--:|:--:|:--:|
+|                                                                                <sub>Actions</sub>                                                                                |                                                                   <sub>Code Coverage</sub>                                                                   |                                           <sub>Website</sub>                                           |                                   <sub>CRAN Downloads</sub>                                    |                                               <sub>CRAN</sub>                                                |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|
 | [![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master) | [![](https://img.shields.io/badge/pkgdown-triangle-blue.svg)](https://bertcarnell.github.io/triangle/) | [![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle) | [![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle) |
 
-| <sub>R-Universe</sub> | <sub>CRAN Packages</sub> | <sub>DOI</sub> |
-|:--:|:--:|:--:|
+|                                            <sub>R-Universe</sub>                                             |                                                                 <sub>CRAN Packages</sub>                                                                  |                                                             <sub>DOI</sub>                                                             |
+|:------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------:|
 | [![name status badge](https://bertcarnell.r-universe.dev/badges/:name)](https://bertcarnell.r-universe.dev/) | [![Static Badge](https://img.shields.io/badge/CRAN-All_Packages-blue)](https://cran.r-project.org/web/checks/check_results_bertcarnell_at_gmail.com.html) | [![Static Badge](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.triangle-blue)](https://cran.r-project.org/package=triangle) |
 
 See the package documentation
