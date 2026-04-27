@@ -4,131 +4,91 @@
 
 ![](triangledistributionmath_files/figure-html/triangle_drawing-1.png)
 
-- $`a`$ = minimum
-- $`b`$ = maximum
-- $`c`$ = mode
-- $`h`$ = density at the mode = $`\frac{2}{b-a}`$
+- $a$ = minimum
+- $b$ = maximum
+- $c$ = mode
+- $h$ = density at the mode = $\frac{2}{b - a}$
 
 ## Triangle Probability Density Funciton (PDF)
 
 **Lemma 1: (Triangle PDF).**
 
-*Given,* $`x, a, b, c  \in \mathbb{R}`$*and* $`a \le c \lt b`$*or*
-$`a \lt c \le b`$*the triangle probability density function is given by*
+*Given,* $x,a,b,c \in {\mathbb{R}}$*and* $a \leq c < b$*or*
+$a < c \leq b$*the triangle probability density function is given by*
 
-``` math
-\begin{equation}
-f(x) = \begin{cases}
-        \frac{2}{(b-a)(c-a)}(x-a)  & \mbox{if } a \leq x \leq c \\
-        \frac{2}{(b-a)(c-b)}(x-b) & \mbox{if } c < x \leq b \\
-        0 & \mbox{otherwise}
-\end{cases}
-\end{equation}
-```
+$$f(x) = \begin{cases}
+{\frac{2}{(b - a)(c - a)}(x - a)} & {{\text{if}\mspace{6mu}}a \leq x \leq c} \\
+{\frac{2}{(b - a)(c - b)}(x - b)} & {{\text{if}\mspace{6mu}}c < x \leq b} \\
+0 & \text{otherwise}
+\end{cases}$$
 
 *if a random variable X has a PDF f(x), then we say*
-$`X \sim triangle(a, b, c)`$
+$X \sim triangle(a,b,c)$
 
 **Proof**
 
 The triangle is made of two lines:
 
-``` math
-(y-0) = \frac{h-0}{c-a}(x-a)
-```
+$$(y - 0) = \frac{h - 0}{c - a}(x - a)$$
 
-``` math
-(y-0)=\frac{h-0}{c-b}(x-b)
-```
+$$(y - 0) = \frac{h - 0}{c - b}(x - b)$$
 
-Integrating the pdf under these two equations to solve for $`h`$:
+Integrating the pdf under these two equations to solve for $h$:
 
-``` math
-\int f(x) dx = 1
-```
+$$\int f(x)dx = 1$$
 
-``` math
-\frac{h}{c-a}\int_{a}^{c} (x-a) dx + \frac{h}{c-b} \int_{c}^{b} (x-b) dx = \frac{h(b-a)}{2} = 1
-```
+$$\frac{h}{c - a}\int_{a}^{c}(x - a)dx + \frac{h}{c - b}\int_{c}^{b}(x - b)dx = \frac{h(b - a)}{2} = 1$$
 
-``` math
-h=\frac{2}{b-a}
-```
+$$h = \frac{2}{b - a}$$
 
 The PDF should be zero at each end of the interval and be continuous at
-$`c`$
+$c$
 
-``` math
-f(a) = \frac{2}{(b-a)(c-a)}(a-a) = 0
-```
+$$f(a) = \frac{2}{(b - a)(c - a)}(a - a) = 0$$
 
-``` math
-f(b) = \frac{2}{(b-a)(c-b)}(b-b)
-```
+$$f(b) = \frac{2}{(b - a)(c - b)}(b - b)$$
 
-``` math
-f_{a \le x \le c}(c) = \frac{2}{(b-a)(c-a)}(c-a) = \frac{2}{(b-a)}
-```
+$$f_{a \leq x \leq c}(c) = \frac{2}{(b - a)(c - a)}(c - a) = \frac{2}{(b - a)}$$
 
-``` math
-\lim_{x \to c} f_{c \lt x \le b}(x) = \lim_{x \to c} \frac{2}{(b-a)(c-b)}(x-b) = \frac{2}{(b-a)}
-```
+$$\lim\limits_{x\rightarrow c}f_{c < x \leq b}(x) = \lim\limits_{x\rightarrow c}\frac{2}{(b - a)(c - b)}(x - b) = \frac{2}{(b - a)}$$
 
 ## Triangle Cumulative Distribution Function (CDF)
 
 **Lemma 2: (Triangle CDF).**
 
-*Given,* $`x, a, b, c  \in \mathbb{R}`$*and* $`a \le c \lt b`$*or*
-$`a \lt c \le b`$*the cumulative distribution function over* $`x`$*is*
+*Given,* $x,a,b,c \in {\mathbb{R}}$*and* $a \leq c < b$*or*
+$a < c \leq b$*the cumulative distribution function over* $x$*is*
 
-``` math
-\begin{equation}
-F(x) = \begin{cases}
-    0 & \mbox{if } x < a \\
-        \frac{(x-a)^2}{(b-a)(c-a)}  & \mbox{if } a \leq x \leq c \\
-        1 + \frac{(x-b)^2}{(b-a)(c-b)} & \mbox{if } c < x \leq b \\
-        1 & \mbox{if } x > b
-\end{cases}
-\end{equation}
-```
+$$F(x) = \begin{cases}
+0 & {{\text{if}\mspace{6mu}}x < a} \\
+\frac{(x - a)^{2}}{(b - a)(c - a)} & {{\text{if}\mspace{6mu}}a \leq x \leq c} \\
+{1 + \frac{(x - b)^{2}}{(b - a)(c - b)}} & {{\text{if}\mspace{6mu}}c < x \leq b} \\
+1 & {{\text{if}\mspace{6mu}}x > b}
+\end{cases}$$
 
 **Proof**
 
-``` math
-F(x) = \int_{-\infty}^{x} f(t) dt
-```
+$$F(x) = \int_{- \infty}^{x}f(t)dt$$
 
-``` math
-\begin{align}
-F_{a \le x \le c}(x) &= \int_a^x \frac{2(t-a)}{(b-a)(c-a)} dt \\
-&= \frac{(x-a)^2}{(b-a)(c-a)}
-\end{align}
-```
+$$\begin{aligned}
+{F_{a \leq x \leq c}(x)} & {= \int_{a}^{x}\frac{2(t - a)}{(b - a)(c - a)}dt} \\
+ & {= \frac{(x - a)^{2}}{(b - a)(c - a)}}
+\end{aligned}$$
 
-``` math
-\begin{align}
-F_{c \lt x \lt b}(x) &= F_{a \le x \le c}(c) + \int_c^x \frac{2(t-b)}{(b-a)(c-b)} dt = 1 - \int_x^b \frac{2(t-b)}{(b-a)(c-b)} dt \\
-&= 1 + \frac{(x - b)^2}{(b-a)(c-b)} = 1 - \frac{(b - x)^2}{(b-a)(b - c)}
-\end{align}
-```
+$$\begin{aligned}
+{F_{c < x < b}(x)} & {= F_{a \leq x \leq c}(c) + \int_{c}^{x}\frac{2(t - b)}{(b - a)(c - b)}dt = 1 - \int_{x}^{b}\frac{2(t - b)}{(b - a)(c - b)}dt} \\
+ & {= 1 + \frac{(x - b)^{2}}{(b - a)(c - b)} = 1 - \frac{(b - x)^{2}}{(b - a)(b - c)}}
+\end{aligned}$$
 
-The CDF should be zero at $`a`$, continuous at $`c`$, and one at $`b`$
+The CDF should be zero at $a$, continuous at $c$, and one at $b$
 
-``` math
-F_{a \le x \le c}(a) = \frac{(a-a)^2}{(b-a)(c-a)} = 0
-```
+$$F_{a \leq x \leq c}(a) = \frac{(a - a)^{2}}{(b - a)(c - a)} = 0$$
 
-``` math
-F_{c \lt x \lt b}(b) = 1 - \frac{(b - b)^2}{(b-a)(b - c)} = 1
-```
+$$F_{c < x < b}(b) = 1 - \frac{(b - b)^{2}}{(b - a)(b - c)} = 1$$
 
-``` math
-F_{a \le x \le c}(c) = \frac{(c-a)^2}{(b-a)(c-a)} = \frac{(c-a)}{(b-a)}
-```
+$$F_{a \leq x \leq c}(c) = \frac{(c - a)^{2}}{(b - a)(c - a)} = \frac{(c - a)}{(b - a)}$$
 
-``` math
-\lim_{x \to c} F_{c \lt x \lt b}(c) = \lim_{x \to c} \left[ 1 - \frac{(b - x)^2}{(b-a)(b - c)} \right] = 1 - \frac{(b - c)}{(b-a)} = \frac{(c-a)}{(b-a)}
-```
+$$\lim\limits_{x\rightarrow c}F_{c < x < b}(c) = \lim\limits_{x\rightarrow c}\left\lbrack 1 - \frac{(b - x)^{2}}{(b - a)(b - c)} \right\rbrack = 1 - \frac{(b - c)}{(b - a)} = \frac{(c - a)}{(b - a)}$$
 
 ## Triangle Mean
 
@@ -136,20 +96,15 @@ F_{a \le x \le c}(c) = \frac{(c-a)^2}{(b-a)(c-a)} = \frac{(c-a)}{(b-a)}
 
 *The mean of the triangle distribution is*
 
-``` math
-E(X) = \frac{a+b+c}{3}
-```
+$$E(X) = \frac{a + b + c}{3}$$
 
 **Proof**
 
-``` math
-\begin{align}
-E(X) &= \int xf(x)dx = \frac{2}{(b-a)(c-a)}\int_a^c (x^2-ax) dx + 
-\frac{2}{(b-a)(c-b)}\int_c^b (x^2-bx) dx \\
-&= \frac{2}{(b-a)(c-a)} \left[\frac{1}{3}x^3-\frac{a}{2}x^2\right]_a^c + \frac{2}{(b-a)(c-b)}\left[\frac{1}{3}x^2-\frac{b}{2}x^2\right]_c^b dx \\
-&= \frac{a+b+c}{3}
-\end{align}
-```
+$$\begin{aligned}
+{E(X)} & {= \int xf(x)dx = \frac{2}{(b - a)(c - a)}\int_{a}^{c}\left( x^{2} - ax \right)dx + \frac{2}{(b - a)(c - b)}\int_{c}^{b}\left( x^{2} - bx \right)dx} \\
+ & {= \frac{2}{(b - a)(c - a)}\left\lbrack \frac{1}{3}x^{3} - \frac{a}{2}x^{2} \right\rbrack_{a}^{c} + \frac{2}{(b - a)(c - b)}\left\lbrack \frac{1}{3}x^{2} - \frac{b}{2}x^{2} \right\rbrack_{c}^{b}dx} \\
+ & {= \frac{a + b + c}{3}}
+\end{aligned}$$
 
 ## Triangle Variance
 
@@ -157,20 +112,16 @@ E(X) &= \int xf(x)dx = \frac{2}{(b-a)(c-a)}\int_a^c (x^2-ax) dx +
 
 *The variance of the triangle distribution is*
 
-``` math
-V(X) = \frac{a^2+b^2+c^2-ab-ac-bc}{18}
-```
+$$V(X) = \frac{a^{2} + b^{2} + c^{2} - ab - ac - bc}{18}$$
 
 **Proof**
 
-``` math
-\begin{align}
-V(X) &= E(X^2) - \big(E(X)\big)^2 = \int x^2f(x)dx- \bigg(\frac{a+b+c}{3}\bigg)^2 \\
-&= \frac{2}{(b-a)(c-a)}\int_{a}^{c} x^2(x-a) dx + \frac{2}{(b-a)(c-b)} \int_{c}^{b} x^2(x-b) dx- \bigg(\frac{a+b+c}{3}\bigg)^2 \\
-&= \frac{2}{(b-a)(c-a)} \left[\frac{1}{4}x^4-\frac{a}{3}x^3\right]_a^c + \frac{2}{(b-a)(c-b)}\left[\frac{1}{4}x^4-\frac{b}{3}x^3\right]_c^b - \bigg(\frac{a+b+c}{3}\bigg)^2 \\
-&= \frac{a^2+b^2+c^2-ab-ac-bc}{18}
-\end{align}
-```
+$$\begin{aligned}
+{V(X)} & {= E\left( X^{2} \right) - (E(X))^{2} = \int x^{2}f(x)dx - (\frac{a + b + c}{3})^{2}} \\
+ & {= \frac{2}{(b - a)(c - a)}\int_{a}^{c}x^{2}(x - a)dx + \frac{2}{(b - a)(c - b)}\int_{c}^{b}x^{2}(x - b)dx - (\frac{a + b + c}{3})^{2}} \\
+ & {= \frac{2}{(b - a)(c - a)}\left\lbrack \frac{1}{4}x^{4} - \frac{a}{3}x^{3} \right\rbrack_{a}^{c} + \frac{2}{(b - a)(c - b)}\left\lbrack \frac{1}{4}x^{4} - \frac{b}{3}x^{3} \right\rbrack_{c}^{b} - (\frac{a + b + c}{3})^{2}} \\
+ & {= \frac{a^{2} + b^{2} + c^{2} - ab - ac - bc}{18}}
+\end{aligned}$$
 
 ## Method of Moments Estimation
 
@@ -183,45 +134,33 @@ accepted “types” of Methods of Moments.
 
 *Estimators for the Triangle parameters are*
 
-``` math
-\hat{a} = min(x) = X_{(1)}
-```
+$$\widehat{a} = min(x) = X_{(1)}$$
 
-``` math
-\hat{b} = max(x) = X_{(n)}
-```
+$$\widehat{b} = max(x) = X_{(n)}$$
 
-``` math
-\hat{c} = 3\bar{x} - \min(x) - \max(x)
-```
+$$\widehat{c} = 3\bar{x} - \min(x) - \max(x)$$
 
 **Motivation**
 
-``` math
-E(X) = \frac{a + b + c}{3}
-```
+$$E(X) = \frac{a + b + c}{3}$$
 
-``` math
-c = 3E(X) - a - b
-```
+$$c = 3E(X) - a - b$$
 
-The sample minimum is an overestimate for $`a`$ and the sample maximum
-is an underestimate for $`b`$.
+The sample minimum is an overestimate for $a$ and the sample maximum is
+an underestimate for $b$.
 
-$`\hat{c}`$ is a biased estimator for $`c`$.
+$\widehat{c}$ is a biased estimator for $c$.
 
-``` math
-\begin{align}
-E(\hat{c}) =& 3E(\bar{x}) - E(X_{(1)}) - E(X_{(n)}) \\
-=& \frac{3}{n} \sum_{i=1}^n E(X_i) \\
- &- n \left[\sum_{k=0}^{n-1} {n-1 \choose k} \left(\frac{c-a}{b-a}\right)^{n-k} (-1)^{n-1-k} \frac{2c(n-k)+a}{(n-k)(2(n-k) + 1)} - \left(\frac{b-c}{b-a}\right)^n \frac{2cn+b}{n(2n+1)} \right] \\
- &- n \left[ \left(\frac{c-a}{b-a}\right)^n \frac{2cn+a}{n(2n + 1)} + \sum_{k=0}^{n-1} {n-1 \choose k} \left(\frac{c-b}{b-a}\right)^{n-k} \frac{2c(n-k)+b}{(n-k)(2(n-k)+1)} \right] \\
-=& a + b + c - [expansion] - [expansion]\\
-\neq & c
-\end{align}
-```
+$$\begin{aligned}
+{E\left( \widehat{c} \right) =} & {3E\left( \bar{x} \right) - E\left( X_{(1)} \right) - E\left( X_{(n)} \right)} \\
+ = & {\frac{3}{n}\sum\limits_{i = 1}^{n}E\left( X_{i} \right)} \\
+ & {- n\left\lbrack \sum\limits_{k = 0}^{n - 1}\left( \frac{n - 1}{k} \right)\left( \frac{c - a}{b - a} \right)^{n - k}( - 1)^{n - 1 - k}\frac{2c(n - k) + a}{(n - k)\left( 2(n - k) + 1 \right)} - \left( \frac{b - c}{b - a} \right)^{n}\frac{2cn + b}{n(2n + 1)} \right\rbrack} \\
+ & {- n\left\lbrack \left( \frac{c - a}{b - a} \right)^{n}\frac{2cn + a}{n(2n + 1)} + \sum\limits_{k = 0}^{n - 1}\left( \frac{n - 1}{k} \right)\left( \frac{c - b}{b - a} \right)^{n - k}\frac{2c(n - k) + b}{(n - k)\left( 2(n - k) + 1 \right)} \right\rbrack} \\
+ = & {a + b + c - \lbrack expansion\rbrack - \lbrack expansion\rbrack} \\
+ \neq & c
+\end{aligned}$$
 
-Simulation shows that $`\hat{c}`$ is consistent for $`c`$.
+Simulation shows that $\widehat{c}$ is consistent for $c$.
 
 ### Type 2
 
@@ -230,68 +169,52 @@ Simulation shows that $`\hat{c}`$ is consistent for $`c`$.
 *Estimators for the Triangle parameters are the solution to these
 equations for the mean, variance, and skewness*
 
-``` math
-\bar{x} = \frac{1}{n} \sum_i x_i = \frac{\hat{a} + \hat{b} + \hat{c}}{3}
-```
+$$\bar{x} = \frac{1}{n}\sum\limits_{i}x_{i} = \frac{\widehat{a} + \widehat{b} + \widehat{c}}{3}$$
 
-``` math
-\frac{1}{n-1} \sum_i (x_i - \bar{x})^2 = \frac{\hat{a}^2+\hat{b}^2+\hat{c}^2-\hat{a}\hat{b}-\hat{a}\hat{c}-\hat{b}\hat{c}}{18}
-```
+$$\frac{1}{n - 1}\sum\limits_{i}\left( x_{i} - \bar{x} \right)^{2} = \frac{{\widehat{a}}^{2} + {\widehat{b}}^{2} + {\widehat{c}}^{2} - \widehat{a}\widehat{b} - \widehat{a}\widehat{c} - \widehat{b}\widehat{c}}{18}$$
 
-``` math
-\frac{\sqrt{n} \sum_i (x_i-\bar{x})^3}{\left[\sum_i (x_i-\bar{x})^2\right]^{3/2}} = \frac{\sqrt{2} (\hat{a} + \hat{b} - 2\hat{c}) (2\hat{a} - \hat{b} - \hat{c}) (\hat{a} - 2\hat{b} + \hat{c})}{5(\hat{a}^2+\hat{b}^2+\hat{c}^2-\hat{a}\hat{b}-\hat{a}\hat{c}-\hat{b}\hat{c})^{3/2}}
-```
+$$\frac{\sqrt{n}\sum\limits_{i}\left( x_{i} - \bar{x} \right)^{3}}{\left\lbrack \sum\limits_{i}\left( x_{i} - \bar{x} \right)^{2} \right\rbrack^{3/2}} = \frac{\sqrt{2}\left( \widehat{a} + \widehat{b} - 2\widehat{c} \right)\left( 2\widehat{a} - \widehat{b} - \widehat{c} \right)\left( \widehat{a} - 2\widehat{b} + \widehat{c} \right)}{5\left( {\widehat{a}}^{2} + {\widehat{b}}^{2} + {\widehat{c}}^{2} - \widehat{a}\widehat{b} - \widehat{a}\widehat{c} - \widehat{b}\widehat{c} \right)^{3/2}}$$
 
 ## Maximum Likelihood Estimation
 
 The procedure for maximum likelihood estimation involves maximizing the
-likelihood with respect to $`c`$ for a fixed $`a`$ and $`b`$, followed
-by minimizing the negative log likelihood with respect to $`a`$ and
-$`b`$ for a fixed $`c`$.
+likelihood with respect to $c$ for a fixed $a$ and $b$, followed by
+minimizing the negative log likelihood with respect to $a$ and $b$ for a
+fixed $c$.
 
-### Maximizing the Likelihood with respect to $`c`$ (given $`a`$ and $`b`$)
+### Maximizing the Likelihood with respect to $c$ (given $a$ and $b$)
 
 This discussion follows the results from [Samuel Kotz and Johan Rene van
 Dorp. Beyond Beta](https://doi.org/10.1142/5720)
 
-For the purposes of this section, with a fixed $`a`$ and $`b`$, the
-sample can be easily rescaled to $`a=0`$ and $`b=1`$. This section will
-proceed on $`[0,1]`$ with the mode at $`0 \le c \le 1`$
+For the purposes of this section, with a fixed $a$ and $b$, the sample
+can be easily rescaled to $a = 0$ and $b = 1$. This section will proceed
+on $\lbrack 0,1\rbrack$ with the mode at $0 \leq c \leq 1$
 
-``` math
-w(x) = 
-\left\{
-  \begin{array}{ll}
-    \frac{2x}{c} & \mbox{if } 0 \le x \lt c \\
-    \frac{2(1-x)}{1-c} & \mbox{if } c \le x \leq 1 \\
-    0 & \mbox{otherwise}
-  \end{array}
-\right.
-```
+$$w(x) = \begin{cases}
+\frac{2x}{c} & {{\text{if}\mspace{6mu}}0 \leq x < c} \\
+\frac{2(1 - x)}{1 - c} & {{\text{if}\mspace{6mu}}c \leq x \leq 1} \\
+0 & \text{otherwise}
+\end{cases}$$
 
-``` math
-L(x|c) = \prod_{i}^{n} w(x|c)
-```
+$$L\left( x|c \right) = \prod\limits_{i}^{n}w\left( x|c \right)$$
 
 Assume that the sample is ordered into order statistics
-$`X_{(1)} \lt \dots \lt X_{(n)}`$. Also, note that
-$`X_{(r)} \le c \lt X_{(r+1)}`$. In other words, the mode falls between
-the $`r^{th}`$ and $`r+1`$ order statistics.
+$X_{(1)} < \ldots < X_{(n)}$. Also, note that
+$X_{(r)} \leq c < X_{(r + 1)}$. In other words, the mode falls between
+the $r^{th}$ and $r + 1$ order statistics.
 
-``` math
-L(x|c) = \prod_{i=1}^{r} \frac{2x_{(i)}}{c} \prod_{i=r+1}^{n} \frac{2(1-x_{(i)})}{1-c} = \frac{2^n \prod_{i=1}^{r} x_{(i)} \prod_{i=r+1}^{n} (1-x_{(i)})}{c^r(1-c)^{n-r}}
-```
+$$L\left( x|c \right) = \prod\limits_{i = 1}^{r}\frac{2x_{(i)}}{c}\prod\limits_{i = r + 1}^{n}\frac{2\left( 1 - x_{(i)} \right)}{1 - c} = \frac{2^{n}\prod\limits_{i = 1}^{r}x_{(i)}\prod\limits_{i = r + 1}^{n}\left( 1 - x_{(i)} \right)}{c^{r}(1 - c)^{n - r}}$$
 
-To maximize the likelihood, we can first maximize with respect to $`r`$
-and then locate $`c`$ between the $`r^{th}`$ and $`r+1`$ order
-statistics. For notation purposes, also define $`X_{(0)} = 0`$ and
-$`X_{(n+1)} = 1`$.
+To maximize the likelihood, we can first maximize with respect to $r$
+and then locate $c$ between the $r^{th}$ and $r + 1$ order statistics.
+For notation purposes, also define $X_{(0)} = 0$ and $X_{(n + 1)} = 1$.
 
 \$\$\large \max\_{0 \le c \le 1} L(x\|c) = \max\_{r \\ \epsilon \\
 (0,\dots,n)} \\ \\ \max\_{x\_{(r)} \le c \le x\_{(r+1)}} \\ \\
 L(x\|c)\$\$
 
-#### Case 1: $`c`$ is between the first and second to last order statistic $`r \ \epsilon \ (1, \dots, n-1)`$
+#### Case 1: $c$ is between the first and second to last order statistic $r\ \epsilon\ (1,\ldots,n - 1)$
 
 Noticing that maximizing the likelihood is equivalent to minimizing the
 denominator:
@@ -299,28 +222,25 @@ denominator:
 \$\$\large \max L(x\|c) = \max\_{r \\ \epsilon \\ (1,\dots,n-1)} \\ \\
 \min\_{x\_{(r)} \le c \le x\_{(r+1)}} \\ \\ c^r(1-c)^{n-r}\$\$
 
-Since $`c^r(1-c)^{n-r}`$ is unimodal with respect to $`c`$, it should be
-sufficient to test the end points of an interval to find the minimum on
-the interval
+Since $c^{r}(1 - c)^{n - r}$ is unimodal with respect to $c$, it should
+be sufficient to test the end points of an interval to find the minimum
+on the interval
 
 \$\$\large = \max\_{r \\ \epsilon \\ (1,\dots,n-1)} \\ \\ \min\_{c \\
 \epsilon \\ (x\_{(r)},\\ \\ x\_{(r+1)})} \\ \\ c^r(1-c)^{n-r}\$\$
 
 Therefore, for this case, it is sufficient to test the likelihood using
-$`c`$ at each of the sampled points and find the largest.
+$c$ at each of the sampled points and find the largest.
 
-##### Side note on $`z=c^r(1-c)^{n-r}`$ being unimodal
+##### Side note on $z = c^{r}(1 - c)^{n - r}$ being unimodal
 
-``` math
-\frac{dz}{dc} = rc^{(r-1)}(1-c)^{n-r} + c^r(n-r)(1-c)^{n-r-1}(-1) = c^{(r-1)}(1-c)^{n-r-1}(r - cn)
-```
+$$\frac{dz}{dc} = rc^{(r - 1)}(1 - c)^{n - r} + c^{r}(n - r)(1 - c)^{n - r - 1}( - 1) = c^{(r - 1)}(1 - c)^{n - r - 1}(r - cn)$$
 
-$`\frac{dz}{dc} = 0`$ at $`c=0,\ 1,\ \frac{r}{n}`$. At
-$`0 < c < \frac{r}{n}`$, $`z`$ is positive, and at
-$`\frac{r}{n} < c < 1`$, $`z`$ is negative. Therefore, $`z`$ is unimodal
-on $`(0,1)`$.
+$\frac{dz}{dc} = 0$ at $c = 0,\ 1,\ \frac{r}{n}$. At
+$0 < c < \frac{r}{n}$, $z$ is positive, and at $\frac{r}{n} < c < 1$,
+$z$ is negative. Therefore, $z$ is unimodal on $(0,1)$.
 
-#### Case 2: $`c`$ is between 0 and the first order statistic $`r = 0`$
+#### Case 2: $c$ is between 0 and the first order statistic $r = 0$
 
 \$\$\large \max L(x\|c) = \max\_{0 \le c \le x\_{(1)}} \prod\_{i=1}^{n}
 \frac{1-x\_{(i)}}{1-c} = \prod\_{i=1}^{n}
@@ -330,280 +250,209 @@ Choosing the largest endpoint in the interval, creates the smallest
 denominator, and the largest likelihood.
 
 Therefore, for this case, it is sufficient to test the likelihood using
-$`c`$ at the first sampled point.
+$c$ at the first sampled point.
 
-#### Case 3: $`c`$ is between the last order statistic $`r = n`$ and 1
+#### Case 3: $c$ is between the last order statistic $r = n$ and 1
 
 \$\$\large \max L(x\|c) = \max\_{x\_{(n)} \le c \le 1} \prod\_{i=1}^{n}
 \frac{x\_{(i)}}{c} = \prod\_{i=1}^{n} \frac{x\_{(i)}}{x\_{(n)}}\$\$
 
 Choosing the smallest option in the denominator creates the largest
-likelihood. Again, it is sufficient to test the likelihood using $`c`$
-at the largest sample point.
+likelihood. Again, it is sufficient to test the likelihood using $c$ at
+the largest sample point.
 
 #### All Cases
 
 For all cases, it is sufficient to compute the sample likelihood using
-$`c`$ equal to each of the samples, and choosing the largest likelihood
-from the $`n`$ options to find the corresponding $`c`$. This calculation
-is performed with a fixed $`a`$ and $`b`$, so the test must be performed
-iteratively as $`a`$ and $`b`$ are separately optimized.
+$c$ equal to each of the samples, and choosing the largest likelihood
+from the $n$ options to find the corresponding $c$. This calculation is
+performed with a fixed $a$ and $b$, so the test must be performed
+iteratively as $a$ and $b$ are separately optimized.
 
 ### Negative Log Likelihood
 
-``` math
-\begin{align}
-nLL &= -\log(L) = -\log\left(\prod_i^n f(x_i)\right) \\
-&= - \sum_i^n \log\left(f(x_i)\right) = - \sum_{i: \ a \le x_i \lt c}^{n_1}  \log\left(f(x_i)\right) - \sum_{i: \ c \le x_i \le b}^{n_2} \log\left(f(x_i)\right)
-\end{align}
-```
+$$\begin{aligned}
+{nLL} & {= - \log(L) = - \log\left( \prod\limits_{i}^{n}f\left( x_{i} \right) \right)} \\
+ & {= - \sum\limits_{i}^{n}\log\left( f\left( x_{i} \right) \right) = - \sum\limits_{i:\ a \leq x_{i} < c}^{n_{1}}\log\left( f\left( x_{i} \right) \right) - \sum\limits_{i:\ c \leq x_{i} \leq b}^{n_{2}}\log\left( f\left( x_{i} \right) \right)}
+\end{aligned}$$
 
-where $`n = n_1 + n_2`$
+where $n = n_{1} + n_{2}$
 
-#### Case 1: $`a = c \lt b`$
+#### Case 1: $a = c < b$
 
-``` math
-\begin{align}
-nLL &= - \sum_{i}^{n} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c) \\
-&= -n\log(2) + n\log(b-a) + n \log(b-c) - \sum_{i}^{n} \log(b-x_i)
-\end{align}
-```
+$$\begin{aligned}
+{nLL} & {= - \sum\limits_{i}^{n}\log(2) + \log\left( b - x_{i} \right) - \log(b - a) - \log(b - c)} \\
+ & {= - n\log(2) + n\log(b - a) + n\log(b - c) - \sum\limits_{i}^{n}\log\left( b - x_{i} \right)}
+\end{aligned}$$
 
-#### Case 2: $`a \lt c = b`$
+#### Case 2: $a < c = b$
 
-``` math
-\begin{align}
-nLL &= - \sum_{i}^{n} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) \\
-&= -n\log(2) + n\log(b-a) + n\log(c-a) - \sum_{i}^{n} \log(x_i - a)
-\end{align}
-```
+$$\begin{aligned}
+{nLL} & {= - \sum\limits_{i}^{n}\log(2) + \log\left( x_{i} - a \right) - \log(b - a) - \log(c - a)} \\
+ & {= - n\log(2) + n\log(b - a) + n\log(c - a) - \sum\limits_{i}^{n}\log\left( x_{i} - a \right)}
+\end{aligned}$$
 
-#### Case 3: $`a \lt c \lt b`$
+#### Case 3: $a < c < b$
 
-``` math
-\begin{align}
-nLL &= - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(2) + \log(x_i - a) - \log(b-a) - \log(c-a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(2) + \log(b-x_i) - \log(b-a) - \log(b-c) \\
-&= -n\log(2) + n\log(b-a) + n_1\log(c-a) + n_2 \log(b-c) - \sum_{i: \ a \lt x_i \lt c}^{n_1} \log(x_i - a) - \sum_{i: \ c \le x_i \lt b}^{n_2} \log(b-x_i)
-\end{align}
-```
+$$\begin{aligned}
+{nLL} & {= - \sum\limits_{i:\ a < x_{i} < c}^{n_{1}}\log(2) + \log\left( x_{i} - a \right) - \log(b - a) - \log(c - a) - \sum\limits_{i:\ c \leq x_{i} < b}^{n_{2}}\log(2) + \log\left( b - x_{i} \right) - \log(b - a) - \log(b - c)} \\
+ & {= - n\log(2) + n\log(b - a) + n_{1}\log(c - a) + n_{2}\log(b - c) - \sum\limits_{i:\ a < x_{i} < c}^{n_{1}}\log\left( x_{i} - a \right) - \sum\limits_{i:\ c \leq x_{i} < b}^{n_{2}}\log\left( b - x_{i} \right)}
+\end{aligned}$$
 
-### Gradient of the negative Log Likelihood Given $`c`$:
+### Gradient of the negative Log Likelihood Given $c$:
 
-The negative log likelihood is not differentiable with respect to $`c`$
-because the limits of the sum ($`n_1`$ and $`n_2`$) are functions of
-$`c`$. Therefore the gradient and hessian are derived as if $`c`$ is
-fixed.
+The negative log likelihood is not differentiable with respect to $c$
+because the limits of the sum ($n_{1}$ and $n_{2}$) are functions of
+$c$. Therefore the gradient and hessian are derived as if $c$ is fixed.
 
-#### Case 1: $`a = c \lt b`$
+#### Case 1: $a = c < b$
 
-``` math
-\frac{\partial nLL}{\partial a} = - \frac{n}{b-a}
-```
+$$\frac{\partial nLL}{\partial a} = - \frac{n}{b - a}$$
 
-``` math
-\frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n}{b-c} - \sum_i^{n} \frac{1}{b-x_i}
-```
+$$\frac{\partial nLL}{\partial b} = \frac{n}{b - a} + \frac{n}{b - c} - \sum\limits_{i}^{n}\frac{1}{b - x_{i}}$$
 
-#### Case 2: $`a \lt c = b`$
+#### Case 2: $a < c = b$
 
-``` math
-\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n}{c-a} + \sum_i^{n} \frac{1}{x_i - a}
-```
+$$\frac{\partial nLL}{\partial a} = - \frac{n}{b - a} - \frac{n}{c - a} + \sum\limits_{i}^{n}\frac{1}{x_{i} - a}$$
 
-``` math
-\frac{\partial nLL}{\partial b} = \frac{n}{b-a}
-```
+$$\frac{\partial nLL}{\partial b} = \frac{n}{b - a}$$
 
-#### Case 3: $`a \lt c \lt b`$
+#### Case 3: $a < c < b$
 
-``` math
-\frac{\partial nLL}{\partial a} = - \frac{n}{b-a} - \frac{n_1}{c-a} + \sum_i^{n_1} \frac{1}{x_i - a}
-```
+$$\frac{\partial nLL}{\partial a} = - \frac{n}{b - a} - \frac{n_{1}}{c - a} + \sum\limits_{i}^{n_{1}}\frac{1}{x_{i} - a}$$
 
-``` math
-\frac{\partial nLL}{\partial b} = \frac{n}{b-a} + \frac{n_2}{b-c} - \sum_i^{n_2} \frac{1}{b-x_i}
-```
+$$\frac{\partial nLL}{\partial b} = \frac{n}{b - a} + \frac{n_{2}}{b - c} - \sum\limits_{i}^{n_{2}}\frac{1}{b - x_{i}}$$
 
-### Hessian of the negative Log Likelihood Given $`c`$:
+### Hessian of the negative Log Likelihood Given $c$:
 
-#### Case 1: $`a = c \lt b`$
+#### Case 1: $a = c < b$
 
-``` math
-\frac{\partial^2nLL}{\partial a^2} = - \frac{n}{(b-a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial a^{2}} = - \frac{n}{(b - a)^{2}}$$
 
-``` math
-\frac{\partial^2 nLL}{\partial b^2} = -\frac{n}{(b-a)^2} - \frac{n}{(b-c)^2} + \sum_i^{n} \frac{1}{(b-x_i)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial b^{2}} = - \frac{n}{(b - a)^{2}} - \frac{n}{(b - c)^{2}} + \sum\limits_{i}^{n}\frac{1}{\left( b - x_{i} \right)^{2}}$$
 
-``` math
-\frac{\partial^2 nLL}{\partial a\partial b} = \frac{\partial^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial a\partial b} = \frac{\partial^{2}nLL}{\partial b\partial a} = - \frac{n}{(b - a)^{2}}$$
 
-#### Case 2: $`a \lt c = b`$
+#### Case 2: $a < c = b$
 
-``` math
-\frac{\partial^2 nLL}{\partial a^2} = - \frac{n}{(b-a)^2} - \frac{n}{(c-a)^2} + \sum_i^{n} \frac{1}{(x_i - a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial a^{2}} = - \frac{n}{(b - a)^{2}} - \frac{n}{(c - a)^{2}} + \sum\limits_{i}^{n}\frac{1}{\left( x_{i} - a \right)^{2}}$$
 
-``` math
-\frac{\partial^2 nLL}{\partial b^2} = - \frac{n}{(b-a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial b^{2}} = - \frac{n}{(b - a)^{2}}$$
 
-``` math
-\frac{\partial^2 nLL}{\partial a\partial b} = \frac{\partial^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial a\partial b} = \frac{\partial^{2}nLL}{\partial b\partial a} = - \frac{n}{(b - a)^{2}}$$
 
-#### Case 3: $`a \lt c \lt b`$
+#### Case 3: $a < c < b$
 
-``` math
-\frac{\partial^2 nLL}{\partial a^2} = - \frac{n}{(b-a)^2} - \frac{n_1}{(c-a)^2} + \sum_i^{n_1} \frac{1}{(x_i - a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial a^{2}} = - \frac{n}{(b - a)^{2}} - \frac{n_{1}}{(c - a)^{2}} + \sum\limits_{i}^{n_{1}}\frac{1}{\left( x_{i} - a \right)^{2}}$$
 
-``` math
-\frac{\partial ^2 nLL}{\partial b^2} = -\frac{n}{(b-a)^2} - \frac{n_2}{(b-c)^2} + \sum_i^{n_2} \frac{1}{(b-x_i)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial b^{2}} = - \frac{n}{(b - a)^{2}} - \frac{n_{2}}{(b - c)^{2}} + \sum\limits_{i}^{n_{2}}\frac{1}{\left( b - x_{i} \right)^{2}}$$
 
-``` math
-\frac{\partial ^2 nLL}{\partial a\partial b} = \frac{\partial ^2 nLL}{\partial b\partial a} = - \frac{n}{(b-a)^2}
-```
+$$\frac{\partial^{2}nLL}{\partial a\partial b} = \frac{\partial^{2}nLL}{\partial b\partial a} = - \frac{n}{(b - a)^{2}}$$
 
 ### MLE Variance - Covariance
 
-For the optimization of $`(a,b)`$ given $`c`$, we can use the inverse of
-the hessian of the negative log likelihood for an estimate of the
-covariance matrix of $`\hat{a}`$ and $`\hat{b}`$. For the variance in
-$`\hat{c}`$, we use the variance of the $`r^{th}`$ order statistic which
-corresponds to $`c`$. The covariance of $`(a,b)`$ and $`c`$ is not
-computed because the negative log likelihood is not differentiable with
-respect to $`c`$.
+For the optimization of $(a,b)$ given $c$, we can use the inverse of the
+hessian of the negative log likelihood for an estimate of the covariance
+matrix of $\widehat{a}$ and $\widehat{b}$. For the variance in
+$\widehat{c}$, we use the variance of the $r^{th}$ order statistic which
+corresponds to $c$. The covariance of $(a,b)$ and $c$ is not computed
+because the negative log likelihood is not differentiable with respect
+to $c$.
 
-Let $`H`$ denote the Hessian matrix, and let $`H^{-1}[1,1]`$ be the
-$`V(\hat{a})`$, $`H^{-1}[2,2]`$ be the $`V(\hat{b})`$, and
-$`H^{-1}[1,2] = H^{-1}[2,1]`$ be the $`Cov(\hat{a}, \hat{b})`$. Then,
+Let $H$ denote the Hessian matrix, and let $H^{- 1}\lbrack 1,1\rbrack$
+be the $V\left( \widehat{a} \right)$, $H^{- 1}\lbrack 2,2\rbrack$ be the
+$V\left( \widehat{b} \right)$, and
+$H^{- 1}\lbrack 1,2\rbrack = H^{- 1}\lbrack 2,1\rbrack$ be the
+$Cov\left( \widehat{a},\widehat{b} \right)$. Then,
 
-``` math
- V([\hat{a}, \hat{b}, \hat{c}]) =   
-\begin{bmatrix} 
-   H^{-1}[1,1] & H^{-1}[1,2] & 0  \\
-   H^{-1}[2,1] & H^{-1}[2,2] & 0  \\
-   0 & 0 & V(\hat{c})  \\
-\end{bmatrix} 
-```
+$$V\left( \left\lbrack \widehat{a},\widehat{b},\widehat{c} \right\rbrack \right) = \begin{bmatrix}
+{H^{- 1}\lbrack 1,1\rbrack} & {H^{- 1}\lbrack 1,2\rbrack} & 0 \\
+{H^{- 1}\lbrack 2,1\rbrack} & {H^{- 1}\lbrack 2,2\rbrack} & 0 \\
+0 & 0 & {V\left( \widehat{c} \right)} \\
+ & & 
+\end{bmatrix}$$
 
-#### $`r^{th}`$ order statistic
+#### $r^{th}$ order statistic
 
-``` math
-f(x_{(r)}) = r {n \choose r} f(x) [F(x)]^{r-1}[1-F(x)]^{n-r}
-```
+$$f\left( x_{(r)} \right) = r\left( \frac{n}{r} \right)f(x)\left\lbrack F(x) \right\rbrack^{r - 1}\left\lbrack 1 - F(x) \right\rbrack^{n - r}$$
 
-#### Expected value of the $`r^{th}`$ order statistic
+#### Expected value of the $r^{th}$ order statistic
 
-``` math
-\begin{align}
-E(X_{(r)}) &= \int x f(x_{(r)}) dx \\
-&= \int_a^c xr {n \choose r} \frac{2(x-a)}{(b-a)(c-a)} \left(\frac{(x-a)^2}{(b-a)(c-a)}\right)^{r-1}\left(1 - \frac{(x-a)^2}{(b-a)(c-a)}\right)^{n-r}dx \\
-&+ \int_c^b xr {n \choose r} \frac{2(x-b)}{(b-a)(c-b)} \left(1+\frac{(x-b)^2}{(b-a)(c-b)}\right)^{r-1}\left(- \frac{(x-b)^2}{(b-a)(c-b)}\right)^{n-r}dx
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)} \right)} & {= \int xf\left( x_{(r)} \right)dx} \\
+ & {= \int_{a}^{c}xr\left( \frac{n}{r} \right)\frac{2(x - a)}{(b - a)(c - a)}\left( \frac{(x - a)^{2}}{(b - a)(c - a)} \right)^{r - 1}\left( 1 - \frac{(x - a)^{2}}{(b - a)(c - a)} \right)^{n - r}dx} \\
+ & {+ \int_{c}^{b}xr\left( \frac{n}{r} \right)\frac{2(x - b)}{(b - a)(c - b)}\left( 1 + \frac{(x - b)^{2}}{(b - a)(c - b)} \right)^{r - 1}\left( - \frac{(x - b)^{2}}{(b - a)(c - b)} \right)^{n - r}dx}
+\end{aligned}$$
 
 To simplify the notation, define:
 
-``` math
-\gamma_0 = 2r {n \choose r}
-```
+$$\gamma_{0} = 2r\left( \frac{n}{r} \right)$$
 
-``` math
-\gamma_1 = (b-a)(c-a)
-```
+$$\gamma_{1} = (b - a)(c - a)$$
 
-``` math
-\gamma_2 = (b-a)(c-b)
-```
+$$\gamma_{2} = (b - a)(c - b)$$
 
 Continuing:
 
-``` math
-E(X_{(r)}) = \int_a^c \frac{\gamma_0}{\gamma_1^n} x(x-a)^{2r-1} \left(\gamma_1 - (x-a)^2\right)^{n-r}dx + \int_c^b \frac{\gamma_0}{\gamma_2^n} (-1)^{n-r}x(x-b)^{2n-2r+1} \left(\gamma_2 + (x-b)^2\right)^{r-1}dx
-```
+$$E\left( X_{(r)} \right) = \int_{a}^{c}\frac{\gamma_{0}}{\gamma_{1}^{n}}x(x - a)^{2r - 1}\left( \gamma_{1} - (x - a)^{2} \right)^{n - r}dx + \int_{c}^{b}\frac{\gamma_{0}}{\gamma_{2}^{n}}( - 1)^{n - r}x(x - b)^{2n - 2r + 1}\left( \gamma_{2} + (x - b)^{2} \right)^{r - 1}dx$$
 
 By using a binomial expansion, we can prevent having to integrate by
 parts multiple times.
 
-``` math
-(a+b)^n = \sum_{k=0}^n {n \choose k} a^kb^{n-k}
-```
+$$(a + b)^{n} = \sum\limits_{k = 0}^{n}\left( \frac{n}{k} \right)a^{k}b^{n - k}$$
 
-``` math
-\begin{align}
-E(X_{(r)}) &= \int_a^c \frac{\gamma_0}{\gamma_1^n} x(x-a)^{2r-1} \sum_{k=0}^{n-r} {n-r \choose k} \gamma_1^k (-1)^{n-r-k}(x-a)^{2n-2r-2k}dx \\
-&+ \int_c^b \frac{\gamma_0}{\gamma_2^n} (-1)^{n-r}x(x-b)^{2n-2r+1} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k (x-b)^{2r-2-2k}dx
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)} \right)} & {= \int_{a}^{c}\frac{\gamma_{0}}{\gamma_{1}^{n}}x(x - a)^{2r - 1}\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)\gamma_{1}^{k}( - 1)^{n - r - k}(x - a)^{2n - 2r - 2k}dx} \\
+ & {+ \int_{c}^{b}\frac{\gamma_{0}}{\gamma_{2}^{n}}( - 1)^{n - r}x(x - b)^{2n - 2r + 1}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)\gamma_{2}^{k}(x - b)^{2r - 2 - 2k}dx}
+\end{aligned}$$
 
-``` math
-\begin{align}
-E(X_{(r)}) &= \frac{\gamma_0}{\gamma_1^n} \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^k (-1)^{n-r-k}\int_a^c x(x-a)^{2n-2k-1}dx \\
-&+ \frac{\gamma_0}{\gamma_2^n} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k \int_c^b x(x-b)^{2n-2k-1}dx
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)} \right)} & {= \frac{\gamma_{0}}{\gamma_{1}^{n}}\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)\gamma_{1}^{k}( - 1)^{n - r - k}\int_{a}^{c}x(x - a)^{2n - 2k - 1}dx} \\
+ & {+ \frac{\gamma_{0}}{\gamma_{2}^{n}}( - 1)^{(n - r)}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)\gamma_{2}^{k}\int_{c}^{b}x(x - b)^{2n - 2k - 1}dx}
+\end{aligned}$$
 
-``` math
-\begin{align}
-E(X_{(r)}) &= \gamma_0 \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^{k-n} (-1)^{n-r-k} \left[\frac{c(c-a)^{2n-2k}}{2n-2k} - \frac{(c-a)^{2n-2k+1}}{(2n-2k)(2n-2k+1)}\right] \\
-&+ \gamma_0 (-1)^{n-r} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^{k-n}  \left[\frac{-c(c-b)^{2n-2k}}{2n-2k}+\frac{(c-b)^{2n-2k+1}}{(2n-2k)(2n-2k+1)}\right]
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)} \right)} & {= \gamma_{0}\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)\gamma_{1}^{k - n}( - 1)^{n - r - k}\left\lbrack \frac{c(c - a)^{2n - 2k}}{2n - 2k} - \frac{(c - a)^{2n - 2k + 1}}{(2n - 2k)(2n - 2k + 1)} \right\rbrack} \\
+ & {+ \gamma_{0}( - 1)^{n - r}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)\gamma_{2}^{k - n}\left\lbrack \frac{- c(c - b)^{2n - 2k}}{2n - 2k} + \frac{(c - b)^{2n - 2k + 1}}{(2n - 2k)(2n - 2k + 1)} \right\rbrack}
+\end{aligned}$$
 
-``` math
-\begin{align}
-E(X_{(r)}) &= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \left[\frac{c}{n-k} - \frac{c-a}{(n-k)(2n-2k+1)}\right] \\
-&+ r {n \choose r} (-1)^{n-r} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n} (c-b)^{n-k} \left[\frac{-c}{n-k}+\frac{c-b}{(n-k)(2n-2k+1)}\right]
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)} \right)} & {= r\left( \frac{n}{r} \right)\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)(b - a)^{k - n}(c - a)^{n - k}( - 1)^{n - r - k}\left\lbrack \frac{c}{n - k} - \frac{c - a}{(n - k)(2n - 2k + 1)} \right\rbrack} \\
+ & {+ r\left( \frac{n}{r} \right)( - 1)^{n - r}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)(b - a)^{k - n}(c - b)^{n - k}\left\lbrack \frac{- c}{n - k} + \frac{c - b}{(n - k)(2n - 2k + 1)} \right\rbrack}
+\end{aligned}$$
 
-``` math
-\begin{align}
-E(X_{(r)}) &= r {n \choose r}  \bigg[ \ \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \frac{2c(n-k)+a}{(n-k)(2(n-k) + 1)} \\
-&+ (-1)^{n-r+1} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n} (c-b)^{n-k} \frac{2c(n-k)+b}{(n-k)(2(n-k)+1)} \ \bigg]
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)} \right)} & {= r\left( \frac{n}{r} \right)\lbrack\ \sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)(b - a)^{k - n}(c - a)^{n - k}( - 1)^{n - r - k}\frac{2c(n - k) + a}{(n - k)\left( 2(n - k) + 1 \right)}} \\
+ & {+ ( - 1)^{n - r + 1}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)(b - a)^{k - n}(c - b)^{n - k}\frac{2c(n - k) + b}{(n - k)\left( 2(n - k) + 1 \right)}\ \rbrack}
+\end{aligned}$$
 
-#### Expected Value of $`r^{th}`$ order statistic squared
+#### Expected Value of $r^{th}$ order statistic squared
 
 Continuing from the above derivation:
 
-``` math
-\begin{align}
-E(X_{(r)}^2) &= \frac{\gamma_0}{\gamma_1^n} \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^k (-1)^{n-r-k}\int_a^c x^2(x-a)^{2n-2k-1}dx \\
-&+ \frac{\gamma_0}{\gamma_2^n} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^k \int_c^b x^2(x-b)^{2n-2k-1}dx
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)}^{2} \right)} & {= \frac{\gamma_{0}}{\gamma_{1}^{n}}\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)\gamma_{1}^{k}( - 1)^{n - r - k}\int_{a}^{c}x^{2}(x - a)^{2n - 2k - 1}dx} \\
+ & {+ \frac{\gamma_{0}}{\gamma_{2}^{n}}( - 1)^{(n - r)}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)\gamma_{2}^{k}\int_{c}^{b}x^{2}(x - b)^{2n - 2k - 1}dx}
+\end{aligned}$$
 
-``` math
-\begin{align}
-E(X_{(r)}^2) &= \gamma_0 \sum_{k=0}^{n-r}   {n-r \choose k} \gamma_1^{k-n} (-1)^{n-r-k} \frac{(c-a)^{2n-2k}}{2n-2k}\left[c^2 - \frac{2c(c-a)}{2n-2k+1} + \frac{2(c-a)^2}{(2n-2k+1)(2n-2k+2)}\right] \\
-&+ \gamma_0 (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} \gamma_2^{k-n}  \frac{(c-b)^{2n-2k}}{2n-2k}\left[-c^2 + \frac{2c(c-b)}{2n-2k+1}-\frac{2(c-b)^2}{(2n-2k+1)(2n-2k+2)}\right]
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)}^{2} \right)} & {= \gamma_{0}\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)\gamma_{1}^{k - n}( - 1)^{n - r - k}\frac{(c - a)^{2n - 2k}}{2n - 2k}\left\lbrack c^{2} - \frac{2c(c - a)}{2n - 2k + 1} + \frac{2(c - a)^{2}}{(2n - 2k + 1)(2n - 2k + 2)} \right\rbrack} \\
+ & {+ \gamma_{0}( - 1)^{(n - r)}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)\gamma_{2}^{k - n}\frac{(c - b)^{2n - 2k}}{2n - 2k}\left\lbrack - c^{2} + \frac{2c(c - b)}{2n - 2k + 1} - \frac{2(c - b)^{2}}{(2n - 2k + 1)(2n - 2k + 2)} \right\rbrack}
+\end{aligned}$$
 
-``` math
-\begin{align}
-E(X_{(r)}^2) &= r {n \choose r} \sum_{k=0}^{n-r}   {n-r \choose k} (b-a)^{k-n} (c-a)^{n-k} (-1)^{n-r-k} \frac{1}{n-k}\left[c^2 - \frac{2c(c-a)}{2n-2k+1} + \frac{2(c-a)^2}{(2n-2k+1)(2n-2k+2)}\right] \\
-&+ r {n \choose r} (-1)^{(n-r)} \sum_{k=0}^{r-1} {r-1 \choose k} (b-a)^{k-n} (c-b)^{n-k} \frac{1}{n-k}\left[-c^2 + \frac{2c(c-b)}{2n-2k+1}-\frac{2(c-b)^2}{(2n-2k+1)(2n-2k+2)}\right]
-\end{align}
-```
+$$\begin{aligned}
+{E\left( X_{(r)}^{2} \right)} & {= r\left( \frac{n}{r} \right)\sum\limits_{k = 0}^{n - r}\left( \frac{n - r}{k} \right)(b - a)^{k - n}(c - a)^{n - k}( - 1)^{n - r - k}\frac{1}{n - k}\left\lbrack c^{2} - \frac{2c(c - a)}{2n - 2k + 1} + \frac{2(c - a)^{2}}{(2n - 2k + 1)(2n - 2k + 2)} \right\rbrack} \\
+ & {+ r\left( \frac{n}{r} \right)( - 1)^{(n - r)}\sum\limits_{k = 0}^{r - 1}\left( \frac{r - 1}{k} \right)(b - a)^{k - n}(c - b)^{n - k}\frac{1}{n - k}\left\lbrack - c^{2} + \frac{2c(c - b)}{2n - 2k + 1} - \frac{2(c - b)^{2}}{(2n - 2k + 1)(2n - 2k + 2)} \right\rbrack}
+\end{aligned}$$
 
-#### Variance of the $`r^{th}`$ order statistic
+#### Variance of the $r^{th}$ order statistic
 
-``` math
-V\left(X_{(r)}\right) = E(X_{(r)}^2) - \left[E(X_{(r)})\right]^2
-```
+$$V\left( X_{(r)} \right) = E\left( X_{(r)}^{2} \right) - \left\lbrack E\left( X_{(r)} \right) \right\rbrack^{2}$$
 
-#### Numerical Stability of Variance and Expected value of $`r^{th}`$ order statistic
+#### Numerical Stability of Variance and Expected value of $r^{th}$ order statistic
 
 Although the above derivation gives an exact solution to the variance
-and expected value of the $`r^{th}`$ order statistic of the triangle
+and expected value of the $r^{th}$ order statistic of the triangle
 distribution, the alternative sign inside the binomial sum and the large
 orders of magnitude over which those coefficients span lead to
 cancellation errors in the results that are not easy to solve. Exact
@@ -615,106 +464,67 @@ numerical integration for these results.
 
 Define:
 
-``` math
-a_l=\log_{\phi}(a),\ \ b_l=\log_{\phi}(b),\ \ c_l=\log_{\phi}(c),\ \ h=\frac{2}{b_l-a_l}, \ \ \phi = \mbox{log base}
-```
+$$a_{l} = \log_{\phi}(a),\ \ b_{l} = \log_{\phi}(b),\ \ c_{l} = \log_{\phi}(c),\ \ h = \frac{2}{b_{l} - a_{l}},\ \ \phi = \text{log base}$$
 
-``` math
-f(z) = 
-\left\{
-  \begin{array}{ll}
-    \frac{h}{c_l - a_l}(z - a_l) & \mbox{if } a_l \leq z \leq c_l \\
-    \frac{h}{c_l - b_l}(z - b_l) & \mbox{if } c_l < z \leq b_l \\
-    0 & \mbox{otherwise}
-  \end{array}
-\right.\ \ \ \ (5)
-```
+$$f(z) = \begin{cases}
+{\frac{h}{c_{l} - a_{l}}\left( z - a_{l} \right)} & {{\text{if}\mspace{6mu}}a_{l} \leq z \leq c_{l}} \\
+{\frac{h}{c_{l} - b_{l}}\left( z - b_{l} \right)} & {{\text{if}\mspace{6mu}}c_{l} < z \leq b_{l}} \\
+0 & \text{otherwise}
+\end{cases}\ \ \ \ (5)$$
 
 However,
 
-``` math
-E({\phi}^z) \neq {\phi}^{E(z)}\ \ \ \ (6)
-```
+$$E\left( \phi^{z} \right) \neq \phi^{E{(z)}}\ \ \ \ (6)$$
 
 Therefore, transforming…
 
-``` math
-Y={\phi}^Z
-```
+$$Y = \phi^{Z}$$
 
-``` math
-Z=\log_{\phi}(Y)
-```
+$$Z = \log_{\phi}(Y)$$
 
-``` math
-w(y)=\log_{\phi}(y)
-```
+$$w(y) = \log_{\phi}(y)$$
 
-``` math
-w'(y)=\frac{dz}{dy} = \frac{1}{y\log({\phi})}
-```
+$$w\prime(y) = \frac{dz}{dy} = \frac{1}{y\log(\phi)}$$
 
-``` math
-g(y)=f(w(y))w'(y)
-```
+$$g(y) = f\left( w(y) \right)w\prime(y)$$
 
-``` math
-g(y) = 
-\left\{
-  \begin{array}{ll}
-    \frac{2}{(c_l-a_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - a_l}{y} & \mbox{if } 0 < a \leq y \leq c \\
-    \frac{2}{(c_l-b_l)(b_l-a_l)\log({\phi})}\frac{log_{\phi}(y) - b_l}{y} & \mbox{if } c < y \leq b \\
-    0 & \mbox{otherwise}
-  \end{array}
-\right.\ \ \ \ (7)
-```
+$$g(y) = \begin{cases}
+{\frac{2}{\left( c_{l} - a_{l} \right)\left( b_{l} - a_{l} \right)\log(\phi)}\frac{log_{\phi}(y) - a_{l}}{y}} & {{\text{if}\mspace{6mu}}0 < a \leq y \leq c} \\
+{\frac{2}{\left( c_{l} - b_{l} \right)\left( b_{l} - a_{l} \right)\log(\phi)}\frac{log_{\phi}(y) - b_{l}}{y}} & {{\text{if}\mspace{6mu}}c < y \leq b} \\
+0 & \text{otherwise}
+\end{cases}\ \ \ \ (7)$$
 
 Define:
 
-``` math
-\beta_1=\frac{2}{(c_l-a_l)(b_l-a_l)}
-```
+$$\beta_{1} = \frac{2}{\left( c_{l} - a_{l} \right)\left( b_{l} - a_{l} \right)}$$
 
-``` math
-\beta_2=\frac{2}{(c_l-b_l)(b_l-a_l)}
-```
+$$\beta_{2} = \frac{2}{\left( c_{l} - b_{l} \right)\left( b_{l} - a_{l} \right)}$$
 
 Finding the CDF,
 
-``` math
-G(y) = \int_{-\infty}^y g(y)dy
-```
+$$G(y) = \int_{- \infty}^{y}g(y)dy$$
 
-``` math
-\begin{align}
-\mbox{for}\ a \leq y \leq c,\ \ G(y) &= \frac{\beta_1}{\log({\phi})} \int_a^y \frac{\log(y)}{y\log({\phi})}-\frac{a_l}{y}dy \\
-&=\beta_1 \bigg[\frac{\log_{\phi}^2(y)}{2} - a_l \log_{\phi}(y) - \frac{a_l^2}{2} + a_l^2\bigg]
-\end{align}
-```
+$$\begin{aligned}
+{\text{for}\ a \leq y \leq c,\ \ G(y)} & {= \frac{\beta_{1}}{\log(\phi)}\int_{a}^{y}\frac{\log(y)}{y\log(\phi)} - \frac{a_{l}}{y}dy} \\
+ & {= \beta_{1}\lbrack\frac{\log_{\phi}^{2}(y)}{2} - a_{l}\log_{\phi}(y) - \frac{a_{l}^{2}}{2} + a_{l}^{2}\rbrack}
+\end{aligned}$$
 
-``` math
-\begin{align}
-\mbox{for}\ c < y \leq b,\ \ G(y) &= G(c) + \frac{\beta_2}{\log({\phi})} \int_c^y \frac{\log(y)}{y\log({\phi})} - \frac{b_l}{y}dy \\
-&=G(c) + \beta_2 \bigg[\frac{\log_{\phi}^2(y)}{2} - b_l \log_{\phi}(y) - \frac{c_l^2}{2} + b_l c_l\bigg]
-\end{align}
-```
+$$\begin{aligned}
+{\text{for}\ c < y \leq b,\ \ G(y)} & {= G(c) + \frac{\beta_{2}}{\log(\phi)}\int_{c}^{y}\frac{\log(y)}{y\log(\phi)} - \frac{b_{l}}{y}dy} \\
+ & {= G(c) + \beta_{2}\lbrack\frac{\log_{\phi}^{2}(y)}{2} - b_{l}\log_{\phi}(y) - \frac{c_{l}^{2}}{2} + b_{l}c_{l}\rbrack}
+\end{aligned}$$
 
 Checking that the CDF is 1 at b,
 
-``` math
-\begin{align}
-G(b) &= \frac{c_l^2 - 2a_l c_l + a_l^2}{(c_l-a_l)(b_l-a_l)} + \frac{-b_l^2-c_l^2+2b_lc_l}{(c_l-b_l)(b_l-a_l)} \\
-&= \frac{c_l-a_l}{b_l-a_l} + \frac{-(c_l-b_l)}{b_l-a_l} = 1
-\end{align}
-```
+$$\begin{aligned}
+{G(b)} & {= \frac{c_{l}^{2} - 2a_{l}c_{l} + a_{l}^{2}}{\left( c_{l} - a_{l} \right)\left( b_{l} - a_{l} \right)} + \frac{- b_{l}^{2} - c_{l}^{2} + 2b_{l}c_{l}}{\left( c_{l} - b_{l} \right)\left( b_{l} - a_{l} \right)}} \\
+ & {= \frac{c_{l} - a_{l}}{b_{l} - a_{l}} + \frac{- \left( c_{l} - b_{l} \right)}{b_{l} - a_{l}} = 1}
+\end{aligned}$$
 
-Now calculating $`E(y)`$,
+Now calculating $E(y)$,
 
-``` math
-\begin{align}
-E(y) &= \int y\ g(y)\ dy \\
-&=\frac{\beta_1}{\log({\phi})} \int_a^c \bigg[\frac{\log(y)}{\log({\phi})} - a_l\bigg]dy + 
-\frac{\beta_2}{\log({\phi})} \int_c^b \bigg[\frac{\log(y)}{\log({\phi})} - b_l\bigg]dy \\
-&=\frac{c\beta_1}{\log^2({\phi})} \bigg[\log(c) - 1 - \log(a) + \frac{a}{c} \bigg] + \frac{c\beta_2}{\log^2({\phi})} \bigg[\frac{-b}{c} - \log(c) + 1 + \log(b) \bigg]
-\end{align}
-```
+$$\begin{aligned}
+{E(y)} & {= \int y\ g(y)\ dy} \\
+ & {= \frac{\beta_{1}}{\log(\phi)}\int_{a}^{c}\lbrack\frac{\log(y)}{\log(\phi)} - a_{l}\rbrack dy + \frac{\beta_{2}}{\log(\phi)}\int_{c}^{b}\lbrack\frac{\log(y)}{\log(\phi)} - b_{l}\rbrack dy} \\
+ & {= \frac{c\beta_{1}}{\log^{2}(\phi)}\lbrack\log(c) - 1 - \log(a) + \frac{a}{c}\rbrack + \frac{c\beta_{2}}{\log^{2}(\phi)}\lbrack\frac{- b}{c} - \log(c) + 1 + \log(b)\rbrack}
+\end{aligned}$$

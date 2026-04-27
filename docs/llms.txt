@@ -9,12 +9,12 @@
 An R package to work with the triangle distribution and logarithmic
 triangle distribution
 
-| _(Actions) | _(Code Coverage) | _(Website) | _(CRAN Downloads) | _(CRAN) |
-|:--:|:--:|:--:|:--:|:--:|
+|                                                                                    _(Actions)                                                                                    |                                                                       _(Code Coverage)                                                                       |                                               _(Website)                                               |                                       _(CRAN Downloads)                                        |                                                   _(CRAN)                                                    |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|
 | [![R-CMD-check](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/triangle/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/triangle/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/triangle?branch=master) | [![](https://img.shields.io/badge/pkgdown-triangle-blue.svg)](https://bertcarnell.github.io/triangle/) | [![](https://cranlogs.r-pkg.org/badges/triangle)](https://cran.r-project.org/package=triangle) | [![CRAN status](https://www.r-pkg.org/badges/version/triangle)](https://cran.r-project.org/package=triangle) |
 
-| _(R-Universe) | _(CRAN Packages) | _(DOI) |
-|:--:|:--:|:--:|
+|                                                _(R-Universe)                                                 |                                                                     _(CRAN Packages)                                                                      |                                                                 _(DOI)                                                                 |
+|:------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------:|
 | [![name status badge](https://bertcarnell.r-universe.dev/badges/:name)](https://bertcarnell.r-universe.dev/) | [![Static Badge](https://img.shields.io/badge/CRAN-All_Packages-blue)](https://cran.r-project.org/web/checks/check_results_bertcarnell_at_gmail.com.html) | [![Static Badge](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.triangle-blue)](https://cran.r-project.org/package=triangle) |
 
 See the package documentation
@@ -25,7 +25,6 @@ See the package documentation
 Install the R package:
 
 ``` r
-
 # Stable CRAN version
 install.packages("triangle")
 
@@ -41,14 +40,12 @@ use the functions:
 - `c` = mode
 
 ``` r
-
 require(triangle)
 ```
 
 ### Triangle distribution
 
 ``` r
-
 # rtriangle(n, a, b, c)
 set.seed(42)
 rtriangle(5, 1, 5, 2)
@@ -59,7 +56,6 @@ rtriangle(5, 1, 5, 2)
 ```
 
 ``` r
-
 # ptriangle(x, a, b, c)
 ptriangle(0:5, 0, 10, 5)
 ```
@@ -69,7 +65,6 @@ ptriangle(0:5, 0, 10, 5)
 ```
 
 ``` r
-
 # qtriangle(p, a, b, c)
 qtriangle(seq(0, 1, by = 0.2), 1, 10, 3)
 ```
@@ -79,7 +74,6 @@ qtriangle(seq(0, 1, by = 0.2), 1, 10, 3)
 ```
 
 ``` r
-
 # dtriangle(x, a, b, c)
 dtriangle(0:4, 0, 10, 5)
 ```
@@ -91,7 +85,6 @@ dtriangle(0:4, 0, 10, 5)
 ### Logarithmic triangle distribution
 
 ``` r
-
 # rltriangle(n, a, b, c, logbase)
 set.seed(2001)
 rltriangle(5, 1, 100, 10)
@@ -102,7 +95,6 @@ rltriangle(5, 1, 100, 10)
 ```
 
 ``` r
-
 # pltriangle(x, a, b, c, logbase)
 pltriangle(10^(0:3), 1, 1000, 10)
 ```
@@ -112,7 +104,6 @@ pltriangle(10^(0:3), 1, 1000, 10)
 ```
 
 ``` r
-
 # qltriangle(p, a, b, c, logbase)
 qltriangle(seq(0, 1, by = 0.2), 1, 100, 20)
 ```
@@ -122,7 +113,6 @@ qltriangle(seq(0, 1, by = 0.2), 1, 100, 20)
 ```
 
 ``` r
-
 # dltriangle(x, a, b, c, logbase)
 dltriangle(0:5, 1, 10, 5)
 ```
@@ -136,7 +126,6 @@ dltriangle(0:5, 1, 10, 5)
 #### triangle method of moments estimates
 
 ``` r
-
 x <- rtriangle(20, 0, 2, 1.5)
 triangle_mom(x)
 ```
@@ -149,7 +138,6 @@ triangle_mom(x)
 #### triangle maximum likelihood estimates
 
 ``` r
-
 x <- c(0.1, 0.25, 0.3, 0.4, 0.45, 0.6, 0.75, 0.8)
 # triangle_mle(x, debug = FALSE, maxiter = 100)
 triangle_mle(x)
@@ -171,7 +159,6 @@ triangle_mle(x)
 ```
 
 ``` r
-
 # standard triangle (0,1) likelihood estimates
 standard_triangle_mle(x)
 ```
@@ -192,7 +179,6 @@ standard_triangle_mle(x)
 ```
 
 ``` r
-
 set.seed(1976)
 x <- rtriangle(100, 1, 5, 3.5)
 triangle_mle(x)

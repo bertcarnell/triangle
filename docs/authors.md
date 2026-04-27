@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/bertcarnell/triangle/blob/HEAD/inst/CITATION)
+[`inst/CITATION`](https://github.com/bertcarnell/triangle/blob/v1.1.0/inst/CITATION)
 
 Carnell R (2026). *triangle: Distribution Functions and Parameter
 Estimates for the Triangle Distribution*.

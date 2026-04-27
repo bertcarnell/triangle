@@ -48,7 +48,7 @@ summary(cdfe)
 #> b  5.35551    0.03210  166.84   <2e-16 ***
 #> c  2.10587    0.04613   45.65   <2e-16 ***
 #> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #> 
 #> Residual standard error: 0.01835 on 97 degrees of freedom
 #> 
